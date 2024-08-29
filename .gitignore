@@ -1,0 +1,24 @@
+# 包文件、输出文件
+node_modules/
+dist/
+lib/
+build/
+log/
+coverage/
+
+# IDE 配置项
+.idea/
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# 日志文件
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# yarn.lock
+package-lock.json

@@ -1,0 +1,27 @@
+# 包文件、输出文件、文档
+node_modules/
+dist/
+build/
+log/
+script/
+docs/
+
+# IDE 配置项
+.vscode/
+.idea/
+
+# github 配置项
+.github/
+
+# 日志文件
+*.log
+
+# lock 文件
+package-lock.json
+yarn.lock
+
+# 根目录配置文件
+.editorconfig
+.prettierignore
+.prettierrc
+.gitignore

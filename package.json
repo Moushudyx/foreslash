@@ -1,0 +1,28 @@
+{
+  "name": "foreslash",
+  "version": "0.1.0",
+  "description": "Foreslash is a javascript utilities lib which contains plenty of functions.",
+  "main": "index.js",
+  "files": [
+    "lib"
+  ],
+  "scripts": {
+    "test": "jest --coverage"
+  },
+  "keywords": [
+    "foreslash",
+    "lib",
+    "util",
+    "modules"
+  ],
+  "author": "moushu",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/jest": "^29.5.12",
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0",
+    "ts-jest": "^29.2.5",
+    "typescript": "^5.5.4",
+    "yarn": "^1.22.22"
+  }
+}
