@@ -1,1 +1,2 @@
-export * from './utils';
+export * from './random/index'
+export * from './utils/index'
