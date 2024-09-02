@@ -5,6 +5,7 @@ build/
 log/
 script/
 docs/
+coverage/
 
 # IDE 配置项
 .vscode/

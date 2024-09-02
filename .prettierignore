@@ -1,0 +1,8 @@
+*.md
+*.svg
+*.png
+*.gif
+*.jpg
+*.jpeg
+*.lock
+tsconfig.json

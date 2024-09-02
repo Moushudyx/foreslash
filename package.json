@@ -1,8 +1,8 @@
 {
   "name": "foreslash",
-  "version": "0.1.0",
+  "version": "0.0.1",
   "description": "Foreslash is a javascript utilities lib which contains plenty of functions.",
-  "main": "index.js",
+  "main": "lib/index.js",
   "files": [
     "lib"
   ],
@@ -16,7 +16,11 @@
     "modules"
   ],
   "author": "moushu",
-  "license": "ISC",
+  "license": "Mulan PSL v2",
+  "bugs": {
+    "url": "https://github.com/Moushudyx/foreslash/issues"
+  },
+  "homepage": "https://github.com/Moushudyx/foreslash#readme",
   "devDependencies": {
     "@types/jest": "^29.5.12",
     "jest": "^29.7.0",
