@@ -28,6 +28,14 @@ export const _curryAny: <Args extends Array<any>, Res>(
  * 内部方法，合并`_curryMore`接收到的参数列表，返回一个新的参数列表
  * @param args 当前参数列表
  * @param currentArguments 接收到的参数列表
+ * @description
+ * 1. 若当前参数列表为 `[]` 则返回接收到的参数列表
+ * 2. 设当前参数为 `[_, b, c, _, e]` 接收到的参数列表为 `[_, d, _, g]`
+ * ```js
+ * // args             `[_, b, c, _, e]`
+ * // currentArguments `[_,       d,    _, g]`
+ * // return           `[_, b, c, d, e, _, g]`
+ * ```
  */
 export function _mergeArguments(args: any[], currentArguments: ArrayLike<any>) {
   let p1 = 0 // , overflow = false
@@ -42,6 +50,12 @@ export function _mergeArguments(args: any[], currentArguments: ArrayLike<any>) {
 /**
  * 内部方法，统计当前参数列表已经填充到哪一位了
  * @param args 当前参数列表
+ * @description
+ * 统计至非占位符的参数数量
+ * - `[]` 返回 0
+ * - `[_]` 返回 0
+ * - `[a, b, _, d]` 返回 2
+ * - `[a, b, c, d]` 返回 4
  */
 export function _countArguments(args: any[]) {
   for (let i = 0; i < args.length; i++) {

@@ -8,12 +8,18 @@ import type {
   PipeFuncList7,
   PipeFuncList8,
   PipeFuncListMore,
-} from './_utils'
+} from './utils/_pipe'
 
 /**
  * 函数管道，将多个函数组合成一个函数，依次执行并返回结果
  * @param pipeFunc 需要组合的函数列表，从左到右依次执行，返回值将作为下一个函数的参数
  * @returns 返回一个函数，接受参数，依次执行函数列表，并返回最后一个函数的返回值
+ * @example
+ * ```js
+ * const pipedFn = pipe(fn1, fn2, fn3)
+ * pipedFn(...args)
+ * // 等价于 fn3(fn2(fn1(...args)))
+ * ```
  */
 export function pipe<PipeArgs extends any[], PipeResult>(
   ...pipeFunc: PipeFuncList1<PipeArgs, PipeResult>
@@ -45,11 +51,11 @@ export function pipe<PipeArgs extends any[], PipeResult, Mid1, Mid2, Mid3, Mid4,
 export function pipe<PipeArgs extends any[], PipeResult>(...pipeFunc: any[]) {
   // 参数校验
   if (pipeFunc.length === 0) {
-    throw new Error('Invalid pipeFunc parameter: pipeFunc is empty');
+    throw new Error('Invalid pipeFunc parameter: pipeFunc is empty')
   }
   for (let i = 0; i < pipeFunc.length; i++) {
     if (typeof pipeFunc[i] !== 'function') {
-      throw new Error(`Invalid pipeFunc parameter: pipeFunc[${i}] is not a function`);
+      throw new Error(`Invalid pipeFunc parameter: pipeFunc[${i}] is not a function`)
     }
   }
   // 函数组合

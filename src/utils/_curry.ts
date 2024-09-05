@@ -21,6 +21,9 @@ export function _curryMore<Args extends Array<any>, Res>(
   fn: (...args: Args) => Res // 3 个以上参数
 ): F.Curry<(...args: Args) => Res>
 export function _curryMore<Args extends Array<any>, Res>(fn: (...args: Args) => Res): F.Curry<(...args: Args) => Res> {
+  if (typeof fn !== 'function') {
+    throw new Error('Invalid fn parameter: fn is not a function.')
+  }
   switch (fn.length) {
     case 0:
       // @ts-ignore
