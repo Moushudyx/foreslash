@@ -1,4 +1,4 @@
-import { _, isPlaceholder, curry } from '../../src/index'
+import { _, isPlaceholder, curry } from '../src/index'
 
 describe('isPlaceholder', () => {
   it('基本测试', () => {

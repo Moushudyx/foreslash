@@ -1,4 +1,4 @@
-import { noop, pass } from '../../src/index'
+import { noop, pass } from '../src/index'
 
 describe('noop', () => {
   it('不处理参数', () => {
