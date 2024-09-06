@@ -1,1 +1,1 @@
-export * from './noop'
+export * from './_globalThis'
