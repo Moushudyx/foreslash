@@ -4,5 +4,5 @@ const object2String = Object.prototype.toString
  * @param value 要判断的类型
  */
 export function getTag(value: unknown): string {
-  return object2String.call(value)
+  return object2String.call(value).slice(8, -1)
 }
