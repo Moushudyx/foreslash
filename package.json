@@ -1,19 +1,33 @@
 {
   "name": "foreslash",
   "version": "0.0.1",
-  "description": "Foreslash is a javascript utilities lib which contains plenty of functions.",
-  "main": "lib/index.js",
-  "module": "lib/module.js",
+  "description": "Foreslash is a Javascript utilities lib which contains plenty of practical functions.",
+  "type": "module",
+  "main": "lib/index.mjs",
+  "module": "lib/index.mjs",
+  "browser": "lib/index.umd.js",
+  "types": "lib/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./lib/index.mjs",
+      "require": "./lib/index.common.cjs"
+    }
+  },
   "files": [
     "lib"
   ],
   "scripts": {
+    "dev": "rollup -c -w",
+    "build": "rollup -c --environment BUILD:production",
     "test": "jest --coverage"
   },
   "keywords": [
     "foreslash",
     "lib",
     "util",
+    "utilities",
+    "typescript",
+    "functional",
     "modules"
   ],
   "author": "moushu",
@@ -22,12 +36,19 @@
     "url": "https://github.com/Moushudyx/foreslash/issues"
   },
   "homepage": "https://github.com/Moushudyx/foreslash#readme",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/Moushudyx/foreslash.git"
+  },
   "devDependencies": {
+    "@rollup/plugin-typescript": "^11.1.6",
     "@types/jest": "^29.5.12",
     "jest": "^29.7.0",
     "jest-environment-jsdom": "^29.7.0",
+    "rollup": "^3.29.4",
     "ts-jest": "^29.2.5",
     "ts-toolbelt": "^9.6.0",
+    "tslib": "^2.7.0",
     "typescript": "^5.5.4",
     "yarn": "^1.22.22"
   }
