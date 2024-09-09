@@ -4,6 +4,11 @@ import { randomChoice } from './randomChoice'
  * @param length 字符串的长度
  * @param chars 字符集，默认为大小写字母和数字
  * @returns 生成的随机字符串
+ * @example
+ * ```js
+ * randomString(16) // "Y3ad54h8Reg7b2H16cfZ"
+ * randomString(8, '136') // "13636611"
+ * ```
  */
 export function randomString(
   length: number,
@@ -20,6 +25,10 @@ export function randomString(
  * 生成指定长度的随机十六进制字符串（小写），`randomString`也能实现此功能但是性能更差
  * @param length 字符串的长度
  * @returns 返回一个长度为`length`的随机十六进制字符串
+ * @example
+ * ```js
+ * randomHexString(16) // "a491bfd3701ace39"
+ * ```
  */
 export function randomHexString(length: number): string {
   // return randomString(length, '0123456789abcdef')
