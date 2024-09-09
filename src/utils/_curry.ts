@@ -5,8 +5,17 @@ import { _curry3 } from './_curry3'
 import { _curryAny } from './_curryAny'
 export { _, isPlaceholder } from './_curry_placeholder'
 /**
- * 柯里化一个函数
+ * 柯里化一个函数，兼容 Ramda，但与 Ramda 不同，此库的 curry 方法不限定参数个数
  * @param fn 待柯里化的函数
+ * @example
+ * ```js
+ * const fn = (a, b, c) => `${a} ${b} ${c}`
+ * const curriedFn = curry(fn)
+ * curriedFn(1)(2)(3) // 同 fn(1, 2, 3)
+ * curriedFn(_, 2, 3)(1) // 同 fn(1, 2, 3)
+ * curriedFn(1, _, _)(2, 3) // 同 fn(1, 2, 3)
+ * curriedFn(_, 2)(_, 3)(1) // 同 fn(1, 2, 3)
+ * ```
  */
 export function _curryMore<Arg1, Res>(
   fn: (arg1: Arg1) => Res // 1 个参数 -> 2 种情况
