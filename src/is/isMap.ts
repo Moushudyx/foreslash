@@ -1,4 +1,4 @@
-import { getGlobalThis } from '../utils/_globalThis'
+import { getGlobalThis } from '../utils/index'
 
 const global = /*#__PURE__*/ getGlobalThis()
 
