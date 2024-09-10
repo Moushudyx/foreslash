@@ -137,5 +137,8 @@ describe('curry', () => {
     expect(testB(a, b, c, _, _, i)(g, h)).toBe(targetRes)
     expect(testB(a, b, c, _, h, i)(g)).toBe(targetRes)
   })
+  it('非法参数测试', () => {
+    expect(expect(() => curry({} as any)).toThrow())
+  })
   // it('this 指向测试', () => {})
 })
