@@ -1,4 +1,6 @@
 export * from './isArray'
+export * from './isArrayBuffer'
+export * from './isArrayLike'
 export * from './isBigInt'
 export * from './isBoolean'
 export * from './isMap'
