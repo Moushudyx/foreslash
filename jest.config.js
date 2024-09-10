@@ -1,5 +1,5 @@
 /** @type {import('ts-jest/dist/types').JestConfigWithTsJest} */
-module.exports = {
+export default {
   preset: 'ts-jest/presets/default-esm', // or other ESM presets
   testEnvironment: 'jsdom',
   transform: {
