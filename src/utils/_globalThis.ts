@@ -3,14 +3,14 @@
  * @returns 全局对象
  */
 export function getGlobalThis(): typeof globalThis {
+  if (typeof self !== 'undefined') {
+    return self
+  }
   if (typeof window !== 'undefined') {
     return window
   }
   if (typeof global !== 'undefined') {
     return global
-  }
-  if (typeof self !== 'undefined') {
-    return self
   }
   return Function('return this')()
 }
