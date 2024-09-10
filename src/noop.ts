@@ -36,9 +36,9 @@ export function pass<T>(value?: T): T | undefined {
  * const pipeWithLog = pipe(...otherFunctions , passWithLog)
  * ```
  */
-export function passWith<T>(fn: (arg: T) => any): (arg: T) => T {
-  return (arg) => {
+export function passWith<T>(fn: (arg: T) => any) {
+  return ((arg: T) => {
     fn(arg)
     return arg
-  }
+  }) as typeof pass
 }
