@@ -7,6 +7,6 @@ describe('isBigInt', () => {
     expect(isBigInt(1)).toBe(false)
     expect(isBigInt(null)).toBe(false);
     expect(isBigInt(undefined)).toBe(false);
-    // expect(isBigInt(Object(1n))).toBe(false)
+    expect(isBigInt(Object(BigInt(1)))).toBe(false)
   })
 })

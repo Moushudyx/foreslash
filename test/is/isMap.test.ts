@@ -8,6 +8,7 @@ describe('isMap', () => {
     expect(isMap(undefined)).toBe(false);
     expect(isMap(123)).toBe(false);
     expect(isMap('foo')).toBe(false);
+    expect(isMap([])).toBe(false)
   })
 })
 
@@ -19,5 +20,6 @@ describe('isWeakMap', () => {
     expect(isWeakMap(undefined)).toBe(false);
     expect(isWeakMap(123)).toBe(false);
     expect(isWeakMap('foo')).toBe(false);
+    expect(isWeakMap([])).toBe(false)
   })
 })
