@@ -31,12 +31,34 @@ pnpm install foreslash # 使用 pnpm 安装
 ```
 
 ```js
-import { _ as __, curry, randomString } from 'foreslash'
+// curry & randomString
+import { _, curry, randomString } from 'foreslash'
 
 randomString(3) // 'bcD' or 'T30' or '7c5' or ...
 
-const randomABCD = curry(randomString)(__, 'ABCD')
-randomOct(3) // 'BDC' or 'ACD' or 'DBB' or ...
+const curriedRanStr = curry(randomString)
+
+const randomABCD = curriedRanStr(_, 'ABCD')
+randomABCD(3) // 'BDC' or 'ACD' or 'DBB' or ...
+
+const random1234 = curriedRanStr(_, '1234')
+random1234(3) // '431' or '213' or '241' or ...
+
+// fastClone
+import { fastClone } from 'foreslash'
+
+const obj = { a: { b: { c: {} } }, map: new Map() }
+obj.a.b.c.d = obj
+obj.map.set(obj, 'val')
+
+const clone = fastClone(obj)
+clone === obj // false
+// clone Deep
+clone.a.b.c === obj.a.b.c // false
+clone.a.b.c.d === clone // true
+// clone Map
+clone.map === obj.map // false
+clone.map.get(clone) === 'val' // true
 ```
 
 ## 兼容性 Compatibility
