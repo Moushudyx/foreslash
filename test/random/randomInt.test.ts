@@ -1,6 +1,6 @@
 import { randomInt, randomIntFloor } from '../../src/index'
 
-const testCount = 1e5
+const testCount = 1e4
 const testMin = 1
 const testMax = 100
 

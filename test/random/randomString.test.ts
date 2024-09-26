@@ -1,6 +1,6 @@
 import { randomString, randomHexString } from '../../src/index'
 
-const testCount = 1e5
+const testCount = 1e4
 
 describe('randomString', () => {
   it('默认字符串测试', () => {

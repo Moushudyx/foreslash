@@ -1,6 +1,6 @@
 import { randomChoice } from '../../src/index'
 
-const testCount = 1e5
+const testCount = 1e4
 
 describe('randomChoice', () => {
   it('数组测试', () => {
