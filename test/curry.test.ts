@@ -138,7 +138,49 @@ describe('curry', () => {
     expect(testB(a, b, c, _, h, i)(g)).toBe(targetRes)
   })
   it('非法参数测试', () => {
-    expect(expect(() => curry({} as any)).toThrow())
+    expect(() => curry({} as any)).toThrow()
   })
-  // it('this 指向测试', () => {})
+  it('this 指向测试', () => {
+    type TestObj = { a: number; fn: (...args: number[]) => any }
+    // 3 个参数
+    const baseFn1 = function (this: TestObj, b: number, c: number, d: number) {
+      return this.a + ':' + b + ':' + c + ':' + d
+    }
+    const obj1: TestObj = { a: 1, fn: baseFn1 }
+    const target1 = obj1.fn(2, 3, 4)
+    console.log(target1)
+    const curriedFn1 = curry(baseFn1)
+    obj1.fn = curriedFn1
+    expect(obj1.fn(2, 3, 4)).toBe(target1)
+    obj1.fn = curriedFn1(_)
+    expect(obj1.fn(2, 3, 4)).toBe(target1)
+    obj1.fn = curriedFn1(_)(_, 3)(_)
+    expect(obj1.fn(2, 4)).toBe(target1)
+    // 1 个参数
+    const baseFn2 = function (this: TestObj, b: number) {
+      return this.a + ':' + b
+    }
+    const obj2: TestObj = { a: 2, fn: baseFn2 }
+    const target2 = obj2.fn(2)
+    console.log(target2)
+    const curriedFn2 = curry(baseFn2)
+    obj2.fn = curriedFn2
+    expect(obj2.fn(2)).toBe(target2)
+    obj2.fn = curriedFn2(_)
+    expect(obj2.fn(2)).toBe(target2)
+    // 多个参数
+    const baseFn3 = function (this: TestObj, b: number, c: number, d: number, e: number, f: number) {
+      return this.a + ':' + b + c + d + e + f
+    }
+    const obj3: TestObj = { a: 2, fn: baseFn3 }
+    const target3 = obj3.fn(2, 3, 4, 5, 6)
+    console.log(target3)
+    const curriedFn3 = curry(baseFn3)
+    obj3.fn = curriedFn3
+    expect(obj3.fn(2, 3, 4, 5, 6)).toBe(target3)
+    obj3.fn = curriedFn3(_)(2, _, 4, _, 6)
+    expect(obj3.fn(3, 5)).toBe(target3)
+    obj3.fn = curriedFn3(_, 3, _, 5, _)(_)
+    expect(obj3.fn(2, 4, 6)).toBe(target3)
+  })
 })

@@ -21,7 +21,7 @@ export const _curryAny: <Args extends Array<any>, Res>(
     const currArgs = _mergeArguments(args, currentArguments)
     if (_countArguments(currArgs) >= fn.length) {
       return fn.apply(this, currArgs as Args)
-    } else return _curryAny(fn, currArgs)
+    } else return _curryAny.apply(this, [fn, currArgs])
   } as F.Curry<(...args: Args) => Res>
 }
 /**
