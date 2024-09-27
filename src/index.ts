@@ -2,6 +2,7 @@ export * from './is/index'
 export * from './random/index'
 export * from './utils/index'
 
+export * from './compose'
 export * from './curry'
 export * from './fastClone'
 export * from './noop'
