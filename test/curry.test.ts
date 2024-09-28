@@ -53,6 +53,15 @@ describe('curry', () => {
     expect(typeof curry(testFn5)).toBe('function')
     expect(curry(testFn5)(1)(2)(3)(4)(5)).toBe(testFn5(1, 2, 3, 4, 5))
   })
+  it('可选参数、剩余参数测试', () => {
+    const testFnA = (a: number, b = 2) => `a: ${a}, b: ${b}`
+    const curriedFnA = curry(testFnA)
+    expect(curriedFnA(_, 2)(1)).toBe(testFnA(1, 2))
+    const testFnB = (a: number, ...arr: number[]) => a + arr.join(', ')
+    const curriedFnB = curry(testFnB)
+    // @ts-ignore
+    expect(curriedFnB(_, 2)(1)).toBe(testFnB(1, 2))
+  })
   it('占位符测试', () => {
     const curriedFn5 = curry(testFn5)
 

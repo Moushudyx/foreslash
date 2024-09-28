@@ -17,22 +17,40 @@ export { _, isPlaceholder } from './_curry_placeholder'
  * curriedFn(_, 2)(_, 3)(1) // 同 fn(1, 2, 3)
  * ```
  */
-export function _curryMore<Arg1, Res>(
-  fn: (arg1: Arg1) => Res // 1 个参数 -> 2 种情况
-): F.Curry<(arg1: Arg1) => Res>
-export function _curryMore<Arg1, Arg2, Res>(
-  fn: (arg1: Arg1, arg2: Arg2) => Res // 2 个参数 -> 4 种情况
-): F.Curry<(arg1: Arg1, arg2: Arg2) => Res>
+// 1 个参数 -> 2 种情况 + 2 种可选参数情况
 export function _curryMore<Arg1, Arg2, Arg3, Res>(
-  fn: (arg1: Arg1, arg2: Arg2, arg3: Arg3) => Res // 3 个参数 -> 8 种情况
+  fn: (arg1: Arg1, arg2?: Arg2, arg3?: Arg3) => Res
+): F.Curry<(arg1: Arg1, arg2?: Arg2, arg3?: Arg3) => Res>
+export function _curryMore<Arg1, Arg2, Res>(
+  fn: (arg1: Arg1, arg2?: Arg2) => Res
+): F.Curry<(arg1: Arg1, arg2?: Arg2) => Res>
+export function _curryMore<Arg1, Res>(
+  fn: (arg1: Arg1) => Res //
+): F.Curry<(arg1: Arg1) => Res>
+// 2 个参数 -> 4 种情况 + 1 种可选参数情况
+export function _curryMore<Arg1, Arg2, Arg3, Res>(
+  fn: (arg1: Arg1, arg2: Arg2, arg3?: Arg3) => Res
+): F.Curry<(arg1: Arg1, arg2: Arg2, arg3?: Arg3) => Res>
+export function _curryMore<Arg1, Arg2, Res>(
+  fn: (arg1: Arg1, arg2: Arg2) => Res
+): F.Curry<(arg1: Arg1, arg2: Arg2) => Res>
+// 3 个参数 -> 8 种情况
+export function _curryMore<Arg1, Arg2, Arg3, Res>(
+  fn: (arg1: Arg1, arg2: Arg2, arg3: Arg3) => Res
 ): F.Curry<(arg1: Arg1, arg2: Arg2, arg3: Arg3) => Res>
-export function _curryMore<Args extends Array<any>, Res>(
-  fn: (...args: Args) => Res // 3 个以上参数
-): F.Curry<(...args: Args) => Res>
+// 3 个以上参数
+export function _curryMore<Args extends Array<any>, Res>(fn: (...args: Args) => Res): F.Curry<(...args: Args) => Res>
 export function _curryMore<Args extends Array<any>, Res>(fn: (...args: Args) => Res): F.Curry<(...args: Args) => Res> {
   if (typeof fn !== 'function') {
     throw new Error('Invalid fn parameter: fn is not a function.')
   }
+  // 检查是否存在可选参数、剩余参数
+  const fnStr = fn.toString()
+  const rightBracket = fnStr.indexOf(')')
+  if (rightBracket < 3 || /=|\.{3}/.test(fnStr.substring(0, rightBracket))) {
+    return _curryAny(fn, [])
+  }
+  // 没有可选参数、剩余参数的情况，适用优化措施
   switch (fn.length) {
     case 0:
       // @ts-ignore
@@ -47,7 +65,6 @@ export function _curryMore<Args extends Array<any>, Res>(fn: (...args: Args) => 
       // @ts-ignore
       return _curry3(fn)
     default:
-      // @ts-ignore
       return _curryAny(fn, [])
   }
 }
