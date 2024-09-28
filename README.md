@@ -1,8 +1,16 @@
 # Foreslash
 
+![GitHub top lang](https://img.shields.io/github/languages/top/Moushudyx/foreslash)
+![GitHub license](https://img.shields.io/badge/license-Mulan_PSL_v2-blue)
+![NPM Version](https://img.shields.io/npm/v/foreslash)
+![NPM Downloads](https://img.shields.io/npm/dm/foreslash)
+![npm package minimized gzipped size](https://img.shields.io/bundlejs/size/foreslash?label=gzipped)
+
 Foreslash 是一个 Javascript 工具库，包含大量实用函数。
 
 Foreslash is a Javascript utilities lib which contains plenty of practical functions.
+
+[文档](https://moushudyx.github.io/foreslash) | [Documentation](https://moushudyx.github.io/foreslash/en)
 
 ## 设计理念 Design Concept
 

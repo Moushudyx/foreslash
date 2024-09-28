@@ -8,14 +8,14 @@
 
 `compose` 将多个函数组合成一个函数，从右到左依次执行
 
-```js
+```js {1}
 const composedFn = compose(fn1, fn2, fn3)
 composedFn(...args) // 等价于 fn1(fn2(fn3(...args)))
 ```
 
 ## 示例
 
-```js
+```js:line-numbers {28}
 // 在这个示例中我们模拟了一个处理复杂数据的场景
 
 import { compose } from 'foreslash'

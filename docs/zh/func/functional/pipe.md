@@ -8,7 +8,7 @@
 
 `pipe` 将多个函数组合成一个函数，从左到右依次执行
 
-```js
+```js {1}
 const pipedFn = pipe(fn1, fn2, fn3)
 pipedFn(...args) // 等价于 fn3(fn2(fn1(...args)))
 ```
@@ -17,7 +17,7 @@ pipedFn(...args) // 等价于 fn3(fn2(fn1(...args)))
 
 这个示例中使用了 [curry](/zh/func/functional/curry) 方法
 
-```js
+```js:line-numbers {13}
 // 在这个示例中我们组装了一个随机首字母大写单词生成器 randomLengthString
 // 输入单词最小长度、最大长度，输出一个长度随机、首字母大写的单词
 
