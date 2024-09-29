@@ -27,26 +27,26 @@ export const en = defineConfig({
 
 function nav(): DefaultTheme.NavItem[] {
   return [
-    // {
-    //   text: 'Guide',
-    //   link: '/zh/guide/what-is-vitepress',
-    //   activeMatch: '/zh/guide/'
-    // },
-    // {
-    //   text: 'Reference',
-    //   link: '/zh/reference/site-config',
-    //   activeMatch: '/zh/reference/'
-    // },
+    {
+      text: '指南',
+      link: 'en/guide/',
+      activeMatch: 'en/guide/',
+    },
+    {
+      text: '总览',
+      link: 'en/func/',
+      activeMatch: 'en/func/',
+    },
     {
       text: 'Foreslash',
       items: [
         {
-          text: 'Change Log',
-          link: 'https://github.com/Moushudyx/foreslash/blob/master/CHANGELOG.md',
+          text: 'Issues',
+          link: 'https://github.com/Moushudyx/foreslash/issues',
         },
         {
-          text: 'Contributing',
-          link: 'https://github.com/Moushudyx/foreslash/blob/master/.github/contributing.md',
+          text: 'Pull Requests',
+          link: 'https://github.com/Moushudyx/foreslash/pulls',
         },
       ],
     },

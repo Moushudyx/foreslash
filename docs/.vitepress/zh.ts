@@ -52,13 +52,13 @@ function nav(): DefaultTheme.NavItem[] {
   return [
     {
       text: '指南',
-      link: '/zh/guide/',
-      activeMatch: '/zh/guide/',
+      link: '/guide/',
+      activeMatch: '/guide/',
     },
     {
       text: '总览',
-      link: '/zh/func/',
-      activeMatch: '/zh/func/',
+      link: '/func/',
+      activeMatch: '/func/',
     },
     {
       text: '参与贡献',

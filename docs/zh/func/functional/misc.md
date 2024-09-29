@@ -11,7 +11,7 @@ next: false
 
 ## pass
 
-`pass` 功能是返回输入的第一个参数, 一般用于 [pipe](/zh/func/functional/pipe) 和 [compose](/zh/func/functional/compose) 中
+`pass` 功能是返回输入的第一个参数, 一般用于 [pipe](./pipe) 和 [compose](./compose) 中
 
 ```js {2}
 pipe(Math.abs)(-1) // 1
@@ -38,7 +38,7 @@ const defaultConfig = { handler: noop }
 
 ## not
 
-`not` 功能是返回输入的第一个参数的相反值, 一般用于 [pipe](/zh/func/functional/pipe) 和 [compose](/zh/func/functional/compose) 中
+`not` 功能是返回输入的第一个参数的相反值, 一般用于 [pipe](./pipe) 和 [compose](./compose) 中
 
 ```js {5}
 not(false) // true

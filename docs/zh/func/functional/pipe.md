@@ -11,7 +11,7 @@ next:
 
 将多个函数组合成一个函数，从**左到右**执行并返回结果
 
-与 [compose](/zh/func/functional/compose) 类似，但是执行顺序相反
+与 [compose](./compose) 类似，但是执行顺序相反
 
 ## 基本用法
 
@@ -24,7 +24,7 @@ pipedFn(...args) // 等价于 fn3(fn2(fn1(...args)))
 
 ## 示例
 
-这个示例中使用了 [curry](/zh/func/functional/curry) 方法
+这个示例中使用了 [curry](./curry) 方法
 
 ```js:line-numbers {13}
 // 在这个示例中我们组装了一个随机首字母大写单词生成器 randomLengthString
