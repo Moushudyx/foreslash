@@ -24,11 +24,11 @@ isArray({ 0: 1, length: 1 }) // false
 - 判断依据为是否有合法的 `length`
 - 常见的类数组有字符串、`arguments` 对象、`document.querySelectorAll` 的返回值
 
-```js
-isArray([1, 2]) // true
-isArray(Array(2)) // true
-isArray('abc') // true
-isArray({ 0: 1, length: 1 }) // true
+```js {3,4}
+isArrayLike([1, 2]) // true
+isArrayLike(Array(2)) // true
+isArrayLike('abc') // true
+isArrayLike({ 0: 1, length: 1 }) // true
 isArrayLike({ 0: 1, length: -1 }) // false
 isArrayLike(document.querySelectorAll('a')) // false
 ```
@@ -55,7 +55,7 @@ isBigInt(1) // false
 
 ## isBoolean 布尔型 {#Boolean}
 
-判断传入的第一个参数是否为布尔型 `Boolean`
+判断传入的第一个参数是否为布尔型(`boolean`)
 
 ```js
 isBoolean(true) // true
@@ -78,7 +78,7 @@ isBuffer([]) // false
 
 ## isFunction 函数 {#Function}
 
-判断传入的第一个参数是否为 函数 `Function`
+判断传入的第一个参数是否为函数 `Function`
 
 - 根据 `typeof` 判断, 因此会将箭头函数、异步函数、生成函数等也视为函数
 
@@ -138,87 +138,135 @@ isNil(false) // false
 isNil('') // false
 ```
 
-## isNumber {#Number}
+## isNumber 数字 {#Number}
 
-判断传入的第一个参数是否为 TODO
+判断传入的第一个参数是否为数字
 
 ```js
-isNumber() // true
-isNumber() // true
-isNumber() // false
-isNumber() // false
+isNumber(123) // true
+isNumber(NaN) // true
+isNumber('123') // false
+isNumber([111]) // false
 ```
 
-## isObject {#Object}
+## isObject 对象 {#Object}
 
-判断传入的第一个参数是否为 TODO
+判断传入的第一个参数是否为对象
+
+- 判据为 `typeof` 结果是否为 `object`, 且不为 `null`
+- 与 lodash 不同, **不会将函数视为对象**
 
 ```js
-isObject() // true
-isObject() // true
-isObject() // false
-isObject() // false
+isObject({}) // true
+isObject([]) // true
+isObject(null) // false
+isObject(function () {}) // false
 ```
 ## isPromise {#Promise}
 
-判断传入的第一个参数是否为 TODO
+判断传入的第一个参数是否为 `Promise`
+
+> [!NOTE] 注意
+> 此功能并非完全可靠
 
 ```js
-isPromise() // true
-isPromise() // true
-isPromise() // false
-isPromise() // false
+isPromise(new Promise((res) => {})) // true
+isPromise(Promise.resolve(1)) // true
+isPromise({ then: () => {} }) // false
+isPromise({ catch: () => {} }) // false
 ```
 
-## isPromiseLike {#PromiseLike}
+## isPromiseLike 类 Promise 对象 {#PromiseLike}
 
-判断传入的第一个参数是否为 TODO
+判断传入的第一个参数是否为类 `Promise` 对象
 
-```js
-isPromiseLike() // true
-isPromiseLike() // true
-isPromiseLike() // false
-isPromiseLike() // false
+- 判据为传入的是一个对象, 且有 `then` 方法
+
+```js {3}
+isPromise(new Promise((res) => {})) // true
+isPromise(Promise.resolve(1)) // true
+isPromise({ then: () => {} }) // true
+isPromise({ catch: () => {} }) // false
 ```
+
 ## isSet {#Set}
 
-判断传入的第一个参数是否为 TODO
+判断传入的第一个参数是否为 `Set`
 
 ```js
-isSet() // true
-isSet() // true
-isSet() // false
-isSet() // false
+isSet(new Set()) // true
+isSet(new WeakSet()) // false
+isSet({}) // false
+isSet([]) // false
 ```
 
-## isString {#String}
+## isWeakSet {#WeakSet}
 
-判断传入的第一个参数是否为 TODO
+判断传入的第一个参数是否为 `WeakSet`
 
 ```js
-isString() // true
-isString() // true
-isString() // false
-isString() // false
+isWeakSet(new WeakSet()) // true
+isWeakSet(new Set()) // false
+isWeakSet({}) // false
+isWeakSet([]) // false
 ```
+
+## isString 字符串 {#String}
+
+判断传入的第一个参数是否为字符串
+
+```js
+isString('123') // true
+isString(`${123}`) // true
+isString(['123']) // false
+isString(String) // false
+```
+
 ## isSymbol {#Symbol}
 
-判断传入的第一个参数是否为 TODO
+判断传入的第一个参数是否为 `Symbol`
 
 ```js
-isSymbol() // true
-isSymbol() // true
-isSymbol() // false
-isSymbol() // false
+isSymbol(Symbol()) // true
+isSymbol(Symbol('123')) // true
+isSymbol(Symbol) // false
+isSymbol('Symbol') // false
 ```
 
-## isWrapper {#Wrapper}
+## isWrapper 包装对象 {#Wrapper}
 
-判断传入的第一个参数是否为 TODO
+判断传入的第一个参数是否为包装对象
+
+- 包装对象指 `Object(123)` 这样包装为对象的初始值
 
 ```js
-isWrapper() // true
-isWrapper() // true
-isWrapper() // false
-isWrapper() // false
+isWrapper(Object(123)) // true
+isWrapper(Object("123")) // true
+isWrapper(123) // false
+isWrapper("123") // false
+```
+
+有这些不常用的变体:
+
+- `isWrapperNumber`
+- `isWrapperBoolean`
+- `isWrapperString`
+- `isWrapperSymbol`
+- `isWrapperBigInt`
+
+```js
+isWrapperNumber(Object(123)) // true
+isWrapperNumber(123) // false
+
+isWrapperBoolean(Object(true)) // true
+isWrapperBoolean(true) // false
+
+isWrapperString(Object("123")) // true
+isWrapperString("123") // false
+
+isWrapperSymbol(Object(Symbol())) // true
+isWrapperSymbol(Symbol()) // false
+
+isWrapperBigInt(Object(1n)) // true
+isWrapperBigInt(1n) // false
 ```
