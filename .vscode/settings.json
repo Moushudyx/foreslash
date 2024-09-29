@@ -3,9 +3,11 @@
     "Foreslash",
     "Frege",
     "Gottlob",
+    "gzipped",
     "Mulan",
     "Parens",
     "schönfinkelisation",
-    "toolbelt"
+    "toolbelt",
+    "vitepress"
   ]
 }
