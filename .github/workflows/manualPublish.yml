@@ -9,26 +9,24 @@ on:
         description: '🤔 没想好参数'
         required: false
 
+permissions:
+  contents: write
+  pull-requests: write
+
 jobs:
   # 构建
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: 📋️ Checkout # 切出分支
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      - name: 📦 Setup Node # 安装 Node
-        uses: actions/setup-node@v4
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: 18
           cache: yarn
+          registry-url: 'https://registry.npmjs.org'
       - name: 📦 Install dependencies # 安装依赖
         run: yarn install
-      - name: 🏗️ Build Package # 编译
-        run: yarn build
-      - name: 🚀 Publish Package # 发布
+      - name: 🚀 Build & Publish Package # 编译并发布
         run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-
