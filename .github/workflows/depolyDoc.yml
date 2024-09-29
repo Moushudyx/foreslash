@@ -1,4 +1,6 @@
-name: Deploy Foreslash VitePress Document
+# 部署 VitePress 文档到 Github Pages
+
+name: 💼 Deploy Foreslash VitePress Document
 
 on:
   push:
@@ -23,22 +25,22 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout # 切出分支
+      - name: 📋️ Checkout # 切出分支
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - name: Setup Node # 安装 Node
+      - name: 📦 Setup Node # 安装 Node
         uses: actions/setup-node@v4
         with:
           node-version: 18
           cache: yarn
-      - name: Setup Pages # 安装 Github Pages
+      - name: 📦 Setup Pages # 安装 Github Pages
         uses: actions/configure-pages@v4
-      - name: Install dependencies # 安装依赖
+      - name: 📦 Install dependencies # 安装依赖
         run: yarn install
-      - name: Build with VitePress # 编译 VP
+      - name: 🏗️ Build with VitePress # 编译 VP
         run: yarn docs:build # touch ./docs/.vitepress/dist/.nojekyll
-      - name: Upload artifact # 上传编译结果
+      - name: 🚀 Upload artifact # 上传编译结果
         uses: actions/upload-pages-artifact@v3
         with:
           path: ./docs/.vitepress/dist
@@ -51,6 +53,6 @@ jobs:
     runs-on: ubuntu-latest
     name: Deploy
     steps:
-      - name: Deploy to GitHub Pages
+      - name: 🚀 Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
