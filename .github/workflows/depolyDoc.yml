@@ -1,0 +1,56 @@
+name: Deploy Foreslash VitePress Document
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - "docs/**"
+
+# 设置 GITHUB_TOKEN 的权限，以允许部署到 GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# 不允许同时进行多个部署，跳过非正在运行、非最新队列的运行队列，且不取消正在运行的工作流
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  # 构建
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout # 切出分支
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Setup Node # 安装 Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: yarn
+      - name: Setup Pages # 安装 Github Pages
+        uses: actions/configure-pages@v4
+      - name: Install dependencies # 安装依赖
+        run: yarn install
+      - name: Build with VitePress # 编译 VP
+        run: yarn docs:build # touch ./docs/.vitepress/dist/.nojekyll
+      - name: Upload artifact # 上传编译结果
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./docs/.vitepress/dist
+  # 部署
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    needs: build
+    runs-on: ubuntu-latest
+    name: Deploy
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
