@@ -1,3 +1,9 @@
+---
+next:
+  text: 'curry 柯里化'
+  link: './curry'
+---
+
 # compose
 
 将多个函数组合成一个函数，从**右到左**执行并返回结果

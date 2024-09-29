@@ -1,3 +1,12 @@
+---
+prev:
+  text: 'curry 柯里化'
+  link: './curry'
+next:
+  text: '辅助函数'
+  link: './misc'
+---
+
 # pipe
 
 将多个函数组合成一个函数，从**左到右**执行并返回结果

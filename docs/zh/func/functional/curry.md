@@ -1,3 +1,12 @@
+---
+prev:
+  text: 'compose 组合'
+  link: './compose'
+next:
+  text: 'pipe 管道'
+  link: './pipe'
+---
+
 # curry
 
 柯里化(Currying)是 JS 函数式编程的重要概念

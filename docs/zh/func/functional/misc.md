@@ -1,4 +1,13 @@
+---
+prev:
+  text: 'pipe 管道'
+  link: './pipe'
+next: false
+---
+
 # 辅助函数
+
+辅助函数是一些非函数式开发工作中很少用到函数
 
 ## pass
 
