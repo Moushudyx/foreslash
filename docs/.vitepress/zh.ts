@@ -53,85 +53,34 @@ function nav(): DefaultTheme.NavItem[] {
     {
       text: '指南',
       link: '/zh/guide/',
-      activeMatch: '/zh/guide/'
+      activeMatch: '/zh/guide/',
     },
     {
-      text: '文档',
+      text: '总览',
       link: '/zh/func/',
-      activeMatch: '/zh/func/'
+      activeMatch: '/zh/func/',
     },
     {
-      text: 'Foreslash',
+      text: '参与贡献',
       items: [
         {
-          text: '更新日志',
-          link: 'https://github.com/Moushudyx/foreslash/blob/master/CHANGELOG.md',
+          text: '工单',
+          link: 'https://github.com/Moushudyx/foreslash/issues',
         },
         {
-          text: '参与贡献',
-          link: 'https://github.com/Moushudyx/foreslash/blob/master/.github/contributing.md',
+          text: '合并',
+          link: 'https://github.com/Moushudyx/foreslash/pulls',
         },
       ],
     },
   ]
 }
 
-// function sidebarGuide(): DefaultTheme.SidebarItem[] {
-//   return [
-//     // {
-//     //   text: '简介',
-//     //   collapsed: false,
-//     //   items: [
-//     //     { text: '什么是 VitePress？', link: 'what-is-vitepress' },
-//     //     { text: '快速开始', link: 'getting-started' },
-//     //     { text: '路由', link: 'routing' },
-//     //     { text: '部署', link: 'deploy' }
-//     //   ]
-//     // },
-//     // {
-//     //   text: '写作',
-//     //   collapsed: false,
-//     //   items: [
-//     //     { text: 'Markdown 扩展', link: 'markdown' },
-//     //     { text: '资源处理', link: 'asset-handling' },
-//     //     { text: 'frontmatter', link: 'frontmatter' },
-//     //     { text: '在 Markdown 使用 Vue', link: 'using-vue' },
-//     //     { text: '国际化', link: 'i18n' }
-//     //   ]
-//     // },
-//     // {
-//     //   text: '自定义',
-//     //   collapsed: false,
-//     //   items: [
-//     //     { text: '自定义主题', link: 'custom-theme' },
-//     //     { text: '扩展默认主题', link: 'extending-default-theme' },
-//     //     { text: '构建时数据加载', link: 'data-loading' },
-//     //     { text: 'SSR 兼容性', link: 'ssr-compat' },
-//     //     { text: '连接 CMS', link: 'cms' }
-//     //   ]
-//     // },
-//     // {
-//     //   text: '实验性功能',
-//     //   collapsed: false,
-//     //   items: [
-//     //     { text: 'MPA 模式', link: 'mpa-mode' },
-//     //     { text: 'sitemap 生成', link: 'sitemap-generation' }
-//     //   ]
-//     // },
-//     // { text: '配置和 API 参考', base: '/zh/reference/', link: 'site-config' }
-//   ]
-// }
-
 function sidebarIs(): DefaultTheme.SidebarItem[] {
   return [
     {
-      text: '常用方法',
-      base: 'func/',
-      collapsed: false,
-      items: [
-        { text: 'deepClone 深拷贝', link: 'object/deepClone' },
-        { text: 'curry 柯里化', link: 'functional/curry' },
-      ],
+      text: '总览',
+      link: 'func/index',
     },
     {
       text: '对象操作',
