@@ -12,6 +12,8 @@ export default defineConfig({
   base: '/foreslash/',
   cleanUrls: true,
 
+  lastUpdated: true,
+
   themeConfig: {
     socialLinks: [{ icon: 'github', link: 'https://github.com/Moushudyx/foreslash' }],
     search: {

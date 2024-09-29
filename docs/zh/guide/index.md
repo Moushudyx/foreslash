@@ -20,13 +20,13 @@ pnpm install foreslash --registry=https://registry.npmmirror.com
 
 Foreslash 打包为 ESM、CJS、UMD 格式, 可以直接在浏览器与 Node.js 中使用
 
-常用的方法有深拷贝 [deepClone](zh/func/object/deepClone)、柯里化 [curry](zh/func/functional/curry) 等
+常用的方法有深拷贝 [deepClone](../func/object/deepClone)、柯里化 [curry](../func/functional/curry) 等
 
 
 > [!NOTE] 注意
 > 出于性能优化的考量，若无特殊说明，此库的任何方法都**不是柯里化**的
 >
-> 除非有特殊需求, 推荐使用性能更高、体积更小的 [fastClone](zh/func/object/deepClone#fastClone) 替代 [deepClone](zh/func/object/deepClone)
+> 除非有特殊需求, 推荐使用性能更高、体积更小的 [fastClone](../func/object/deepClone#fastClone) 替代 [deepClone](../func/object/deepClone)
 
 ```js {6-8,11-15}
 import { _, curry, randomString, fastClone } from 'foreslash'
