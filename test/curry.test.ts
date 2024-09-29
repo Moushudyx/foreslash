@@ -157,7 +157,6 @@ describe('curry', () => {
     }
     const obj1: TestObj = { a: 1, fn: baseFn1 }
     const target1 = obj1.fn(2, 3, 4)
-    console.log(target1)
     const curriedFn1 = curry(baseFn1)
     obj1.fn = curriedFn1
     expect(obj1.fn(2, 3, 4)).toBe(target1)
@@ -171,7 +170,6 @@ describe('curry', () => {
     }
     const obj2: TestObj = { a: 2, fn: baseFn2 }
     const target2 = obj2.fn(2)
-    console.log(target2)
     const curriedFn2 = curry(baseFn2)
     obj2.fn = curriedFn2
     expect(obj2.fn(2)).toBe(target2)
@@ -183,7 +181,6 @@ describe('curry', () => {
     }
     const obj3: TestObj = { a: 2, fn: baseFn3 }
     const target3 = obj3.fn(2, 3, 4, 5, 6)
-    console.log(target3)
     const curriedFn3 = curry(baseFn3)
     obj3.fn = curriedFn3
     expect(obj3.fn(2, 3, 4, 5, 6)).toBe(target3)
