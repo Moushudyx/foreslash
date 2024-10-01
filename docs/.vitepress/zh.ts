@@ -131,6 +131,7 @@ function sidebarIs(): DefaultTheme.SidebarItem[] {
         { text: 'Nil (空值)', link: 'is#Nil' },
         { text: 'Number (数字)', link: 'is#Number' },
         { text: 'Object (对象)', link: 'is#Object' },
+        { text: 'Primitive (原始类型)', link: 'is#Primitive' },
         { text: 'Promise', link: 'is#Promise' },
         { text: 'PromiseLike (类 Promise 对象)', link: 'is#PromiseLike' },
         { text: 'Set', link: 'is#Set' },

@@ -162,6 +162,22 @@ isObject([]) // true
 isObject(null) // false
 isObject(function () {}) // false
 ```
+
+## isPrimitive 原始类型 {#Primitive}
+
+判断传入的第一个参数是否为原始类型
+
+- 包括: 数字、字符串、布尔型、`symbol`、`bigint`、`undefined` 和 `null`
+
+```js
+isPrimitive(123) // true
+isPrimitive(false) // true
+isPrimitive('123') // true
+isPrimitive({}) // false
+isPrimitive([]) // false
+isPrimitive(() => 1) // false
+```
+
 ## isPromise {#Promise}
 
 判断传入的第一个参数是否为 `Promise`
