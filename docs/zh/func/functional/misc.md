@@ -15,7 +15,7 @@ next: false
 
 ```js {2}
 pipe(Math.abs)(-1) // 1
-pipe(Math.abs, pass, pass, pass)(-1) // 1
+pipe(pass, pass, Math.abs, pass, pass)(-1) // 1
 ```
 
 ## passWith
@@ -43,7 +43,7 @@ const defaultConfig = { handler: noop }
 ```js {5}
 not(false) // true
 not(1) // false
-not('') // false
+not('') // true
 // 用于取反
 const isNotFinite = pipe(Number.isFinite, not)
 ```
