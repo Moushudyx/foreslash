@@ -144,6 +144,10 @@ See the Mulan PSL v2 for more details.
         return typeof value === 'object' && value !== null;
     }
 
+    function isPrimitive(value) {
+        return value == null || (typeof value !== 'object' && typeof value !== 'function');
+    }
+
     function isPromise(value) {
         return isObject(value) && isFunction(value.then) && getTag(value) === 'Promise';
     }
@@ -402,6 +406,28 @@ See the Mulan PSL v2 for more details.
         return res;
     }
 
+    function isEmpty(value) {
+        if (value == null)
+            return true;
+        if (typeof value !== 'object') {
+            if (value === '' || value === 0)
+                return true;
+            if (typeof value === 'function')
+                return false;
+            return false;
+        }
+        else {
+            if (isArrayLike(value)) {
+                return !value.length;
+            }
+            if (isBuffer(value) || isArrayBuffer(value))
+                return !value.byteLength;
+            if (isSet(value) || isMap(value))
+                return !value.size;
+            return !Object.getOwnPropertyNames(value).length;
+        }
+    }
+
     const noop = function noop() { };
     function pass(value) {
         return value;
@@ -448,6 +474,7 @@ See the Mulan PSL v2 for more details.
     exports.isBigInt = isBigInt;
     exports.isBoolean = isBoolean;
     exports.isBuffer = isBuffer;
+    exports.isEmpty = isEmpty;
     exports.isFunction = isFunction;
     exports.isInteger = isInteger;
     exports.isMap = isMap;
@@ -456,6 +483,7 @@ See the Mulan PSL v2 for more details.
     exports.isNumber = isNumber;
     exports.isObject = isObject;
     exports.isPlaceholder = isPlaceholder;
+    exports.isPrimitive = isPrimitive;
     exports.isPromise = isPromise;
     exports.isPromiseLike = isPromiseLike;
     exports.isSet = isSet;
