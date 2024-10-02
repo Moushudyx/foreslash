@@ -1,3 +1,10 @@
+---
+prev: false
+next:
+  text: 'isEmpty 深拷贝'
+  link: './isEmpty'
+---
+
 # deepClone
 
 ## deepClone 深拷贝 {#deepClone}

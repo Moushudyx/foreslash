@@ -1,0 +1,25 @@
+import { isEmpty } from '../src/index'
+
+describe('isEmpty', () => {
+  it('基本功能', () => {
+    expect(isEmpty({})).toBe(true)
+    expect(isEmpty([])).toBe(true)
+    expect(isEmpty(Buffer.from([]))).toBe(true)
+    expect(isEmpty(new ArrayBuffer(0))).toBe(true)
+    expect(isEmpty(new Set())).toBe(true)
+    expect(isEmpty(new Map())).toBe(true)
+    expect(isEmpty(0)).toBe(true)
+    expect(isEmpty('')).toBe(true)
+    expect(isEmpty(null)).toBe(true)
+    expect(isEmpty(undefined)).toBe(true)
+    expect(isEmpty(123)).toBe(false)
+    expect(isEmpty('123')).toBe(false)
+    expect(isEmpty(() => 0)).toBe(false)
+    expect(isEmpty([1])).toBe(false)
+    expect(isEmpty({ a: 1 })).toBe(false)
+    expect(isEmpty(Buffer.from([1]))).toBe(false)
+    expect(isEmpty(new ArrayBuffer(1))).toBe(false)
+    expect(isEmpty(new Set([1]))).toBe(false)
+    expect(isEmpty(new Map([[1, 2]]))).toBe(false)
+  })
+})

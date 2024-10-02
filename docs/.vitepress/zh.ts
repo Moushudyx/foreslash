@@ -89,6 +89,7 @@ function sidebarIs(): DefaultTheme.SidebarItem[] {
       items: [
         { text: 'deepClone 深拷贝', link: 'deepClone' },
         { text: 'fastClone 快速深拷贝', link: 'deepClone#fastClone' },
+        { text: 'isEmpty 判断为空', link: 'isEmpty' },
       ],
     },
     {

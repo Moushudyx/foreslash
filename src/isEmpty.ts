@@ -1,9 +1,9 @@
-import { isArrayBuffer } from './isArrayBuffer'
-import { isArrayLike } from './isArrayLike'
-import { isBuffer } from './isBuffer'
-import { isMap } from './isMap'
+import { isArrayBuffer } from './is/isArrayBuffer'
+import { isArrayLike } from './is/isArrayLike'
+import { isBuffer } from './is/isBuffer'
+import { isMap } from './is/isMap'
 // import { isObject } from './isObject'
-import { isSet } from './isSet'
+import { isSet } from './is/isSet'
 /**
  * 功能性函数, 检查输入的参数是否为空
  * 1. 若值为 `undefined` 和 `null` 返回 `true`
