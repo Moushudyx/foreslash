@@ -89,6 +89,7 @@ isFunction(function *a() {}) // true
 isFunction(() => {}) // true
 isFunction({}) // false
 ```
+
 ## isInteger 整数 {#Integer}
 
 判断传入的第一个参数是否为整数
@@ -130,12 +131,37 @@ isMap([]) // false
 判断传入的第一个参数是否为空值
 
 - 这里指 `null` 和 `undefined`
+- 传入 `document.all` 之类将返回 `false`
 
 ```js
 isNil(null) // true
 isNil(undefined) // true
 isNil(false) // false
 isNil('') // false
+// 浏览器环境:
+isNil(document.all) // false
+```
+
+## isNull {#Null}
+
+判断传入的第一个参数是否为 `null`
+
+```js
+isNull(null) // true
+isNull(undefined) // false
+```
+
+## isUndefined 空值 {#Undefined}
+
+判断传入的第一个参数是否为 `undefined`
+
+- 传入 `document.all` 之类将返回 `false`
+
+```js
+isUndefined(undefined) // true
+isUndefined(null) // false
+// 浏览器环境:
+isUndefined(document.all) // false
 ```
 
 ## isNumber 数字 {#Number}

@@ -8,10 +8,11 @@
  * isNil(0) // false
  * isNil("") // false
  * isNil(false) // false
+ * isNil(document.all) // false
  * ```
  */
 export function isNil(value: unknown): value is null | undefined {
-  return value == null
+  return value === null || value === void 0
 }
 
 /**
