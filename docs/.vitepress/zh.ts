@@ -111,6 +111,7 @@ function sidebarIs(): DefaultTheme.SidebarItem[] {
         { text: 'randomChoice 随机抽选', link: 'randomChoice' },
         { text: 'randomInt 随机数字', link: 'randomInt' },
         { text: 'randomString 随机字符串', link: 'randomString' },
+        { text: 'shuffle 打乱数组', link: 'shuffle' },
       ],
     },
     {
