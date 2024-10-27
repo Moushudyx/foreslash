@@ -22,7 +22,7 @@ export function randomString(
   return res
 }
 /**
- * 生成指定长度的随机十六进制字符串（小写），`randomString`也能实现此功能但是性能更差
+ * 生成指定长度的随机十六进制字符串（小写），`randomString` 也能实现此功能但是性能更差
  * @param length 字符串的长度
  * @returns 返回一个长度为`length`的随机十六进制字符串
  * @example
