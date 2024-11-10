@@ -1,4 +1,4 @@
-import { randomString, randomHexString } from '../../src/index'
+import { randomString, randomHexString, randomBase32String } from '../../src/index'
 
 const testCount = 1e4
 
@@ -91,5 +91,25 @@ describe('randomHexString', () => {
     expect(() => randomHexString(-1)).toThrow()
     expect(() => randomHexString(1.23)).toThrow()
     expect(() => randomHexString(NaN)).toThrow()
+  })
+})
+
+describe('randomBase32String', () => {
+  it('基本测试', () => {
+    const reg = /^[abcdefghijklmnopqrstuvwxyz234567]+$/
+    const regC = /^[0123456789abcdefghjkmnpqrstvwxyz]+$/
+    // 类型测试
+    expect(randomBase32String(1).length).toBe(1)
+    expect(typeof randomBase32String(1)).toBe('string')
+    expect(randomBase32String(12).length).toBe(12)
+    expect(typeof randomBase32String(12)).toBe('string')
+    expect(randomBase32String(12)).toMatch(reg)
+    expect(randomBase32String(12, true)).toMatch(regC)
+  })
+  it('非法参数测试', () => {
+    expect(() => randomBase32String(0)).toThrow()
+    expect(() => randomBase32String(-1)).toThrow()
+    expect(() => randomBase32String(1.23)).toThrow()
+    expect(() => randomBase32String(NaN)).toThrow()
   })
 })

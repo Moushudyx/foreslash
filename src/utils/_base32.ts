@@ -15,3 +15,15 @@ export function toBase32(str: string, mapping: Map<string, string>): string {
     .map((c) => mapping.get(c))
     .join('')
 }
+/**
+ * 将**整数**转换为 Base32 格式的（小写）
+ * @param num 需要转换的**整数**
+ * @param length 转换后的长度
+ * @param mapping 字符集的映射表
+ * @returns 返回 Base32 字符串
+ */
+export function numberToBase32(num: number, length: number, mapping: Map<string, string>): string {
+  let res = num.toString(32)
+  while (res.length < length) res = '0' + res
+  return toBase32(res, mapping)
+}

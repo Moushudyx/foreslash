@@ -2,7 +2,9 @@
 prev:
   text: 'randomString 随机字符串'
   link: './randomString'
-next: false
+next:
+  text: 'ulid 标准 ULID'
+  link: './ulid'
 ---
 
 # shuffle

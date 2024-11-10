@@ -1,5 +1,5 @@
 import { randomChoice } from './randomChoice'
-import { base32CharsMap, base32CrockfordMap, toBase32 } from '../utils/_base32'
+import { base32CharsMap, base32CrockfordMap, numberToBase32, toBase32 } from '../utils/_base32'
 /**
  * 生成指定长度的随机字符串
  * @param length 字符串的长度
@@ -90,7 +90,5 @@ export function randomBase32String(length: number, isCrockford = false): string 
  * @returns 返回一个长度为`length`的随机 Base32 字符串
  */
 function _randomBase32String(length: number, mapping: Map<string, string>): string {
-  let res = Math.floor(Math.random() * 32 ** length).toString(32)
-  while (res.length < length) res = '0' + res
-  return toBase32(res, mapping)
+  return numberToBase32(Math.floor(Math.random() * 32 ** length), length, mapping)
 }

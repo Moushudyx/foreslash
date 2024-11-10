@@ -35,3 +35,17 @@ randomString(8, '136') // "13366161"
 ```js
 randomHexString(16) // "3b78ae1b7433a461"
 ```
+
+## randomBase32String
+
+生成指定长度的随机 Base32 字符串（**小写**）
+
+除了指定字符串长度参数外, 还可以指定为 Crockford 型的 Base32 字符串
+
+- 性能比 `randomString` 要高不少
+
+```js
+randomBase32String(16) // "fn2lc6z4q6zsq3x6"
+// 第二个参数设为 true 可以输出 Crockford 型的 Base32 字符串
+randomBase32String(16, true) // "kvy5yh490q7g90te"
+```
