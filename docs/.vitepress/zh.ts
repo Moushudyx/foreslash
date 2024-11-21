@@ -116,6 +116,15 @@ function sidebarIs(): DefaultTheme.SidebarItem[] {
       ],
     },
     {
+      text: '字符串操作',
+      base: 'func/string/',
+      collapsed: false,
+      items: [
+        { text: 'caseConvert 格式转换', link: 'caseConvert' },
+        { text: 'splitWords 词分割', link: 'splitWords' },
+      ],
+    },
+    {
       text: '类型守卫',
       base: 'func/is/',
       link: 'is',

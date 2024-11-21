@@ -333,6 +333,123 @@ See the Mulan PSL v2 for more details.
       return str;
   }
 
+  const getDefaultVarCase = () => ({ code: '', upperCase: false, number: false });
+  const isUpperCase = RegExp.prototype.test.bind(/[A-Z]/);
+  const isLowerCase = RegExp.prototype.test.bind(/[a-z]/);
+  const isNumberCase = RegExp.prototype.test.bind(/[0-9]/);
+  const isSymbolCase = RegExp.prototype.test.bind(/[^a-z0-9A-Z]/);
+  function _splitVar(c) {
+      const res = [];
+      let temp = getDefaultVarCase();
+      let i;
+      for (i = 0; i < c.length; i++) {
+          const char = c[i];
+          if (isSymbolCase(char)) {
+              if (temp.code) {
+                  res.push(temp);
+                  temp = getDefaultVarCase();
+              }
+          }
+          else if (isNumberCase(char)) {
+              if (!temp.code)
+                  temp.number = true;
+              if (temp.number) {
+                  temp.code += char;
+              }
+              else {
+                  res.push(temp);
+                  temp = { code: char, number: true, upperCase: false };
+              }
+          }
+          else if (isLowerCase(char)) {
+              if (!temp.code) {
+                  temp.code += char;
+              }
+              else if (temp.upperCase) {
+                  if (temp.code.length === 1) {
+                      temp.upperCase = false;
+                      temp.code += char;
+                  }
+                  else {
+                      const lastUpperCase = temp.code[temp.code.length - 1];
+                      temp.code = temp.code.slice(0, -1);
+                      res.push(temp);
+                      temp = { code: lastUpperCase + char, upperCase: false, number: false };
+                  }
+              }
+              else if (temp.number) {
+                  res.push(temp);
+                  temp = { code: char, upperCase: false, number: false };
+              }
+              else {
+                  temp.code += char;
+              }
+          }
+          else if (isUpperCase(char)) {
+              if (!temp.code)
+                  temp.upperCase = true;
+              if (temp.upperCase) {
+                  temp.code += char;
+              }
+              else {
+                  res.push(temp);
+                  temp = { code: char, upperCase: true, number: false };
+              }
+          }
+      }
+      res.push(temp);
+      return res;
+  }
+
+  function _caseConvert(tokens, joiner, handler) {
+      return tokens
+          .map(handler)
+          .filter((s) => s.length)
+          .join(joiner);
+  }
+  function caseConvert(str, joiner = '', handler) {
+      const hc = handler ? handler : (token) => token.code;
+      return _caseConvert(_splitVar(str), joiner, hc);
+  }
+  function caseCamel(str, keepLetterCase = false, keepNumber = true) {
+      let tokens = _splitVar(str);
+      if (!keepNumber)
+          tokens = tokens.filter(({ number }) => !number);
+      return _caseConvert(tokens, '', keepLetterCase
+          ? ({ code }, index) => {
+              if (index)
+                  return code.slice(0, 1).toUpperCase() + code.slice(1);
+              else
+                  return code;
+          }
+          : ({ code }, index) => {
+              if (index)
+                  return code.slice(0, 1).toUpperCase() + code.slice(1).toLowerCase();
+              else
+                  return code.toLowerCase();
+          });
+  }
+  function casePascal(str, keepLetterCase = false, keepNumber = true) {
+      let tokens = _splitVar(str);
+      if (!keepNumber)
+          tokens = tokens.filter(({ number }) => !number);
+      return _caseConvert(tokens, '', keepLetterCase
+          ? ({ code }) => code.slice(0, 1).toUpperCase() + code.slice(1)
+          : ({ code }) => code.slice(0, 1).toUpperCase() + code.slice(1).toLowerCase());
+  }
+  function caseKebab(str, keepLetterCase = false, keepNumber = true) {
+      let tokens = _splitVar(str);
+      if (!keepNumber)
+          tokens = tokens.filter(({ number }) => !number);
+      return _caseConvert(tokens, '-', keepLetterCase ? ({ code }) => code : ({ code }) => code.toLowerCase());
+  }
+  function caseSnake(str, keepLetterCase = false, keepNumber = true) {
+      let tokens = _splitVar(str);
+      if (!keepNumber)
+          tokens = tokens.filter(({ number }) => !number);
+      return _caseConvert(tokens, '_', keepLetterCase ? ({ code }) => code : ({ code }) => code.toLowerCase());
+  }
+
   function compose(...composeFunc) {
       if (composeFunc.length === 0) {
           throw new Error('Invalid composeFunc parameter: composeFunc is empty');
@@ -554,8 +671,17 @@ See the Mulan PSL v2 for more details.
       };
   }
 
+  function splitWords(str) {
+      return _splitVar(str).map(({ code }) => code);
+  }
+
   exports._ = _;
   exports._fastClone = _fastClone;
+  exports.caseCamel = caseCamel;
+  exports.caseConvert = caseConvert;
+  exports.caseKebab = caseKebab;
+  exports.casePascal = casePascal;
+  exports.caseSnake = caseSnake;
   exports.compose = compose;
   exports.curry = _curryMore;
   exports.fastClone = fastClone;
@@ -603,6 +729,7 @@ See the Mulan PSL v2 for more details.
   exports.randomIntFloor = randomIntFloor;
   exports.randomString = randomString;
   exports.shuffle = shuffle;
+  exports.splitWords = splitWords;
   exports.ulid = ulid;
 
 }));
