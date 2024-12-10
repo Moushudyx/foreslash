@@ -2,7 +2,9 @@
 prev:
   text: 'shuffle 打乱数组'
   link: './shuffle'
-next: false
+next:
+  text: 'uuid 标准 UUID V4'
+  link: './uuid'
 ---
 
 # ulid

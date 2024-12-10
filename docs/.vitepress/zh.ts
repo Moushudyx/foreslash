@@ -113,6 +113,7 @@ function sidebarIs(): DefaultTheme.SidebarItem[] {
         { text: 'randomString 随机字符串', link: 'randomString' },
         { text: 'shuffle 打乱数组', link: 'shuffle' },
         { text: 'ulid 标准 ULID', link: 'ulid' },
+        { text: 'uuid 标准 UUID V4', link: 'uuid' },
       ],
     },
     {
