@@ -1,5 +1,5 @@
 import { isMap } from './is'
-import { _fastClone } from './utils'
+import { _fastClone } from './utils/_fastClone'
 
 /**
  * 快速深拷贝
