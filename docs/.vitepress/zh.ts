@@ -126,6 +126,17 @@ function sidebarIs(): DefaultTheme.SidebarItem[] {
       ],
     },
     {
+      text: '杂项功能',
+      base: 'func/misc/',
+      collapsed: false,
+      items: [
+        { text: 'acceptableFileName\n检查拓展名', link: 'acceptableFileName' },
+        { text: 'acceptableFileType\n检查 MIME 类型', link: 'acceptableFileType' },
+        { text: 'getAcceptableExtByMIME\n获取拓展名', link: 'getAcceptableExtByMIME' },
+        { text: 'getAcceptableMIMEByExt\n获取 MIME 类型', link: 'getAcceptableMIMEByExt' },
+      ],
+    },
+    {
       text: '类型守卫',
       base: 'func/is/',
       link: 'is',

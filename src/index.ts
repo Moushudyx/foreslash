@@ -1,4 +1,5 @@
 export * from './is/index'
+export * from './misc/index'
 export * from './random/index'
 export * from './utils/index'
 
