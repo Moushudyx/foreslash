@@ -4,7 +4,7 @@
 ![GitHub license](https://img.shields.io/badge/license-Mulan_PSL_v2-blue)
 ![NPM Version](https://img.shields.io/npm/v/foreslash)
 ![NPM Downloads](https://img.shields.io/npm/dm/foreslash)
-![npm package minimized gzipped size](https://img.shields.io/bundlejs/size/foreslash?label=gzipped)
+![NPM package minimized gzipped size](https://img.shields.io/bundlejs/size/foreslash?label=gzipped)
 
 Foreslash 是一个 Javascript 工具库，包含大量实用函数。
 
@@ -90,4 +90,5 @@ clone.map.get(clone) === 'val' // true
 - [ts-jest](https://github.com/kulshekhar/ts-jest)
 - [ts-toolbelt](https://github.com/millsp/ts-toolbelt)
 - [typescript](https://github.com/microsoft/TypeScript)
+- [vitepress](https://github.com/vuejs/vitepress)
 - [yarn](https://github.com/yarnpkg/yarn)
