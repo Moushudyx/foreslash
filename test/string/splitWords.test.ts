@@ -1,4 +1,4 @@
-import { splitWords } from '../src'
+import { splitWords } from '../../src'
 
 describe('splitWords', () => {
   it('基本功能', () => {

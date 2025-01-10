@@ -1,4 +1,4 @@
-import { caseConvert, caseCamel, casePascal, caseKebab, caseSnake } from '../src'
+import { caseConvert, caseCamel, casePascal, caseKebab, caseSnake } from '../../src'
 
 describe('caseConvert', () => {
   it('基本功能', () => {

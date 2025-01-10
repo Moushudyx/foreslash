@@ -1,17 +1,5 @@
-import { _splitVar, type VarCase } from './utils/_splitWords'
-/**
- * 内部方法, 转换已经分词好的字符串
- * @param tokens 已经分词好的 VarCase 对象数组
- * @param joiner 链接字符
- * @param handler 处理字符的方法
- * @returns 转换格式后的字符串
- */
-function _caseConvert(tokens: VarCase[], joiner: string, handler: (token: VarCase, index: number) => string): string {
-  return tokens
-    .map(handler)
-    .filter((s) => s.length) // 滤除空字符串
-    .join(joiner)
-}
+import { _splitVar, type VarCase } from '../utils/_splitWords'
+import { _caseConvert } from './_caseConvert'
 /**
  * 将想要转换格式的字符串处理成需要的格式\
  * 推荐使用预置功能的方法:

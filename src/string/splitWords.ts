@@ -1,4 +1,4 @@
-import { _splitVar } from './utils/_splitWords'
+import { _splitVar } from '../utils/_splitWords'
 /**
  * 分割单词, 适用于分割、转换变量名的场景
  * - 任何非英文字母、数字的字符均会视为分割符
