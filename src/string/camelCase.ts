@@ -8,9 +8,12 @@ import { _caseConvert } from './_caseConvert'
  * @returns 转换为小驼峰格式的字符串
  * @example
  * ```js
- * camelCase("get-Test-UUID-1234") // "getTestUuid1234" 默认情况 不保留大小写 保留数字
- * camelCase("get-Test-UUID-1234", { keepLetterCase: true }) // "getTestUUID1234" 保留大小写 保留数字
- * camelCase("get-Test-UUID-1234", { keepLetterCase: true, keepNumber: false }) // "getTestUUID" 保留大小写 不保留数字
+ * // 默认情况 不保留大小写 保留数字
+ * camelCase("get-Test-UUID-1234") // "getTestUuid1234"
+ * // 保留大小写 保留数字
+ * camelCase("get-Test-UUID-1234", { keepLetterCase: true }) // "getTestUUID1234"
+ * // 保留大小写 不保留数字
+ * camelCase("get-Test-UUID-1234", { keepLetterCase: true, keepNumber: false }) // "getTestUUID"
  * ```
  */
 export function camelCase(str: string, options?: { keepLetterCase?: boolean; keepNumber?: boolean }): string {

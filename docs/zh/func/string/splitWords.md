@@ -1,7 +1,7 @@
 ---
 prev:
-  text: 'caseConvert 格式转换'
-  link: './caseConvert'
+  text: 'snakeCase 蛇行格式'
+  link: './snakeCase'
 next: false
 ---
 

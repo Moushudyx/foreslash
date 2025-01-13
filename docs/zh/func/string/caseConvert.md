@@ -1,8 +1,8 @@
 ---
 prev: false
 next:
-  text: 'splitWords 词分割'
-  link: './splitWords'
+  text: 'camelCase 小驼峰格式'
+  link: './camelCase'
 ---
 
 # caseConvert
@@ -26,6 +26,9 @@ caseConvert("user_nick_name", " ", ({ code }) => code.toUpperCase()) // "USER NI
 
 ## caseCamel
 
+> [!IMPORTANT] 注意
+> 此方法已弃用, 将在后续版本更新中移除, 请使用 `camelCase` 代替
+
 封装好的转换方法, 转换为小驼峰格式
 
 - 第二个参数指示是否保留原来的大小写, 默认不保留
@@ -42,6 +45,9 @@ caseCamel("get-Test-UUID-1234", true, false) // "getTestUUID"
 
 ## casePascal
 
+> [!IMPORTANT] 注意
+> 此方法已弃用, 将在后续版本更新中移除, 请使用 `pascalCase` 代替
+
 封装好的转换方法, 转换为大驼峰格式, 参数同上
 
 ```js
@@ -55,6 +61,9 @@ casePascal("get-Test-UUID-1234", true, false) // "GetTestUUID"
 
 ## caseKebab
 
+> [!IMPORTANT] 注意
+> 此方法已弃用, 将在后续版本更新中移除, 请使用 `kebabCase` 代替
+
 封装好的转换方法, 转换为串行格式(短横线连接), 参数同上
 
 ```js
@@ -66,8 +75,10 @@ caseKebab("getTestUuid1234", true) // "get-Test-UUID-1234"
 caseKebab("getTestUuid1234", true, false) // "get-Test-UUID"
 ```
 
-
 ## caseSnake
+
+> [!IMPORTANT] 注意
+> 此方法已弃用, 将在后续版本更新中移除, 请使用 `snakeCase` 代替
 
 封装好的转换方法, 转换为蛇行格式(下划线连接), 参数同上
 
@@ -79,4 +90,3 @@ caseSnake("getTestUuid1234", true) // "get_Test_UUID_1234"
 // 保留大小写 不保留数字
 caseSnake("getTestUuid1234", true, false) // "get_Test_UUID"
 ```
-

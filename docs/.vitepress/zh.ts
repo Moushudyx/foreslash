@@ -122,6 +122,10 @@ function sidebarIs(): DefaultTheme.SidebarItem[] {
       collapsed: false,
       items: [
         { text: 'caseConvert 格式转换', link: 'caseConvert' },
+        { text: 'camelCase 小驼峰格式', link: 'camelCase' },
+        { text: 'pascalCase 大驼峰格式', link: 'pascalCase' },
+        { text: 'kebabCase 串行格式', link: 'kebabCase' },
+        { text: 'snakeCase 蛇行格式', link: 'snakeCase' },
         { text: 'splitWords 词分割', link: 'splitWords' },
       ],
     },
