@@ -22,15 +22,16 @@ export function caseConvert(str: string, joiner = '', handler?: (token: VarCase,
 }
 /**
  * 将输入的字符串处理成小驼峰格式
+ * @deprecated 推荐使用 `camelCase` 替代
  * @param str 想要转换的字符串
  * @param keepLetterCase 是否保留原来的大小写, 默认不保留
  * @param keepNumber 是否保留数字, 默认保留
  * @returns 转换为小驼峰格式的字符串
  * @example
  * ```js
- * caseCamel("get-Test-UUID-1234") // "getTestUuid1234" 默认情况 不保留大小写 保留数字
- * caseCamel("get-Test-UUID-1234", true) // "getTestUUID1234" 保留大小写 保留数字
- * caseCamel("get-Test-UUID-1234", true, false) // "getTestUUID" 保留大小写 不保留数字
+ * caseCamel("get-Test-UUID-1234") // "getTestUuid1234"
+ * caseCamel("get-Test-UUID-1234", true) // "getTestUUID1234"
+ * caseCamel("get-Test-UUID-1234", true, false) // "getTestUUID"
  * ```
  */
 export function caseCamel(str: string, keepLetterCase = false, keepNumber = true): string {
@@ -52,6 +53,7 @@ export function caseCamel(str: string, keepLetterCase = false, keepNumber = true
 }
 /**
  * 将输入的字符串处理成大驼峰格式
+ * @deprecated 推荐使用 `pascalCase` 替代
  * @param str 想要转换的字符串
  * @param keepLetterCase 是否保留原来的大小写
  * @param keepNumber 是否保留数字, 默认保留
@@ -76,6 +78,7 @@ export function casePascal(str: string, keepLetterCase = false, keepNumber = tru
 }
 /**
  * 将输入的字符串处理成串行格式
+ * @deprecated 推荐使用 `kebabCase` 替代
  * @param str 想要转换的字符串
  * @param keepLetterCase 是否保留原来的大小写
  * @param keepNumber 是否保留数字, 默认保留
@@ -94,6 +97,7 @@ export function caseKebab(str: string, keepLetterCase = false, keepNumber = true
 }
 /**
  * 将输入的字符串处理成蛇行格式
+ * @deprecated 推荐使用 `snakeCase` 替代
  * @param str 想要转换的字符串
  * @param keepLetterCase 是否保留原来的大小写
  * @param keepNumber 是否保留数字, 默认保留

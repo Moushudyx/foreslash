@@ -1,6 +1,18 @@
 # Change Log
 
-## Version 0.1.2 - 2025
+## Version 0.2.0 - 2025-01
+
+Unstable version
+
+- Change 🥟 Functions changed: `caseCamel` `casePascal` `caseKebab` `caseSnake` now deprecated, will be removed in the future, use `camelCase` `pascalCase` `kebabCase` `snakeCase` instead
+- Other fixes and improvements
+
+不稳定版本
+
+- 变更 🥟 函数变更: `caseCamel` `casePascal` `caseKebab` `caseSnake` 弃用，将来会移除，请改用 `camelCase` `pascalCase` `kebabCase` `snakeCase`
+- 其他修复与优化
+
+## Version 0.1.2 - 2025-01-09
 
 Unstable version
 

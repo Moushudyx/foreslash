@@ -57,7 +57,7 @@ describe('caseKebab', () => {
   })
 })
 
-describe('caseCamel', () => {
+describe('caseSnake', () => {
   it('基本功能', () => {
     expect(caseSnake('')).toBe('')
     expect(caseSnake('=-=')).toBe('')
