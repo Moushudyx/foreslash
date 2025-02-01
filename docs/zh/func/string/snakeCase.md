@@ -3,8 +3,8 @@ prev:
   text: 'kebabCase 串行格式'
   link: './kebabCase'
 next:
-  text: 'splitWords 词分割'
-  link: './splitWords'
+  text: 'titleCase 标题格式'
+  link: './titleCase'
 ---
 
 # snakeCase

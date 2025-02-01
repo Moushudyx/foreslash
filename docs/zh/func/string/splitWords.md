@@ -1,7 +1,7 @@
 ---
 prev:
-  text: 'snakeCase 蛇行格式'
-  link: './snakeCase'
+  text: 'titleCase 标题格式'
+  link: './titleCase'
 next: false
 ---
 
