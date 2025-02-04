@@ -104,6 +104,19 @@ function sidebarIs(): DefaultTheme.SidebarItem[] {
       ],
     },
     {
+      text: '异步函数',
+      base: 'func/async/',
+      collapsed: false,
+      items: [
+        { text: 'defer 延后', link: 'defer' },
+        { text: 'parallel 并行', link: 'parallel' },
+        { text: 'retry 重试', link: 'retry' },
+        { text: 'sleep 休眠', link: 'sleep' },
+        { text: 'tryit 错误优先回调', link: 'tryit' },
+        { text: 'withResolvers ES15 的 Ponyfill', link: 'withResolvers' },
+      ],
+    },
+    {
       text: '随机操作',
       base: 'func/random/',
       collapsed: false,

@@ -21,7 +21,7 @@ type TryitResult<Res, Err extends Error> = Res extends Promise<infer R>
  * tryit(errorFn)() // [Error('1'), undefined]
  * // Async Function
  * const normalAsyncFn = () => { return Promise.resolve(1) }
- * const errorAsyncFn = () => { throw Promise.reject('1') }
+ * const errorAsyncFn = () => { return Promise.reject('1') }
  * tryit(normalAsyncFn)() // Promise<[undefined, 1]>
  * tryit(errorAsyncFn)() // Promise<[Error('1'), undefined]>
  * ```

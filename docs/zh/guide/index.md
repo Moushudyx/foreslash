@@ -1,27 +1,35 @@
 # 快速开始
 
+为何使用 foreslash? [请看这里](./intro.md)
+
 ## 安装
 
 ```bash
 npm install foreslash
 yarn add foreslash
 pnpm install foreslash
+bun install foreslash
 ```
 
-如果你的网络环境无法访问 npm，可以使用以下命令安装：
+如果你的网络环境无法访问 npm, 可以指定镜像库安装, 推荐 `https://registry.npmmirror.com`
 
 ```bash
 npm install foreslash --registry=https://registry.npmmirror.com
 yarn add foreslash --registry=https://registry.npmmirror.com
-pnpm install foreslash --registry=https://registry.npmmirror.com
 ```
 
 ## 使用
 
 Foreslash 打包为 ESM、CJS、UMD 格式, 可以直接在浏览器与 Node.js 中使用
 
-常用的方法有深拷贝 [deepClone](../func/object/deepClone)、柯里化 [curry](../func/functional/curry) 等
+> [!NOTE] 提示
+> 如果您使用 webpack、vite 等现代打包/构建工具, 那么无需担心格式问题
+>
+> 由于不同的环境存在客观差异(比如只有 Node.js 环境存在原生的 `Buffer` 对象), 因此不同环境下, 同一个方法的下行为不完全一致
 
+### 示例
+
+常用的方法有深拷贝 [deepClone](../func/object/deepClone)、柯里化 [curry](../func/functional/curry) 等
 
 > [!NOTE] 注意
 > 出于性能优化的考量，若无特殊说明，此库的任何方法都**不是柯里化**的
