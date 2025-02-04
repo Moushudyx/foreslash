@@ -1,7 +1,7 @@
 ---
 prev: false
 next:
-  text: 'isEmpty 深拷贝'
+  text: 'isEmpty 判断为空'
   link: './isEmpty'
 ---
 

@@ -27,9 +27,9 @@ const passWithLog = passWith(console.log)
 pipe(Math.abs, DEBUG ? passWithLog : pass)(-1) // 返回 1, 但在 DEBUG 模式下会调用 console.log
 ```
 
-## nope
+## noop
 
-`nope` 功能是返回 `undefined`(准确来说是 `void`), 一般用作默认(default)方法
+`noop` 功能是返回 `undefined`(准确来说是 `void`), 一般用作默认(default)方法
 
 ```js {1}
 const defaultConfig = { handler: noop }
