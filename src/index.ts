@@ -1,3 +1,4 @@
+export * from './async/index'
 export * from './is/index'
 export * from './misc/index'
 export * from './random/index'
