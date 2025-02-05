@@ -76,6 +76,18 @@ isBuffer(new ArrayBuffer(0)) // false
 isBuffer([]) // false
 ```
 
+## isDate 日期 {#Date}
+
+判断传入的第一个参数是否为 JS 的 `Date` 对象
+
+```js
+isDate(new Date()) // true
+isDate(new Date(123456789)) // true
+isDate(Date.now()) // false
+isDate(Date) // false
+isDate({}) // false
+```
+
 ## isFunction 函数 {#Function}
 
 判断传入的第一个参数是否为函数 `Function`

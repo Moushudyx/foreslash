@@ -166,6 +166,7 @@ function sidebarIs(): DefaultTheme.SidebarItem[] {
         { text: 'BigInt (大数)', link: 'is#BigInt' },
         { text: 'Boolean (布尔型)', link: 'is#Boolean' },
         { text: 'Buffer (NodeJs 的 Buffer)', link: 'is#Buffer' },
+        { text: 'Date (日期)', link: 'is#Date' },
         { text: 'Function (函数)', link: 'is#Function' },
         { text: 'Integer (整数)', link: 'is#Integer' },
         { text: 'Map', link: 'is#Map' },

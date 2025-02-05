@@ -5,12 +5,14 @@
 Unstable version
 
 - Feat 🥥 Functions added: `titleCase` `tryit` `withResolvers` and so forth
+- Feat 🥥 Function change: `isEmpty` now validates Date object
 - Change 🥟 Functions changed: `caseCamel` `casePascal` `caseKebab` `caseSnake` now deprecated, will be removed in the future, use `camelCase` `pascalCase` `kebabCase` `snakeCase` instead
 - Other fixes and improvements
 
 不稳定版本
 
 - 功能 🥥 添加函数: `titleCase` `tryit` `withResolvers` 等
+- 功能 🥥 变更函数: `isEmpty` 现在会校验 Date 对象
 - 变更 🥟 函数变更: `caseCamel` `casePascal` `caseKebab` `caseSnake` 弃用，将来会移除，请改用 `camelCase` `pascalCase` `kebabCase` `snakeCase`
 - 其他修复与优化
 
