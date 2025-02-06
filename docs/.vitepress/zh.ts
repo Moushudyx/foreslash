@@ -187,7 +187,10 @@ function sidebarIs(): DefaultTheme.SidebarItem[] {
 }
 
 function sidebarGuide(): DefaultTheme.SidebarItem[] {
-  return [{ text: '快速开始', link: 'guide/index' }]
+  return [
+    { text: '快速开始', link: 'guide/index' },
+    { text: '简介', link: 'guide/intro' },
+  ]
 }
 
 export const zhSearch: DefaultTheme.LocalSearchOptions['locales'] = {

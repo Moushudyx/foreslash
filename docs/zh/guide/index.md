@@ -1,6 +1,13 @@
+---
+prev: false
+next:
+  text: '简介'
+  link: './intro'
+---
+
 # 快速开始
 
-为何使用 foreslash? [请看这里](./intro.md)
+为何使用 Foreslash? [请看这里](./intro.md)
 
 ## 安装
 
@@ -54,4 +61,10 @@ const clone = fastClone(obj)
 clone.map.get(clone) // 'val'
 ```
 
-##
+## 兼容性
+
+您可以利用 core.js 补全环境 API, 使用 Babel.js 将代码转换为 ES5 等方式使此库可以在几乎所有现代设备上使用
+
+如果出于某些原因不能使用以上手段, 您可以参考以下信息:
+
+
