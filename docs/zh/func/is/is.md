@@ -116,6 +116,21 @@ isInteger(NaN) // false
 isInteger("123") // false
 ```
 
+## isIterable 可迭代值 {#Iterable}
+
+判断传入的第一个参数是否可迭代
+
+- 常见的可迭代值有数组、字符串、`Set`、`Map` 等
+
+```js
+isIterable([]) // true
+isIterable("1") // true
+isIterable(new Map()) // true
+isIterable(new Set()) // true
+isIterable({}) // false
+isIterable(null) // false
+```
+
 ## isMap {#Map}
 
 判断传入的第一个参数是否为 `Map`
@@ -241,6 +256,17 @@ isPromise(new Promise((res) => {})) // true
 isPromise(Promise.resolve(1)) // true
 isPromise({ then: () => {} }) // true
 isPromise({ catch: () => {} }) // false
+```
+
+## isRegExp 正则表达式 {#RegExp}
+
+判断传入的第一个参数是否为正则表达式 `RegExp`
+
+```js
+isRegExp(/123/) // true
+isRegExp(new RegExp("123")) // true
+isRegExp("123") // false
+isRegExp({}) // false
 ```
 
 ## isSet {#Set}
