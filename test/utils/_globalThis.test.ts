@@ -4,16 +4,29 @@ describe('getGlobalThis', () => {
   it('返回 globalThis', () => {
     expect(getGlobalThis()).toBe(globalThis)
   })
-  // it('模拟浏览器', () => {
-  //   const windowMock = {};
-  //   // @ts-ignore
-  //   globalThis.window = windowMock;
-  //   expect(getGlobalThis()).toBe(windowMock)
-  // })
-  // it('模拟 worker', () => {
-  //   const selfMock = {};
-  //   // @ts-ignore
-  //   globalThis.self = selfMock;
-  //   expect(getGlobalThis()).toBe(selfMock)
-  // })
+})
+
+describe('getGlobalThis 当 self 不存在时', () => {
+  beforeEach(() => {
+    jest.spyOn(global, 'self', 'get').mockImplementation(() => undefined as any);
+  });
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
+  it('返回 globalThis', () => {
+    expect(getGlobalThis()).toBe(globalThis);
+  });
+})
+
+describe('getGlobalThis 当 self 和 window 不存在时', () => {
+  beforeEach(() => {
+    jest.spyOn(global, 'self', 'get').mockImplementation(() => undefined as any);
+    jest.spyOn(global, 'window', 'get').mockImplementation(() => undefined as any);
+  });
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
+  it('返回 globalThis', () => {
+    expect(getGlobalThis()).toBe(globalThis);
+  });
 })
