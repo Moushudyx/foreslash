@@ -13,6 +13,7 @@ const File = /*#__PURE__*/ global.File
  * isFile(new ArrayBuffer(8)) // false
  * isFile([1, 2, 3]) // false
  * ```
+ * @version 0.2.0
  */
 export function isFile(value: unknown): value is File {
   return !!File && value instanceof File

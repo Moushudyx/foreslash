@@ -10,6 +10,7 @@ import { isObject } from './isObject'
  * isDataView(new ArrayBuffer(8)) // false
  * isDataView([1, 2, 3]) // false
  * ```
+ * @version 0.2.0
  */
 export function isDataView(value: unknown): value is DataView {
   return isObject(value) && getTag(value) === 'DataView'

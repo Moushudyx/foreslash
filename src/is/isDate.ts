@@ -12,6 +12,7 @@ import { isObject } from './isObject'
  * isDate(Date) // false
  * isDate({}) // false
  * ```
+ * @version 0.2.0
  */
 export function isDate(value: unknown): value is Date {
   return isObject(value) && getTag(value) === 'Date'

@@ -190,6 +190,7 @@ export function isBigInt64Array(value: unknown): value is BigInt64Array {
  * isBigUint64Array([1, 2, 3]) // false
  * isBigUint64Array(new ArrayBuffer(8)) // false
  * ```
+ * @version 0.2.0
  */
 export function isBigUint64Array(value: unknown): value is BigUint64Array {
   return isObject(value) && getTag(value) === 'BigUint64Array'

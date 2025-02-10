@@ -10,6 +10,7 @@ import { isObject } from './isObject'
  * isRegExp(new RegExp("123")) // true
  * isRegExp("123") // false
  * ```
+ * @version 0.2.0
  */
 export function isRegExp(value: unknown): value is RegExp {
   return isObject(value) && getTag(value) === 'RegExp'

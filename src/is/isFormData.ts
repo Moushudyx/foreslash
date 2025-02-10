@@ -14,6 +14,7 @@ const FormData = /*#__PURE__*/ global.FormData
  * isFormData([]) // false
  * isFormData(null) // false
  * ```
+ * @version 0.2.0
  */
 export function isFormData(value: unknown): value is FormData {
   return !!FormData && value instanceof FormData

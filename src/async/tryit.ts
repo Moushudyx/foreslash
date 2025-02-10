@@ -25,6 +25,7 @@ type TryitResult<Res, Err extends Error> = Res extends Promise<infer R>
  * tryit(normalAsyncFn)() // Promise<[undefined, 1]>
  * tryit(errorAsyncFn)() // Promise<[Error('1'), undefined]>
  * ```
+ * @version 0.2.0
  */
 export function tryit<Args extends any[], Res, Err extends Error>(
   fn: (...args: Args) => Res

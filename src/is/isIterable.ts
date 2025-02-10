@@ -13,6 +13,7 @@ import { isNil } from "./isNil";
  * isIterable(null) // false
  * isIterable(1234) // false
  * ```
+ * @version 0.2.0
  */
 export function isIterable(value: unknown): value is Iterable<unknown> {
   return !isNil(value) && typeof (value as any)[Symbol.iterator] === 'function'

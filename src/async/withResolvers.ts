@@ -26,6 +26,7 @@ interface PromiseLikeConstructor {
  *
  * const fileBase64 = await readFileAsBase64(someFile)
  * ```
+ * @version 0.2.0
  */
 export function withResolvers<T>(): {
   promise: Promise<T>
