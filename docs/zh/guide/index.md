@@ -7,7 +7,7 @@ next:
 
 # 快速开始
 
-为何使用 Foreslash? [请看这里](./intro.md)
+为何使用 Foreslash? [请看这里](./intro)
 
 ## 安装
 
