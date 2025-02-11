@@ -4,18 +4,18 @@
 
 Unstable version
 
-- Feat 🥥 Functions added: `titleCase` `tryit` `withResolvers` and so forth
+- Change 🥟 Functions changed: `caseCamel` `casePascal` `caseKebab` `caseSnake` now deprecated, will be removed in the future, use `camelCase` `pascalCase` `kebabCase` `snakeCase` instead
+- Feat 🥥 Functions added: `isTypedArray` `range` `titleCase` `tryit` `withResolvers` and so forth
 - Feat 🥥 Function change: `isEmpty` now validates Date object
 - Feat 🥥 Function change: `fastClone` now clones FormData object
-- Change 🥟 Functions changed: `caseCamel` `casePascal` `caseKebab` `caseSnake` now deprecated, will be removed in the future, use `camelCase` `pascalCase` `kebabCase` `snakeCase` instead
 - Other fixes and improvements
 
 不稳定版本
 
-- 功能 🥥 添加函数: `titleCase` `tryit` `withResolvers` 等
+- 变更 🥟 变更函数: `caseCamel` `casePascal` `caseKebab` `caseSnake` 弃用，将来会移除，请改用 `camelCase` `pascalCase` `kebabCase` `snakeCase`
+- 功能 🥥 添加函数: `isTypedArray` `range` `titleCase` `tryit` `withResolvers` 等
 - 功能 🥥 变更函数: `isEmpty` 现在会校验 Date 对象
 - 功能 🥥 变更函数: `fastClone` 现在会复制 FormData 对象
-- 变更 🥟 函数变更: `caseCamel` `casePascal` `caseKebab` `caseSnake` 弃用，将来会移除，请改用 `camelCase` `pascalCase` `kebabCase` `snakeCase`
 - 其他修复与优化
 
 ## Version 0.1.2 - 2025-01-09
