@@ -1,5 +1,5 @@
-import { isArray, isFunction, isMap, isObject, isPromise, isSet, isWeakMap, isWeakSet } from '../is'
-import { _cloneArray, _cloneMap, _cloneSet } from './_deepCloneBase'
+import { isArray, isFormData, isFunction, isMap, isObject, isPromise, isSet, isWeakMap, isWeakSet } from '../is'
+import { _cloneArray, _cloneFormData, _cloneMap, _cloneSet } from './_deepCloneBase'
 /**
  * 快速深拷贝内部实现
  * - 不考虑各种杂七杂八的实现
@@ -16,6 +16,7 @@ export function _fastClone<T>(obj: T, map: Map<any, any>): T {
   if (isArray(obj)) return _cloneArray(obj, map, _fastClone)
   if (isMap(obj)) return _cloneMap(obj, map, _fastClone)
   if (isSet(obj)) return _cloneSet(obj, map, _fastClone)
+  if (isFormData(obj)) return _cloneFormData(obj, map, _fastClone)
   // 其他情况
   let res: T
   if (obj instanceof Date) {

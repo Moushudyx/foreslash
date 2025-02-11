@@ -15,6 +15,7 @@ import { _caseConvert } from './_caseConvert'
  * // 保留大小写 不保留数字
  * kebabCase("getTestUuid1234", { keepLetterCase: true, keepNumber: false }) // "get-Test-UUID"
  * ```
+ * @version 0.2.0
  */
 export function kebabCase(str: string, options?: { keepLetterCase?: boolean; keepNumber?: boolean }): string {
   const { keepLetterCase = false, keepNumber = true } = options || {}

@@ -10,7 +10,9 @@ describe('fastClone', () => {
       h: new Set([5, 6]),
       i: new Map([[7, 8]]),
       j: new Date(),
+      k: new FormData(),
     }
+    obj.k.append('test', '1')
     const clonedObj = fastClone(obj)
     expect(clonedObj !== obj).toBe(true)
     expect(clonedObj.a === obj.a).toBe(true)
@@ -20,6 +22,7 @@ describe('fastClone', () => {
     expect(clonedObj.h !== obj.h).toBe(true)
     expect(clonedObj.i !== obj.i).toBe(true)
     expect(clonedObj.j !== obj.j).toBe(true)
+    expect(clonedObj.k !== obj.k).toBe(true)
     expect(clonedObj.d[1].f()).toBe(4)
     expect(clonedObj.g.test('AWA')).toBe(true)
     expect(clonedObj.g.test('QWQ')).toBe(false)
@@ -27,6 +30,7 @@ describe('fastClone', () => {
     expect(clonedObj.h.has(4)).toBe(false)
     expect(clonedObj.i.get(7)).toBe(8)
     expect(clonedObj.j.valueOf() === obj.j.valueOf()).toBe(true)
+    expect(clonedObj.k.get('test')).toBe('1')
   })
   it('循环引用', () => {
     type TestObj = { a: number; b: { c: TestObj }; d: [TestObj]; e: Set<TestObj>; f: Map<TestObj, number> }

@@ -68,12 +68,61 @@ isBoolean(null) // false
 
 判断传入的第一个参数是否为 NodeJs 的 `Buffer`
 
-- 只在 NodeJs 上生效, 其他任何环境均返回 `false`
+- 非 Node.js 环境会尝试使用当前环境的 `Buffer` 全局对象
 
 ```js
 isBuffer(Buffer.from('abc')) // true
 isBuffer(new ArrayBuffer(0)) // false
 isBuffer([]) // false
+```
+
+## isDataView {#DataView}
+
+判断传入的第一个参数是否为 `DataView` 对象
+
+```js
+isDataView(new DataView(new ArrayBuffer(8))) // true
+isDataView(new ArrayBuffer(8)) // false
+isDataView([1, 2, 3]) // false
+```
+
+## isDate 日期 {#Date}
+
+判断传入的第一个参数是否为 JS 的 `Date` 对象
+
+```js
+isDate(new Date()) // true
+isDate(new Date(123456789)) // true
+isDate(Date.now()) // false
+isDate(Date) // false
+isDate({}) // false
+```
+
+## isFile 文件 {#File}
+
+判断传入的第一个参数是否为 Web API 的 `File` 对象
+
+- 非 Web 环境会尝试使用当前环境的 `File` 全局对象
+- Node.js 18+ 才引入了此 API, Node.js 20+ 实现了完全支持
+
+```js
+isFile(new File([new ArrayBuffer(8)], 'fileName')) // true
+isFile(new ArrayBuffer(8)) // false
+isFile([1, 2, 3]) // false
+```
+
+## isFormData 表单数据 {#FormData}
+
+判断传入的第一个参数是否为 Web API 的 `FormData` 对象
+
+- 非 Web 环境会尝试使用当前环境的 `FormData` 全局对象
+- Node.js 18+ 才引入了此 API
+
+```js
+isFormData(new FormData()) // true
+isFormData({}) // false
+isFormData([]) // false
+isFormData(null) // false
 ```
 
 ## isFunction 函数 {#Function}
@@ -102,6 +151,21 @@ isInteger(-123) // true
 isInteger(1.23) // false
 isInteger(NaN) // false
 isInteger("123") // false
+```
+
+## isIterable 可迭代值 {#Iterable}
+
+判断传入的第一个参数是否可迭代
+
+- 常见的可迭代值有数组、字符串、`Set`、`Map` 等
+
+```js
+isIterable([]) // true
+isIterable("1") // true
+isIterable(new Map()) // true
+isIterable(new Set()) // true
+isIterable({}) // false
+isIterable(null) // false
 ```
 
 ## isMap {#Map}
@@ -231,6 +295,17 @@ isPromise({ then: () => {} }) // true
 isPromise({ catch: () => {} }) // false
 ```
 
+## isRegExp 正则表达式 {#RegExp}
+
+判断传入的第一个参数是否为正则表达式 `RegExp`
+
+```js
+isRegExp(/123/) // true
+isRegExp(new RegExp("123")) // true
+isRegExp("123") // false
+isRegExp({}) // false
+```
+
 ## isSet {#Set}
 
 判断传入的第一个参数是否为 `Set`
@@ -275,6 +350,32 @@ isSymbol(Symbol) // false
 isSymbol('Symbol') // false
 ```
 
+## isTypedArray {#TypedArray}
+
+判断传入的第一个参数是否为 [TypedArray](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/TypedArray)
+
+- 有以下类型: `Int8Array`, `Int16Array`, `Int32Array`, `Uint8Array`, `Uint8ClampedArray`, `Uint16Array`, `Uint32Array`, `Float32Array`, `Float64Array`, `BigInt64Array`, `BigUint64Array`
+
+```js
+isTypedArray(new Int8Array([1, 2, 3])) // true
+isTypedArray(new Int16Array([1, 2, 3])) // true
+isTypedArray(new Int32Array([1, 2, 3])) // true
+// ... 每一种都能识别
+isTypedArray(new BigUint64Array([1n, 2n, 3n])) // true
+isTypedArray([1, 2, 3]) // false
+isTypedArray(new ArrayBuffer(8)) // false
+```
+
+针对每一种 `TypedArray` 类型, 都有对应的 `isXXXArray` 方法
+
+```js
+isInt8Array(new Int8Array([1, 2, 3])) // true
+isInt16Array(new Int16Array([1, 2, 3])) // true
+isInt32Array(new Int32Array([1, 2, 3])) // true
+// ...
+isBigUint64Array(new BigUint64Array([1n, 2n, 3n])) // true
+```
+
 ## isWrapper 包装对象 {#Wrapper}
 
 判断传入的第一个参数是否为包装对象
@@ -288,13 +389,7 @@ isWrapper(123) // false
 isWrapper("123") // false
 ```
 
-有这些不常用的变体:
-
-- `isWrapperNumber`
-- `isWrapperBoolean`
-- `isWrapperString`
-- `isWrapperSymbol`
-- `isWrapperBigInt`
+针对 5 种常见基本类型, 有这些不常用的变体: `isWrapperNumber`, `isWrapperBoolean`, `isWrapperString`, `isWrapperSymbol`, `isWrapperBigInt`
 
 ```js
 isWrapperNumber(Object(123)) // true

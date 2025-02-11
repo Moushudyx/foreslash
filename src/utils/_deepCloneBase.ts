@@ -45,3 +45,29 @@ export function _cloneSet<T extends Set<any>>(obj: T, map: Map<any, any>, cloner
   obj.forEach((item) => res.add(cloner(item, map, ...args)))
   return res
 }
+/**
+ * 深拷贝 `FormData` 内部实现
+ * @param obj 要拷贝的 `FormData`
+ * @param map 缓存对象，用于处理循环引用
+ * @param cloner 深拷贝方法
+ * @param args 深拷贝方法的其他参数
+ */
+export function _cloneFormData<T extends FormData>(obj: T, map: Map<any, any>, cloner: CloneFn, ...args: any[]): T {
+  const res = new FormData() as T
+  map.set(obj, res)
+  obj.forEach((value, key) => {
+    res.append(key, cloner(value, map, ...args))
+  })
+  return res
+}
+/**
+ * 深拷贝 `ArrayBuffer` 内部实现
+ * @param obj 要拷贝的 `ArrayBuffer`
+ * @param map 缓存对象，用于处理循环引用
+ */
+export function _cloneArrayBuffer<T extends ArrayBuffer>(obj: T, map: Map<any, any>): T {
+  const res = new ArrayBuffer(obj.byteLength) as T
+  map.set(obj, res)
+  new Uint8Array(res).set(new Uint8Array(obj))
+  return res
+}

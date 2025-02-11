@@ -16,6 +16,7 @@ import { _caseConvert } from './_caseConvert'
  * // 保留大小写 不保留数字
  * titleCase("getTestUuid1234", { keepLetterCase: true, keepNumber: false }) // "Get Test UUID"
  * ```
+ * @version 0.2.0
  */
 export function titleCase(str: string, options?: { keepLetterCase?: boolean; keepNumber?: boolean }): string {
   const { keepLetterCase = false, keepNumber = true } = options || {}

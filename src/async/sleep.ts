@@ -10,6 +10,7 @@
  *
  * await sleep(2500) // do something 2.5s later
  * ```
+ * @version 0.2.0
  */
 export function sleep(time: number = 1000) {
   return new Promise((res) => {

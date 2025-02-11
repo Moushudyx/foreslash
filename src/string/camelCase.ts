@@ -15,6 +15,7 @@ import { _caseConvert } from './_caseConvert'
  * // 保留大小写 不保留数字
  * camelCase("get-Test-UUID-1234", { keepLetterCase: true, keepNumber: false }) // "getTestUUID"
  * ```
+ * @version 0.2.0
  */
 export function camelCase(str: string, options?: { keepLetterCase?: boolean; keepNumber?: boolean }): string {
   const { keepLetterCase = false, keepNumber = true } = options || {}
