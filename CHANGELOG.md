@@ -1,6 +1,6 @@
 # Change Log
 
-## Version 0.2.0 - 2025-01
+## Version 0.2.0 - 2025-02-16
 
 Unstable version
 
@@ -8,6 +8,7 @@ Unstable version
 - Feat 🥥 Functions added: `isTypedArray` `range` `titleCase` `tryit` `withResolvers` and so forth
 - Feat 🥥 Function change: `isEmpty` now validates Date object
 - Feat 🥥 Function change: `fastClone` now clones FormData object
+- Wip 🍉 Function wip: `deepClone` still on progress
 - Other fixes and improvements
 
 不稳定版本
@@ -16,6 +17,7 @@ Unstable version
 - 功能 🥥 添加函数: `isTypedArray` `range` `titleCase` `tryit` `withResolvers` 等
 - 功能 🥥 变更函数: `isEmpty` 现在会校验 Date 对象
 - 功能 🥥 变更函数: `fastClone` 现在会复制 FormData 对象
+- 开发中 🍉 函数开发中: `deepClone` 尚在开发中
 - 其他修复与优化
 
 ## Version 0.1.2 - 2025-01-09

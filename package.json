@@ -1,6 +1,6 @@
 {
   "name": "foreslash",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "Foreslash is a Javascript utilities lib which contains plenty of practical functions.",
   "author": "moushu",
   "license": "Mulan PSL v2",
@@ -20,7 +20,8 @@
   "exports": {
     ".": {
       "import": "./lib/index.mjs",
-      "require": "./lib/index.cmn.cjs"
+      "require": "./lib/index.cmn.cjs",
+      "types": "./types/index.d.ts"
     },
     "./umd": "./lib/index.umd.js"
   },
