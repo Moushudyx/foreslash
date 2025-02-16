@@ -8,6 +8,7 @@ export * from './utils/index'
 
 export * from './compose'
 export * from './curry'
+export * from './deepClone'
 export * from './fastClone'
 export * from './isEmpty'
 export * from './noop'
