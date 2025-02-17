@@ -1,5 +1,17 @@
 # Change Log
 
+## Version 0.2.1 - 2025-02-
+
+Unstable version
+
+- Feat 🥥 Function change: `range` now support single parameter invocation, *compatible with Radash*
+- Fix 🥕 Bug fixed: Correct type definition filepath
+
+不稳定版本
+
+- 功能 🥥 变更函数: `range` 现在支持单个参数的调用, *与 Radash 兼容*
+- 修复 🥕 缺陷修复: 修复了类型定义文件路径
+
 ## Version 0.2.0 - 2025-02-16
 
 Unstable version
