@@ -18,6 +18,7 @@ describe('deepClone', () => {
       l: { l1: Object(1), l2: Object('2'), l3: Object(true) },
       m: { m1: typedArray, m2: typedArray },
       n: { n1: ab, n2: ab },
+      o: { o1: new DataView(ab, 4, 4), o2: new DataView(ab, 2, 4) },
       [key1]: Symbol('value'),
       [key2]: Object(Symbol('value')),
     }
@@ -43,6 +44,9 @@ describe('deepClone', () => {
     expect(clonedObj.n !== obj.n).toBe(true)
     expect(clonedObj.n.n1 !== obj.n.n1).toBe(true)
     expect(clonedObj.n.n1 === clonedObj.n.n2).toBe(true)
+    expect(clonedObj.o !== obj.o).toBe(true)
+    expect(clonedObj.o.o1 !== obj.o.o1).toBe(true)
+    expect(clonedObj.o.o2 !== obj.o.o2).toBe(true)
     expect(clonedObj.d[1].f()).toBe(4)
     expect(clonedObj.g.test('AWA')).toBe(true)
     expect(clonedObj.g.test('QWQ')).toBe(false)
@@ -60,6 +64,9 @@ describe('deepClone', () => {
     expect(clonedObj.m.m1[2]).toBe(BigInt(3))
     expect(clonedObj.n.n1.byteLength).toBe(8)
     expect(clonedObj[key2].valueOf() === obj[key2].valueOf()).toBe(true)
+    expect(clonedObj.o.o1.byteLength === obj.o.o1.byteLength).toBe(true)
+    expect(clonedObj.o.o2.byteOffset === obj.o.o2.byteOffset).toBe(true)
+    expect(clonedObj.o.o1.buffer === clonedObj.o.o2.buffer).toBe(true) // 复制的 ArrayBuffer 是同一个
   })
   it('循环引用', () => {
     type TestObj = { a: number; b: { c: TestObj }; d: [TestObj]; e: Set<TestObj>; f: Map<TestObj, number> }

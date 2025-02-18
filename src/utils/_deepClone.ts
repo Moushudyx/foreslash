@@ -69,7 +69,11 @@ export function _deepClone<T>(obj: T, map: Map<any, any>, options: CloneOptions)
     map.set(obj, res)
   } else if (obj instanceof DataView) {
     // DataView
-    res = new DataView(_cloneArrayBuffer(obj.buffer, map), obj.byteOffset, obj.byteLength) as T & DataView
+    res = new DataView(
+      map.has(obj.buffer) ? map.get(obj.buffer) : _cloneArrayBuffer(obj.buffer, map),
+      obj.byteOffset,
+      obj.byteLength
+    ) as T & DataView
     map.set(obj, res)
   } else if (isWrapperObject(obj)) {
     res = Object(obj.valueOf())
