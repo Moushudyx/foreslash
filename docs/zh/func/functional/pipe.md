@@ -1,7 +1,7 @@
 ---
 prev:
-  text: 'curry 柯里化'
-  link: './curry'
+  text: 'memo 记忆化'
+  link: './memo'
 next:
   text: '辅助函数'
   link: './misc'
