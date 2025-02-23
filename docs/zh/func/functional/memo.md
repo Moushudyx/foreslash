@@ -36,6 +36,8 @@ fib(10) // count = 11 (命中缓存)
 - `count` 缓存最大使用次数, 默认为 0 表示不限次数
 
 ```js
+// 由于 JavaScript 的计时器客观存在误差, 因此 sleep 可能会出现误差
+// 这个示例将时间尺度拉长至秒级以规避此类问题
 let count = 0 // 记录函数执行次数
 const fib = memo(function (n) {
   count++
