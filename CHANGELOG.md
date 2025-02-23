@@ -1,10 +1,10 @@
 # Change Log
 
-## Version 0.2.1 - 2025-02-
+## Version 0.2.1 - 2025-02-23
 
 Unstable version
 
-- Feat 🥥 Functions added: `memo` and so forth
+- Feat 🥥 Functions added: `memo`
 - Feat 🥥 Function change: `range` now support single parameter invocation, *compatible with Radash*
 - Fix 🥕 Bug fixed: `deepClone` now processes `DataView.buffer` properly
 - Fix 🥕 Bug fixed: Correct type definition filepath
@@ -12,7 +12,7 @@ Unstable version
 
 不稳定版本
 
-- 功能 🥥 添加函数: `memo` 等
+- 功能 🥥 添加函数: `memo`
 - 功能 🥥 变更函数: `range` 现在支持单个参数的调用, *与 Radash 兼容*
 - 修复 🥕 缺陷修复: `deepClone` 现在能正确处理 `DataView.buffer`
 - 修复 🥕 缺陷修复: 修复了类型定义文件路径
