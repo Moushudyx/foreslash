@@ -99,6 +99,7 @@ function sidebarIs(): DefaultTheme.SidebarItem[] {
       items: [
         { text: 'compose 组合', link: 'compose' },
         { text: 'curry 柯里化', link: 'curry' },
+        { text: 'memo 记忆化', link: 'memo' },
         { text: 'pipe 管道', link: 'pipe' },
         { text: '辅助函数', link: 'misc' },
       ],

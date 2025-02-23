@@ -53,12 +53,9 @@ export function isEmpty(value: unknown): boolean {
     // 7. 若值为 `Set` 或 `Map`: `size` 为 `0` 返回 `true` 否则返回 `false`
     if (isSet(value) || isMap(value)) return !value.size
     // 8. 若值不为 原始类型: 根据 `Object.getOwnPropertyNames` 判断是否存在自身键, 若没有返回 `true` 否则返回 `false`
-    // if (isObject(value)) {
-    //   for (const key in value) {
-    //     if (Object.prototype.hasOwnProperty.call(value, key)) return false
-    //   }
-    //   return true
-    // }
-    return !Object.getOwnPropertyNames(value).length
+    for (const key in value) {
+      if (Object.prototype.hasOwnProperty.call(value, key)) return false
+    }
+    return true
   }
 }

@@ -16,6 +16,17 @@ export type RangeOptions<T> = {
  */
 export function range(start: number, end: number): number[]
 /**
+ * 根据目标值生成一个数组, 步长默认为 1
+ * @param target 目标值
+ * @example
+ * ```js
+ * range(10) // [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+ * range(-10) // [0, -1, -2, -3, -4, -5, -6, -7, -8, -9, -10]
+ * ```
+ * @version 0.2.1
+ */
+export function range(target: number): number[]
+/**
  * 根据起止值生成一个数组, 步长默认为 1
  * @param start 开始值
  * @param end 结束值
@@ -43,7 +54,10 @@ export function range(start: number, end: number, step?: number): number[]
  * @version 0.2.0
  */
 export function range<T = number>(start: number, end: number, options?: RangeOptions<T>): T[]
-export function range<T = number>(start: number, end: number, stepOrOptions?: number | RangeOptions<T>): T[] {
+export function range<T = number>(start: number, end?: number, stepOrOptions?: number | RangeOptions<T>): T[] {
+  if (!isFinite(start)) throw new Error('start must be finite')
+  if (end == null) return range(0, start) as T[]
+  if (!isFinite(end)) throw new Error('end must be finite')
   let step = 1
   let getter: null | undefined | ((index: number, existList: T[]) => T) = null
   if (typeof stepOrOptions === 'number') {
@@ -56,7 +70,6 @@ export function range<T = number>(start: number, end: number, stepOrOptions?: nu
   }
   if (!isFinite(step)) throw new Error('step must be finite')
   if (step === 0) throw new Error('step must not be 0')
-  if (!isFinite(start) || !isFinite(end)) throw new Error('start and end must be finite')
   if ((start > end && step > 0) || (start < end && step < 0)) step = -step
   const res: T[] = []
   for (let i = start; step > 0 ? i <= end : i >= end; i += step) {

@@ -3,8 +3,8 @@ prev:
   text: 'compose 组合'
   link: './compose'
 next:
-  text: 'pipe 管道'
-  link: './pipe'
+  text: 'memo 记忆化'
+  link: './memo'
 ---
 
 # curry
