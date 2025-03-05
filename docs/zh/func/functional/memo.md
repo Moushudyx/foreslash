@@ -1,7 +1,7 @@
 ---
 prev:
-  text: 'curry 柯里化'
-  link: './curry'
+  text: 'throttle 节流'
+  link: './throttle'
 next:
   text: 'pipe 管道'
   link: './pipe'

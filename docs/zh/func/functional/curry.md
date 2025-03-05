@@ -3,8 +3,8 @@ prev:
   text: 'compose 组合'
   link: './compose'
 next:
-  text: 'memo 记忆化'
-  link: './memo'
+  text: 'debounce 防抖'
+  link: './debounce'
 ---
 
 # curry
