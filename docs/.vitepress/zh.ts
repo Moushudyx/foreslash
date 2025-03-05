@@ -84,6 +84,15 @@ function sidebarIs(): DefaultTheme.SidebarItem[] {
     },
     {
       text: '对象操作',
+      base: 'func/array/',
+      collapsed: false,
+      items: [
+        { text: 'range 范围计数', link: 'range' },
+        { text: 'remove 移除', link: 'remove' },
+      ],
+    },
+    {
+      text: '对象操作',
       base: 'func/object/',
       collapsed: false,
       items: [

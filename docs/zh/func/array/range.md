@@ -1,3 +1,9 @@
+---
+prev: false
+next:
+  text: 'remove 移除'
+  link: './remove'
+---
 
 # range
 
