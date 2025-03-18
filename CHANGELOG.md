@@ -1,6 +1,6 @@
 # Change Log
 
-## Version 0.2.2 - 2025-03
+## Version 0.2.2 - 2025-03-18
 
 Unstable version
 

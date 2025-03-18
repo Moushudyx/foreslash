@@ -1,36 +1,77 @@
 # Foreslash
 
-![GitHub top lang](https://img.shields.io/github/languages/top/Moushudyx/foreslash)
-![GitHub license](https://img.shields.io/badge/license-Mulan_PSL_v2-blue)
-![NPM Version](https://img.shields.io/npm/v/foreslash)
-![NPM Downloads](https://img.shields.io/npm/dm/foreslash)
-![NPM package minimized gzipped size](https://img.shields.io/bundlejs/size/foreslash?label=gzipped)
+<div align="center">
+  <p align="center">
+    <img src="https://img.shields.io/github/languages/top/Moushudyx/foreslash" alt="GitHub top lang" />
+    <a href="https://github.com/moushudyx/foreslash/blob/master/LICENSE">
+      <img src="https://img.shields.io/badge/license-Mulan_PSL_v2-blue" alt="GitHub license" />
+    </a>
+    <img src="https://img.shields.io/npm/v/foreslash" alt="NPM Version" />
+    <img src="https://img.shields.io/npm/dm/foreslash" alt="NPM Downloads" />
+    <img src="https://img.shields.io/bundlejs/size/foreslash?label=gzipped" alt="NPM package gzipped size" />
+  </p>
+  <p align="center">
+    Foreslash 是一个 Javascript 工具库，包含大量实用函数。
+  </p>
+  <p align="center">
+    Foreslash is a Javascript utilities lib which contains plenty of practical functions.
+  </p>
+  <p align="center">
+    <a href="https://moushudyx.github.io/foreslash">文档</a>
+    |
+    <a href="https://moushudyx.github.io/foreslash/en">Documentation</a>
+  </p>
+  <p align="center">
+    <span>中文</span>
+    |
+    <a href="./README.EN.md">English</a>
+  </p>
+</div>
 
-Foreslash 是一个 Javascript 工具库，包含大量实用函数。
+## 为何选择 Foreslash
 
-Foreslash is a Javascript utilities lib which contains plenty of practical functions.
+### 完整类型提示
 
-[文档](https://moushudyx.github.io/foreslash) | [Documentation](https://moushudyx.github.io/foreslash/en)
+Foreslash 自带完整的类型提示，无需安装 `@types/XXX`。
 
-## 设计理念 Design Concept
+- Foreslash 使用 [typescript](https://github.com/microsoft/TypeScript) 开发，并使用 [jest](https://github.com/facebook/jest) 和 [ts-jest](https://github.com/kulshekhar/ts-jest) 编写单元测试。
 
-### 函数式 Functional
+### 低副作用
 
-此库提供了诸如`curry`、`pipe`等函数式编程的方法，但若无特殊说明，此库的任何方法都**不是柯里化**的。
+若无特殊说明，Foreslash 的任何方法都**几乎没有副作用**
 
-- 这是出于性能优化和调试方便的考量。
+- Foreslash 的方法不会修改传入的原数据，返回值将是一个新的数据。
 
-此库的柯里化方法`curry`和柯里化占位符`_`与 [ramda](https://github.com/ramda/ramda) 兼容。
+```js
+import { shuffle } from 'foreslash'
 
-### 不变性 Immutability
+const arr = [1, 2, 3, 4, 5, 6, 7, 8]
+const shuffled = shuffle(arr) // 返回新的数组 [3, 2, 6, 5, 8, 1, 7, 4] 同时 arr 并没有受到影响
+```
 
-若无特殊说明，此库的任何方法都是**不可变**的，即不会修改传入的原数据，返回值将是一个新的数据。
+### 函数式编程
 
-### 类型 Type
+Foreslash 提供了诸如 `curry`、`pipe` 等函数式编程的方法。
 
-此库使用 [typescript](https://github.com/microsoft/TypeScript) 编写，并使用 [jest](https://github.com/facebook/jest) 和 [ts-jest](https://github.com/kulshekhar/ts-jest) 来单元测试。
+- 出于性能优化的考量，若无特殊说明，此库的任何方法都**不是柯里化**的。
+- Foreslash 的柯里化方法 `curry` 和柯里化占位符 `_` 与 [ramda](https://github.com/ramda/ramda) 兼容。
 
-## 安装与使用 Install & Usage
+```js
+import { curry, _ } from 'foreslash'
+
+// const regTest = (regex) => (str) => regex.test(str) // 传统方法，传入参数的顺序有强制规定不够灵活
+const regTest = curry((str, regex) => regex.test(str)) // 这里柯里化了一个函数使其能更灵活地复用
+
+const testString = regTest('123')
+testString(/^\d+$/) // true
+testString(/^[a-z]+$/) // false
+
+const isDigits = regTest(_, /^\d+$/) // 使用占位符来跳过填充某些参数，传统方法做不到这点
+isDigits('123') // true
+isDigits('abc') // false
+```
+
+## 安装与使用
 
 ```bash
 npm install foreslash # 使用 npm 安装
@@ -38,52 +79,50 @@ yarn add foreslash # 使用 yarn 安装
 pnpm install foreslash # 使用 pnpm 安装
 ```
 
+Foreslash 支持 ESM、CJS、UMD 三种引入方式，推荐使用 ESM。
+
+更多 API 请参考[文档](https://moushudyx.github.io/foreslash)。
+
 ```js
 // curry & randomString
 import { _, curry, randomString } from 'foreslash'
 
-randomString(3) // 'bcD' or 'T30' or '7c5' or ...
+randomString(3) // 'bcD' 或 'T30' 或 '7c5' 或 ...
 
 const curriedRanStr = curry(randomString)
 
 const randomABCD = curriedRanStr(_, 'ABCD')
-randomABCD(3) // 'BDC' or 'ACD' or 'DBB' or ...
+randomABCD(3) // 'BDC' 或 'ACD' 或 'DBB' 或 ...
 
 const random1234 = curriedRanStr(_, '1234')
-random1234(3) // '431' or '213' or '241' or ...
+random1234(3) // '431' 或 '213' 或 '241' 或 ...
 
 // fastClone
 import { fastClone } from 'foreslash'
 
 const obj = { a: { b: { c: {} } }, map: new Map() }
-obj.a.b.c.d = obj
-obj.map.set(obj, 'val')
+obj.a.b.c.d = obj // 常见的循环引用
+obj.map.set(obj, 'val') // Map 键上的循环引用
 
 const clone = fastClone(obj)
 clone === obj // false
-// clone Deep
+// 处理深层级对象
 clone.a.b.c === obj.a.b.c // false
 clone.a.b.c.d === clone // true
-// clone Map
+// 处理 Map
 clone.map === obj.map // false
 clone.map.get(clone) === 'val' // true
 ```
 
-## 兼容性 Compatibility
+## 兼容性
 
-此库兼容任何能正确运行 ES6 代码的 Javascript 环境，包括 node.js 和浏览器
+Foreslash 兼容任何能正确运行 ES6 代码的 Javascript 环境，包括 Node.js 和浏览器。
 
-- 不支持 Internet Explorer，但是使用 [core-js](https://github.com/zloirock/core-js) 处理并由 [babel](https://babeljs.io/) 转译为 ES5(ES2009) 后可以使用
+- 不支持 Internet Explorer，但是使用 [core-js](https://github.com/zloirock/core-js) 处理并由 [babel](https://babeljs.io/) 转译为 ES5(ES2009) 后可以使用。
 
-### polyfill
+## 开源软件
 
-此库没有 polyfill，如果要在旧版浏览器中使用，请使用 [core-js](https://github.com/zloirock/core-js) 或其他 polyfill 工具
-
-### ES2015
-
-此库使用 ES6(ES2015) 语法，如果要在旧版浏览器中使用，请使用 [babel](https://babeljs.io/) 或其他打包/转译工具
-
-## 开源软件 Credits
+Foreslash 的诞生离不开这些开源项目：
 
 - [jest](https://github.com/facebook/jest)
 - [rollup](https://github.com/rollup/rollup)
@@ -92,3 +131,8 @@ clone.map.get(clone) === 'val' // true
 - [typescript](https://github.com/microsoft/TypeScript)
 - [vitepress](https://github.com/vuejs/vitepress)
 - [yarn](https://github.com/yarnpkg/yarn)
+
+部分方法灵感源于以下开源项目：
+
+- [radash](https://github.com/sodiray/radash)
+- [ramda](https://github.com/ramda/ramda)
