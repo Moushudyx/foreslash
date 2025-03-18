@@ -84,6 +84,16 @@ function sidebarIs(): DefaultTheme.SidebarItem[] {
     },
     {
       text: '对象操作',
+      base: 'func/object/',
+      collapsed: false,
+      items: [
+        { text: 'deepClone 深拷贝', link: 'deepClone' },
+        { text: 'fastClone 快速深拷贝', link: 'deepClone#fastClone' },
+        { text: 'isEmpty 判断为空', link: 'isEmpty' },
+      ],
+    },
+    {
+      text: '数组操作',
       base: 'func/array/',
       collapsed: false,
       items: [
@@ -92,13 +102,22 @@ function sidebarIs(): DefaultTheme.SidebarItem[] {
       ],
     },
     {
-      text: '对象操作',
-      base: 'func/object/',
+      text: '数字操作',
+      base: 'func/number/',
+      collapsed: false,
+      items: [{ text: 'clamp 限制范围', link: 'clamp' }],
+    },
+    {
+      text: '异步函数',
+      base: 'func/async/',
       collapsed: false,
       items: [
-        { text: 'deepClone 深拷贝', link: 'deepClone' },
-        { text: 'fastClone 快速深拷贝', link: 'deepClone#fastClone' },
-        { text: 'isEmpty 判断为空', link: 'isEmpty' },
+        { text: 'defer 延后', link: 'defer' },
+        { text: 'parallel 并行', link: 'parallel' },
+        { text: 'retry 重试', link: 'retry' },
+        { text: 'sleep 休眠', link: 'sleep' },
+        { text: 'tryit 错误优先回调', link: 'tryit' },
+        { text: 'withResolvers ES15 的 Ponyfill', link: 'withResolvers' },
       ],
     },
     {
@@ -116,19 +135,6 @@ function sidebarIs(): DefaultTheme.SidebarItem[] {
       ],
     },
     {
-      text: '异步函数',
-      base: 'func/async/',
-      collapsed: false,
-      items: [
-        { text: 'defer 延后', link: 'defer' },
-        { text: 'parallel 并行', link: 'parallel' },
-        { text: 'retry 重试', link: 'retry' },
-        { text: 'sleep 休眠', link: 'sleep' },
-        { text: 'tryit 错误优先回调', link: 'tryit' },
-        { text: 'withResolvers ES15 的 Ponyfill', link: 'withResolvers' },
-      ],
-    },
-    {
       text: '随机操作',
       base: 'func/random/',
       collapsed: false,
@@ -142,7 +148,7 @@ function sidebarIs(): DefaultTheme.SidebarItem[] {
       ],
     },
     {
-      text: '字符串操作',
+      text: '字符串变换',
       base: 'func/string/',
       collapsed: false,
       items: [

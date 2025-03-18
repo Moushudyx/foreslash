@@ -4,12 +4,12 @@
 
 Unstable version
 
-- Feat 🥥 Functions added: `throttle` `debounce` and so forth
+- Feat 🥥 Functions added: `throttle` `debounce` `remove` and `clamp`
 - Other fixes and improvements
 
 不稳定版本
 
-- 功能 🥥 添加函数: `throttle` `debounce` 等
+- 功能 🥥 添加函数: `throttle` `debounce` `remove` 和 `clamp`
 - 其他修复与优化
 
 ## Version 0.2.1 - 2025-02-23

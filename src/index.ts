@@ -1,6 +1,7 @@
 export * from './array/index'
 export * from './async/index'
 export * from './is/index'
+export * from './number/index'
 export * from './misc/index'
 export * from './random/index'
 export * from './string/index'
