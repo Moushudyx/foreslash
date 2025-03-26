@@ -17,6 +17,7 @@
  * clamp(15, 0, 10, { default: 6 }) // 6
  * clamp(-5, 0, 10, { default: 6 }) // 6
  * ```
+ * @version 0.2.2
  */
 export function clamp(
   num: number,
