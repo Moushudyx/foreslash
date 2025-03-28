@@ -1,15 +1,17 @@
 # Change Log
 
-## Version 0.2.3 - 2025-03-
+## Version 0.2.3 - 2025-03-28
 
 Unstable version
 
 - Feat 🥥 Functions added: `defer`
+- Fix 🥕 Bug fixed: `debounce` doesn't apply the last callee's arguments
 - Other fixes and improvements
 
 不稳定版本
 
 - 功能 🥥 添加函数: `defer`
+- 修复 🥕 缺陷修复: `debounce` 没有传入最后一次获取的参数
 - 其他修复与优化
 
 ## Version 0.2.2 - 2025-03-18
