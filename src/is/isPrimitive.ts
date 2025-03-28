@@ -15,5 +15,5 @@
  */
 export function isPrimitive(value: unknown): value is object {
   // return value == null || !['object', 'function'].includes(typeof value)
-  return value == null || (typeof value !== 'object' && typeof value !== 'function')
+  return value === undefined || value === null || (typeof value !== 'object' && typeof value !== 'function')
 }

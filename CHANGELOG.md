@@ -1,5 +1,17 @@
 # Change Log
 
+## Version 0.2.3 - 2025-03-
+
+Unstable version
+
+- Feat 🥥 Functions added: `defer`
+- Other fixes and improvements
+
+不稳定版本
+
+- 功能 🥥 添加函数: `defer`
+- 其他修复与优化
+
 ## Version 0.2.2 - 2025-03-18
 
 Unstable version
