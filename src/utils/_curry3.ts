@@ -13,7 +13,7 @@ import { _curry2 } from './_curry2'
  */
 export const _curry3: <Arg1, Arg2, Arg3, Res>(
   fn: (arg1: Arg1, arg2: Arg2, arg3: Arg3) => Res // 3 个参数 -> 8 种情况
-) => F.Curry<(arg1: Arg1, arg2: Arg2, arg3: Arg3) => Res> = /*#__PURE__*/ function _curry3<Arg1, Arg2, Arg3, Res>(
+) => F.Curry<(arg1: Arg1, arg2: Arg2, arg3: Arg3) => Res> = function _curry3<Arg1, Arg2, Arg3, Res>(
   fn: (arg1: Arg1, arg2: Arg2, arg3: Arg3) => Res // 3 个参数 -> 8 种情况
 ) {
   return function curried3(

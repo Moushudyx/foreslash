@@ -1,7 +1,7 @@
 import { getGlobalThis } from '../utils/index'
 
 const global = /*#__PURE__*/ getGlobalThis()
-const ArrayBuffer = /*#__PURE__*/ global.ArrayBuffer
+const ArrayBuffer = global.ArrayBuffer
 /**
  * 类型守卫，判断给定的值是否为 `ArrayBuffer`
  * @param value 要判断的值

@@ -13,7 +13,7 @@ import { isPlaceholder } from './_curry_placeholder'
 export const _curryAny: <Args extends Array<any>, Res>(
   fn: (...args: Args) => Res,
   args: any[]
-) => F.Curry<(...args: Args) => Res> = /*#__PURE__*/ function _curryAny<Args extends Array<any>, Res>(
+) => F.Curry<(...args: Args) => Res> = function _curryAny<Args extends Array<any>, Res>(
   fn: (...args: Args) => Res,
   args: any[]
 ) {

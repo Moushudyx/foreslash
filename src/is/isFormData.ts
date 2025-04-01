@@ -1,7 +1,7 @@
 import { getGlobalThis, getTag } from '../utils/index'
 
 const global = /*#__PURE__*/ getGlobalThis()
-const FormData = /*#__PURE__*/ global.FormData
+const FormData = global.FormData
 /**
  * 类型守卫，判断给定的值是否为`FormData`
  * - 非 Web 环境会使用当前环境的 `FormData` 全局对象

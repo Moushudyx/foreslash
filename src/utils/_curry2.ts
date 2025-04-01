@@ -12,7 +12,7 @@ import { _curry1 } from './_curry1'
  */
 export const _curry2: <Arg1, Arg2, Res>(
   fn: (arg1: Arg1, arg2: Arg2) => Res // 2 个参数 -> 4 种情况
-) => F.Curry<(arg1: Arg1, arg2: Arg2) => Res> = /*#__PURE__*/ function _curry2<Arg1, Arg2, Res>(
+) => F.Curry<(arg1: Arg1, arg2: Arg2) => Res> = function _curry2<Arg1, Arg2, Res>(
   fn: (arg1: Arg1, arg2: Arg2) => Res // 2 个参数 -> 4 种情况
 ) {
   return function curried2(this: any, arg1, arg2): ReturnType<F.Curry<(arg1: Arg1, arg2: Arg2) => Res>> {

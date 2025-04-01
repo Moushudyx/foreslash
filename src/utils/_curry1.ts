@@ -11,7 +11,7 @@ import { isPlaceholder } from './_curry_placeholder'
  */
 export const _curry1: <Arg1, Res>(
   fn: (arg1: Arg1) => Res // 1 个参数 -> 2 种情况
-) => F.Curry<(arg1: Arg1) => Res> = /*#__PURE__*/ function _curry1<Arg1, Res>(
+) => F.Curry<(arg1: Arg1) => Res> = function _curry1<Arg1, Res>(
   fn: (arg1: Arg1) => Res // 1 个参数 -> 2 种情况
 ) {
   return function curried1(this: any, arg1) {

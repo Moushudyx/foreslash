@@ -1,7 +1,7 @@
 import { getGlobalThis, getTag } from '../utils/index'
 
 const global = /*#__PURE__*/ getGlobalThis()
-const File = /*#__PURE__*/ global.File
+const File = global.File
 /**
  * 类型守卫，判断给定的值是否为`File`
  * - 非 Web 环境会使用当前环境的 `File` 全局对象

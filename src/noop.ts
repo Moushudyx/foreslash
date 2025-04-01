@@ -7,4 +7,4 @@
  * // defaultConfig.handler = xxx
  * ```
  */
-export const noop: (...args: any[]) => void = /*#__PURE__*/ function noop() {}
+export const noop: (...args: any[]) => void = function noop() {}
