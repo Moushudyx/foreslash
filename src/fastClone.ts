@@ -3,7 +3,7 @@ import { _fastClone } from './utils/_fastClone'
 
 /**
  * 快速深拷贝
- * - 相对 `deepClone` 而言运行更快, 功能较为齐全
+ * - 功能较为齐全, 相对 `deepClone` 而言运行更快
  * - 支持处理的情况：循环引用、数组、`Date`、正则、`Set`、`Map`、`FormData`
  * - 对象上以 `Symbol` 为键的属性无法拷贝
  * - 无法拷贝的内容将视为原生数据类型, 直接复制(如函数、`Promise`、`WeakMap`、`WeakSet`)

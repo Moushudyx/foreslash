@@ -46,7 +46,7 @@ deepClone({ id: 'app', el: document.querySelector('#app') }, { customCloner })
 
 ## fastClone 快速深拷贝 {#fastClone}
 
-`fastClone` 是 `deepClone` 的简化版, 拥有更高的性能, 但是功能会少一些
+`fastClone` 是 `deepClone` 的简化版, 拥有更好的性能, 但是功能会少一些
 
 - 快速是相对 `deepClone` 而言的，功能比许多互联网上常见的深拷贝代码片段更多
 - 支持处理的情况：**循环引用**、数组、`Date`、正则、`Set`、`Map`、`FormData`
