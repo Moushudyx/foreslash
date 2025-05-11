@@ -1,5 +1,17 @@
 # Change Log
 
+## Version 0.2.4 - 2025-0
+
+Unstable version
+
+- Feat 🥥 Functions added: `retry`
+- Other fixes and improvements
+
+不稳定版本
+
+- 功能 🥥 添加函数: `retry`
+- 其他修复与优化
+
 ## Version 0.2.3 - 2025-03-28
 
 Unstable version
