@@ -13,5 +13,5 @@ export function debounce<T extends any[]>(fn: (...args: T) => any, delay: number
   if (!isNumber(delay) || !isFinite(delay) || delay <= 0) {
     throw new Error('Invalid delay parameter')
   }
-  return _throttle(fn, delay, Object.assign({ trailing: true, leading: false }, options))
+  return _throttle(fn, delay, Object.assign({ trailing: true, leading: false, trailingRunLast: true }, options))
 }
