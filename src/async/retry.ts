@@ -45,7 +45,7 @@ type RetryOption = {
  * // 间隔模式, 每次失败后会在下 1 秒再重新调用
  * const res = await retry(() => fetch(url, params), { gap: 1000 })
  * ```
- * @version 0.2.3
+ * @version 0.2.4
  */
 export async function retry<T>(asyncFunction: RetryFunction<T>, option?: RetryOption): Promise<T> {
   let retryCounts = 0

@@ -4,12 +4,12 @@
 
 Unstable version
 
-- Feat 🥥 Functions added: `retry`
+- Feat 🥥 Functions added: `retry` `parallel`
 - Other fixes and improvements
 
 不稳定版本
 
-- 功能 🥥 添加函数: `retry`
+- 功能 🥥 添加函数: `retry` `parallel`
 - 其他修复与优化
 
 ## Version 0.2.3 - 2025-03-28
