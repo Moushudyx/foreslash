@@ -6,7 +6,7 @@
  * @param options 配置项, 可以配置默认值等
  * - `default` 默认值, 如果初始值不在范围内, 则返回默认值
  * - `defaultMin` 初始值小于最小值时返回该值, 覆盖 `default` 参数
- * - `defaultMax` 初始值大于最大值时返回该值
+ * - `defaultMax` 初始值大于最大值时返回该值, 覆盖 `default` 参数
  * @returns 返回一个在指定范围内的数字
  * @example
  * ```js

@@ -1,6 +1,6 @@
 # Change Log
 
-## Version 0.3.0 - 2025-04-
+## Version 0.3.0 - 2025-05-
 
 Unstable version, planning to refactor into a monorepo
 
@@ -10,6 +10,18 @@ Unstable version, planning to refactor into a monorepo
 不稳定版本, 计划做成 monorepo
 
 - 变更 🥟 依赖变更: 升级开发依赖 `rollup` `@rollup/plugin-typescript` `rollup-plugin-dts` `vitepress`
+- 其他修复与优化
+
+## Version 0.2.4 - 2025-05
+
+Unstable version
+
+- Feat 🥥 Functions added: `retry` `parallel`
+- Other fixes and improvements
+
+不稳定版本
+
+- 功能 🥥 添加函数: `retry` `parallel`
 - 其他修复与优化
 
 ## Version 0.2.3 - 2025-03-28

@@ -1,4 +1,6 @@
 export * from './defer'
+export * from './parallel'
+export * from './retry'
 export * from './sleep'
 export * from './tryit'
 export * from './withResolvers'
