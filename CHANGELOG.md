@@ -1,18 +1,20 @@
 # Change Log
 
-## Version 0.3.0 - 2025-05-
+## Version 0.3.0 - 2025-06-
 
 Unstable version, planning to refactor into a monorepo
 
+- Feat 🥥 Functions added: `capitalize`
 - Change 🥟 Dependencies change: upgrade devDependencies `rollup` `@rollup/plugin-typescript` `rollup-plugin-dts` `vitepress`
 - Other fixes and improvements
 
 不稳定版本, 计划做成 monorepo
 
+- 功能 🥥 添加函数: `capitalize`
 - 变更 🥟 依赖变更: 升级开发依赖 `rollup` `@rollup/plugin-typescript` `rollup-plugin-dts` `vitepress`
 - 其他修复与优化
 
-## Version 0.2.4 - 2025-05
+## Version 0.2.4 - 2025-05-29
 
 Unstable version
 
