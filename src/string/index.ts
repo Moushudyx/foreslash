@@ -4,5 +4,6 @@ export * from './pascalCase'
 export * from './snakeCase'
 export * from './titleCase'
 
+export * from './capitalize'
 export * from './caseConvert'
 export * from './splitWords'
