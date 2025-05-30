@@ -16,14 +16,14 @@ describe('defer', () => {
   })
   it('队列处理', async () => {
     // 模拟异步任务
-    // 5 个任务分别耗时 800 500 400 300 100
+    // 5 个任务分别耗时 800 500 400 300 200
     // 理论上两个并行流程需要:
     // 800 -> 300 (1.1 秒)
-    // 500 -> 400 -> 100 (1 秒)
-    // 总计 1.1 秒
+    // 500 -> 400 -> 200 (1.2 秒)
+    // 总计 1.2 秒
     const fn = jest.fn(async (n: number) => {
       runOrder.push(n)
-      await sleep([0, 800, 500, 400, 300, 100][n])
+      await sleep([0, 800, 500, 400, 300, 200][n])
       return n * 2
     })
     let runOrder: number[] = []
@@ -33,7 +33,7 @@ describe('defer', () => {
     // 800
     // 500
     expect(fn).toHaveBeenCalledTimes(2)
-    await sleep(250)
+    await sleep(225)
     // 800
     // 500 -> 400
     expect(fn).toHaveBeenCalledTimes(3)
