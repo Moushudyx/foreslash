@@ -1,4 +1,5 @@
 import { getGlobalThis, getTag } from '../utils/index'
+import { isObject } from './isObject'
 
 const global = /*#__PURE__*/ getGlobalThis()
 const File = global.File
@@ -16,5 +17,5 @@ const File = global.File
  * @version 0.2.0
  */
 export function isFile(value: unknown): value is File {
-  return !!File && value instanceof File
+  return !!File && isObject(value) && getTag(value) === 'File'
 }

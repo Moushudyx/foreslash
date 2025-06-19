@@ -5,11 +5,13 @@
 Unstable version
 
 - Feat 🥥 Functions added: `capitalize`
+- Feat 🥥 Function change: `deepClone` now support `Blob` and `File`
 - Other fixes and improvements
 
 不稳定版本
 
 - 功能 🥥 添加函数: `capitalize`
+- 功能 🥥 变更函数: `deepClone` 现在支持 `Blob` 和 `File`
 - 其他修复与优化
 
 ## Version 0.2.4 - 2025-05-29

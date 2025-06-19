@@ -1,4 +1,8 @@
 import { deepClone, fastClone, isBigInt64Array } from '../src'
+import {Blob as BlobPolyfill, File as FilePloyFill} from 'node:buffer';
+
+global.Blob = BlobPolyfill as any; // Jest 的 Blob 不正常
+global.File = FilePloyFill as any; // Jest 的 File 不正常
 
 describe('deepClone', () => {
   it('基本功能', () => {
@@ -6,6 +10,8 @@ describe('deepClone', () => {
     const key2 = Symbol('key2')
     const typedArray = new BigInt64Array([BigInt(1), BigInt(2), BigInt(3)])
     const ab = new ArrayBuffer(8)
+    const blob = new Blob(['123'], { type: 'text/plain' })
+    const file = new File(['456'], 'test.txt', { type: 'text/plain' })
     const obj = {
       a: 1,
       b: { c: 2 },
@@ -19,11 +25,13 @@ describe('deepClone', () => {
       m: { m1: typedArray, m2: typedArray },
       n: { n1: ab, n2: ab },
       o: { o1: new DataView(ab, 4, 4), o2: new DataView(ab, 2, 4) },
+      p: { p1: blob, p2: blob, p3: file, p4: file },
       [key1]: Symbol('value'),
       [key2]: Object(Symbol('value')),
     }
     obj.k.append('test', '1')
     const clonedObj = deepClone(obj)
+    // 保留结构
     expect(clonedObj !== obj).toBe(true)
     expect(clonedObj.a === obj.a).toBe(true)
     expect(clonedObj[key1] === obj[key1]).toBe(true)
@@ -47,6 +55,13 @@ describe('deepClone', () => {
     expect(clonedObj.o !== obj.o).toBe(true)
     expect(clonedObj.o.o1 !== obj.o.o1).toBe(true)
     expect(clonedObj.o.o2 !== obj.o.o2).toBe(true)
+    expect(clonedObj.p.p1 !== obj.p.p1).toBe(true)
+    expect(clonedObj.p.p2 !== obj.p.p2).toBe(true)
+    expect(clonedObj.p.p1 === clonedObj.p.p2).toBe(true)
+    expect(clonedObj.p.p3 !== obj.p.p3).toBe(true)
+    expect(clonedObj.p.p4 !== obj.p.p4).toBe(true)
+    expect(clonedObj.p.p3 === clonedObj.p.p4).toBe(true)
+    // 内容测试
     expect(clonedObj.d[1].f()).toBe(4)
     expect(clonedObj.g.test('AWA')).toBe(true)
     expect(clonedObj.g.test('QWQ')).toBe(false)
@@ -67,6 +82,13 @@ describe('deepClone', () => {
     expect(clonedObj.o.o1.byteLength === obj.o.o1.byteLength).toBe(true)
     expect(clonedObj.o.o2.byteOffset === obj.o.o2.byteOffset).toBe(true)
     expect(clonedObj.o.o1.buffer === clonedObj.o.o2.buffer).toBe(true) // 复制的 ArrayBuffer 是同一个
+    expect(clonedObj.p.p1.type === clonedObj.p.p2.type).toBe(true)
+    expect(clonedObj.p.p3.type === obj.p.p3.type).toBe(true)
+    expect(clonedObj.p.p3.name === obj.p.p3.name).toBe(true)
+    expect(clonedObj.p.p3.type === clonedObj.p.p4.type).toBe(true)
+    expect(clonedObj.p.p3.name === clonedObj.p.p4.name).toBe(true)
+    expect(clonedObj.p.p1.text()).resolves.toBe('123')
+    expect(clonedObj.p.p3.text()).resolves.toBe('456')
   })
   it('循环引用', () => {
     type TestObj = { a: number; b: { c: TestObj }; d: [TestObj]; e: Set<TestObj>; f: Map<TestObj, number> }

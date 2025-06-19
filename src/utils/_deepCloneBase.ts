@@ -71,3 +71,23 @@ export function _cloneArrayBuffer<T extends ArrayBuffer>(obj: T, map: Map<any, a
   new Uint8Array(res).set(new Uint8Array(obj))
   return res
 }
+/**
+ * 深拷贝 `Blob` 内部实现
+ * @param obj 要拷贝的 `Blob`
+ * @param map 缓存对象，用于处理循环引用
+ */
+export function _cloneBlob<T extends Blob>(obj: T, map: Map<any, any>): T {
+  const res = obj.slice(0, obj.size, obj.type) as T;
+  map.set(obj, res)
+  return res
+}
+/**
+ * 深拷贝 `File` 内部实现
+ * @param obj 要拷贝的 `File`
+ * @param map 缓存对象，用于处理循环引用
+ */
+export function _cloneFile<T extends File>(obj: T, map: Map<any, any>): T {
+  const res = new File([obj], obj.name, { type: obj.type, lastModified: obj.lastModified }) as T
+  map.set(obj, res)
+  return res
+}
