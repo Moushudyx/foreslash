@@ -6,7 +6,7 @@
  * ```js
  * capitalize('hello world') // 'Hello world'
  * ```
- * @version 0.2.4
+ * @version 0.3.0
  */
 export function capitalize(str: string): string {
   if (!str) return str
