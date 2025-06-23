@@ -50,16 +50,66 @@ See the Mulan PSL v2 for more details.
       }
       return res;
   }
-  function sleep(time = 1000) {
-      return new Promise((res) => {
-          setTimeout(res, time);
+
+  function remove(arr, ...item) {
+      const removeSet = new Set();
+      const judgerList = [];
+      for (let i = 0; i < item.length; i++) {
+          const cond = item[i];
+          if (typeof cond === 'function')
+              judgerList.push(cond);
+          else
+              removeSet.add(cond);
+      }
+      const res = [];
+      for (let i = 0; i < arr.length; i++) {
+          const el = arr[i];
+          if (removeSet.has(el) || judgerList.some((judger) => judger(el)))
+              continue;
+          res.push(el);
+      }
+      return res;
+  }
+
+  /******************************************************************************
+  Copyright (c) Microsoft Corporation.
+
+  Permission to use, copy, modify, and/or distribute this software for any
+  purpose with or without fee is hereby granted.
+
+  THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+  REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
+  AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
+  INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
+  LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
+  OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+  PERFORMANCE OF THIS SOFTWARE.
+  ***************************************************************************** */
+  /* global Reflect, Promise, SuppressedError, Symbol, Iterator */
+
+
+  function __awaiter(thisArg, _arguments, P, generator) {
+      function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+      return new (P || (P = Promise))(function (resolve, reject) {
+          function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+          function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+          function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+          step((generator = generator.apply(thisArg, _arguments || [])).next());
       });
   }
+
+  typeof SuppressedError === "function" ? SuppressedError : function (error, suppressed, message) {
+      var e = new Error(message);
+      return e.name = "SuppressedError", e.error = error, e.suppressed = suppressed, e;
+  };
+
   const isArray = Array.isArray;
+
   const object2String = Object.prototype.toString;
   function getTag(value) {
       return object2String.call(value).slice(8, -1);
   }
+
   function getGlobalThis() {
       if (typeof self !== 'undefined')
           return self;
@@ -69,48 +119,67 @@ See the Mulan PSL v2 for more details.
           return global;
       return Function('return this')();
   }
-  const global$7 = getGlobalThis();
-  const ArrayBuffer$1 = global$7.ArrayBuffer;
+
+  const global$8 = getGlobalThis();
+  const ArrayBuffer$1 = global$8.ArrayBuffer;
   function isArrayBuffer(val) {
       return !!ArrayBuffer$1 && val instanceof ArrayBuffer$1;
   }
+
   function isInteger(value) {
       return typeof value === 'number' && isFinite(value) && value % 1 === 0;
   }
+
   function isArrayLike(value) {
       return value != null && typeof value !== 'function' && isInteger(value.length) && value.length >= 0;
   }
+
   function isBigInt(value) {
       return typeof value === 'bigint';
   }
-  function isBoolean(value) {
-      return typeof value === 'boolean';
-  }
-  const global$6 = getGlobalThis();
-  const Buffer = global$6.Buffer;
-  const isBuffer = (Buffer && Buffer.isBuffer) || (() => false);
+
   function isObject(value) {
       return typeof value === 'object' && value !== null;
   }
+
+  const global$7 = getGlobalThis();
+  const Blob = global$7.Blob;
+  function isBlob(value) {
+      return !!Blob && isObject(value) && getTag(value) === 'Blob';
+  }
+
+  function isBoolean(value) {
+      return typeof value === 'boolean';
+  }
+
+  const global$6 = getGlobalThis();
+  const Buffer = global$6.Buffer;
+  const isBuffer = (Buffer && Buffer.isBuffer) || (() => false);
+
   function isDataView(value) {
       return isObject(value) && getTag(value) === 'DataView';
   }
+
   function isDate(value) {
       return isObject(value) && getTag(value) === 'Date';
   }
+
   const global$5 = getGlobalThis();
-  const File = global$5.File;
+  const File$1 = global$5.File;
   function isFile(value) {
-      return !!File && value instanceof File;
+      return !!File$1 && isObject(value) && getTag(value) === 'File';
   }
+
   const global$4 = getGlobalThis();
   const FormData$1 = global$4.FormData;
   function isFormData(value) {
       return !!FormData$1 && value instanceof FormData$1;
   }
+
   function isFunction(value) {
       return typeof value === 'function';
   }
+
   function isNil(value) {
       return value === null || value === void 0;
   }
@@ -120,9 +189,11 @@ See the Mulan PSL v2 for more details.
   function isUndefined(value) {
       return value === void 0;
   }
+
   function isIterable(value) {
       return !isNil(value) && typeof value[Symbol.iterator] === 'function';
   }
+
   const global$3 = getGlobalThis();
   function isMap(value) {
       return !!global$3.Map && value instanceof Map;
@@ -130,21 +201,27 @@ See the Mulan PSL v2 for more details.
   function isWeakMap(value) {
       return !!global$3.WeakMap && value instanceof WeakMap;
   }
+
   function isNumber(value) {
       return typeof value === 'number';
   }
+
   function isPrimitive(value) {
-      return value == null || (typeof value !== 'object' && typeof value !== 'function');
+      return value === undefined || value === null || (typeof value !== 'object' && typeof value !== 'function');
   }
+
   function isPromise(value) {
       return isObject(value) && isFunction(value.then) && getTag(value) === 'Promise';
   }
+
   function isPromiseLike(value) {
       return isObject(value) && isFunction(value.then);
   }
+
   function isRegExp(value) {
       return isObject(value) && getTag(value) === 'RegExp';
   }
+
   const global$2 = getGlobalThis();
   function isSet(value) {
       return !!global$2.Set && value instanceof Set;
@@ -152,12 +229,15 @@ See the Mulan PSL v2 for more details.
   function isWeakSet(value) {
       return !!global$2.WeakSet && value instanceof WeakSet;
   }
+
   function isString(value) {
       return typeof value === 'string';
   }
+
   function isSymbol(value) {
       return typeof value === 'symbol';
   }
+
   const allTypedArrayTags = new Set([
       'Int8Array',
       'Int16Array',
@@ -207,6 +287,7 @@ See the Mulan PSL v2 for more details.
   function isBigUint64Array(value) {
       return isObject(value) && getTag(value) === 'BigUint64Array';
   }
+
   const global$1 = getGlobalThis();
   function isWrapperObject(value) {
       return (!!value &&
@@ -232,6 +313,7 @@ See the Mulan PSL v2 for more details.
   function isWrapperBigInt(value) {
       return !!global$1.BigInt && value instanceof BigInt;
   }
+
   function tryit(fn) {
       return function tryitConvert(...args) {
           try {
@@ -245,7 +327,136 @@ See the Mulan PSL v2 for more details.
           }
       };
   }
+
+  function defer(asyncFunction, options) {
+      return __awaiter(this, void 0, void 0, function* () {
+          const queue = [];
+          const { rethrow = false } = options || {};
+          const defaultOption = { rethrow };
+          const cleanUp = (fn, options) => {
+              queue.push({ fn, opt: Object.assign(defaultOption, options) });
+              return queue.length - 1;
+          };
+          const cancelCleanUp = (fnOrIndex) => {
+              if (isInteger(fnOrIndex) && fnOrIndex > -1)
+                  queue[fnOrIndex] = null;
+              else if (isFunction(fnOrIndex)) {
+                  const i = queue.findIndex((item) => item && item.fn === fnOrIndex);
+                  if (i > -1)
+                      queue[i] = null;
+              }
+          };
+          const [err, res] = yield tryit(asyncFunction)(cleanUp, cancelCleanUp);
+          for (const item of queue) {
+              if (!item)
+                  continue;
+              const { fn, opt } = item;
+              const [cleanUpErr] = yield tryit(fn)(err);
+              if (cleanUpErr && opt.rethrow)
+                  throw cleanUpErr;
+          }
+          if (err)
+              throw err;
+          return res;
+      });
+  }
+
+  function clamp(num, min, max, options) {
+      var _a, _b;
+      if (isNaN(min))
+          throw new Error('Invalid min parameter');
+      if (isNaN(max))
+          throw new Error('Invalid max parameter');
+      if (max < min) {
+          [min, max] = [max, min];
+      }
+      const { default: def, defaultMin: _dMin, defaultMax: _dMax } = options || {};
+      const defaultMin = (_a = _dMin !== null && _dMin !== void 0 ? _dMin : def) !== null && _a !== void 0 ? _a : min;
+      const defaultMax = (_b = _dMax !== null && _dMax !== void 0 ? _dMax : def) !== null && _b !== void 0 ? _b : max;
+      if (isNaN(num))
+          return defaultMin;
+      return num < min ? defaultMin : num > max ? defaultMax : num;
+  }
+
+  function parallel(args, fn, options) {
+      return __awaiter(this, void 0, void 0, function* () {
+          if (!args.length)
+              return [];
+          const { limit: _limit = 5 } = options || {};
+          const limit = clamp(Math.floor(_limit), 1, 100);
+          let current = 0;
+          const results = [];
+          const errors = [];
+          const asyncFn = tryit(fn);
+          const processor = () => __awaiter(this, void 0, void 0, function* () {
+              while (current < args.length) {
+                  const index = current++;
+                  const [err, result] = yield asyncFn(args[index]);
+                  if (err)
+                      errors.push({ index, error: err });
+                  else
+                      results[index] = result;
+              }
+          });
+          const tasks = [];
+          for (let i = 0; i < Math.min(args.length, limit); i++) {
+              tasks.push(processor());
+          }
+          yield Promise.all(tasks);
+          if (errors.length) {
+              throw new Error(`Parallel execution failed on index: ${errors.map((e) => e.index).join(', ')}`, { cause: errors });
+          }
+          return results;
+      });
+  }
+
+  function sleep(time = 1000) {
+      return new Promise((res) => {
+          setTimeout(res, time);
+      });
+  }
+
+  function retry(asyncFunction, option) {
+      return __awaiter(this, void 0, void 0, function* () {
+          let retryCounts = 0;
+          const times = isNumber(option === null || option === void 0 ? void 0 : option.times) ? option.times : 3;
+          const delay = isFunction(option === null || option === void 0 ? void 0 : option.delay)
+              ? option.delay
+              : isNumber(option === null || option === void 0 ? void 0 : option.delay)
+                  ? () => option.delay
+                  : null;
+          const gap = isFunction(option === null || option === void 0 ? void 0 : option.gap) ? option.gap : isNumber(option === null || option === void 0 ? void 0 : option.gap) ? () => option.gap : null;
+          let lastRunTime = 0;
+          const getDelayTime = !option || (!delay && !gap)
+              ? () => 0
+              : gap
+                  ? (retryCounts) => {
+                      const time = gap(retryCounts);
+                      return time - Date.now() + lastRunTime;
+                  }
+                  : delay;
+          while (1) {
+              lastRunTime = Date.now();
+              const [err, res] = yield tryit(asyncFunction)((err) => {
+                  throw { $$exit_retry: err };
+              });
+              if (!err)
+                  return res;
+              retryCounts++;
+              if (err && err.$$exit_retry)
+                  throw err.$$exit_retry;
+              if (retryCounts >= times)
+                  throw err;
+              const delayTime = getDelayTime(retryCounts);
+              if (delayTime > 0)
+                  yield sleep(delayTime);
+          }
+          throw new Error('retry failed');
+      });
+  }
+
   const noop = function noop() { };
+
   function withResolvers(PromiseLike = Promise) {
       let promise;
       let resolve = noop;
@@ -256,6 +467,7 @@ See the Mulan PSL v2 for more details.
       });
       return { promise, resolve, reject };
   }
+
   const mimeMap = {
       application: {
           acrobat: ['pdf'],
@@ -698,6 +910,7 @@ See the Mulan PSL v2 for more details.
       });
       return map;
   })();
+
   function _getAcceptableExtByMIME(mime) {
       var _a;
       const [t, st] = mime.split('/');
@@ -711,6 +924,7 @@ See the Mulan PSL v2 for more details.
   function _getAcceptableMIMEByExt(ext) {
       return extMap[ext] || [];
   }
+
   function acceptableFileName(fileName, accept) {
       const _ext = fileName.split('.').pop();
       const ext = /^[CZ]$/.test(_ext) ? _ext : _ext.toLowerCase();
@@ -737,6 +951,7 @@ See the Mulan PSL v2 for more details.
       }
       return false;
   }
+
   function acceptableFileType(fileType, accept) {
       const type = fileType.toLowerCase();
       const allExtList = _getAcceptableExtByMIME(type);
@@ -758,11 +973,13 @@ See the Mulan PSL v2 for more details.
       }
       return false;
   }
+
   function getAcceptableExtByMIME(mime) {
       if (!mime || !isString(mime))
           return [];
       return _getAcceptableExtByMIME(mime.trim().toLowerCase());
   }
+
   function getAcceptableMIMEByExt(ext) {
       if (!ext || !isString(ext))
           return [];
@@ -770,12 +987,14 @@ See the Mulan PSL v2 for more details.
       const e = /^[CZ]$/.test(_ext) ? _ext : _ext.toLowerCase();
       return _getAcceptableMIMEByExt(e);
   }
+
   function randomInt(min, max) {
       return Math.floor(Math.random() * (max - min + 1)) + min;
   }
   function randomIntFloor(min, max) {
       return Math.floor(Math.random() * (max - min)) + min;
   }
+
   function randomChoice(arr, weights) {
       if (!weights || !weights.length)
           return arr[randomIntFloor(0, arr.length)];
@@ -789,6 +1008,7 @@ See the Mulan PSL v2 for more details.
       const index = cumulativeWeights.findIndex(weight => weight > randomWeight);
       return arr[index];
   }
+
   const radix32 = '0123456789abcdefghijklmnopqrstuv';
   const base32Chars = 'abcdefghijklmnopqrstuvwxyz234567';
   const base32Crockford = '0123456789abcdefghjkmnpqrstvwxyz';
@@ -806,6 +1026,7 @@ See the Mulan PSL v2 for more details.
           res = '0' + res;
       return toBase32(res, mapping);
   }
+
   function randomString(length, chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789') {
       if (!Number.isInteger(length) || length <= 0) {
           throw new Error('Invalid length parameter');
@@ -855,6 +1076,7 @@ See the Mulan PSL v2 for more details.
   function _randomBase32String(length, mapping) {
       return numberToBase32(Math.floor(Math.random() * 32 ** length), length, mapping);
   }
+
   function shuffle(arr) {
       const array = Array.from(arr);
       if (array.length <= 1)
@@ -865,6 +1087,7 @@ See the Mulan PSL v2 for more details.
       }
       return array;
   }
+
   let lastTime = 0;
   let lastNum1 = 0;
   let lastNum2 = 0;
@@ -899,12 +1122,14 @@ See the Mulan PSL v2 for more details.
       }
       return str;
   }
+
   const uuidNil = '00000000-0000-0000-0000-000000000000';
   function uuidV4() {
       const r = randomHexString(30);
       return (`${r.slice(0, 8)}-${r.slice(8, 12)}-4${r.slice(12, 15)}-` +
           `${'89ab'[Math.floor(Math.random() * 4)]}${r.slice(15, 18)}-${r.slice(18)}`);
   }
+
   const getDefaultVarCase = () => ({ code: '', upperCase: false, number: false });
   const isUpperCase = RegExp.prototype.test.bind(/[A-Z]/);
   const isLowerCase = RegExp.prototype.test.bind(/[a-z]/);
@@ -972,12 +1197,14 @@ See the Mulan PSL v2 for more details.
       res.push(temp);
       return res;
   }
+
   function _caseConvert(tokens, joiner, handler) {
       return tokens
           .map(handler)
           .filter((s) => s.length)
           .join(joiner);
   }
+
   function camelCase(str, options) {
       const { keepLetterCase = false, keepNumber = true } = options || {};
       let tokens = _splitVar(str);
@@ -997,6 +1224,7 @@ See the Mulan PSL v2 for more details.
                   return code.toLowerCase();
           });
   }
+
   function kebabCase(str, options) {
       const { keepLetterCase = false, keepNumber = true } = options || {};
       let tokens = _splitVar(str);
@@ -1004,6 +1232,7 @@ See the Mulan PSL v2 for more details.
           tokens = tokens.filter(({ number }) => !number);
       return _caseConvert(tokens, '-', keepLetterCase ? ({ code }) => code : ({ code }) => code.toLowerCase());
   }
+
   function pascalCase(str, options) {
       const { keepLetterCase = false, keepNumber = true } = options || {};
       let tokens = _splitVar(str);
@@ -1013,6 +1242,7 @@ See the Mulan PSL v2 for more details.
           ? ({ code }) => code.slice(0, 1).toUpperCase() + code.slice(1)
           : ({ code }) => code.slice(0, 1).toUpperCase() + code.slice(1).toLowerCase());
   }
+
   function snakeCase(str, options) {
       const { keepLetterCase = false, keepNumber = true } = options || {};
       let tokens = _splitVar(str);
@@ -1020,6 +1250,7 @@ See the Mulan PSL v2 for more details.
           tokens = tokens.filter(({ number }) => !number);
       return _caseConvert(tokens, '_', keepLetterCase ? ({ code }) => code : ({ code }) => code.toLowerCase());
   }
+
   function titleCase(str, options) {
       const { keepLetterCase = false, keepNumber = true } = options || {};
       let tokens = _splitVar(str);
@@ -1029,6 +1260,13 @@ See the Mulan PSL v2 for more details.
           ? ({ code }) => code.slice(0, 1).toUpperCase() + code.slice(1)
           : ({ code }) => code.slice(0, 1).toUpperCase() + code.slice(1).toLowerCase());
   }
+
+  function capitalize(str) {
+      if (!str)
+          return str;
+      return str.charAt(0).toUpperCase() + str.slice(1);
+  }
+
   function caseConvert(str, joiner = '', handler) {
       const hc = handler ? handler : (token) => token.code;
       return _caseConvert(_splitVar(str), joiner, hc);
@@ -1071,9 +1309,17 @@ See the Mulan PSL v2 for more details.
           tokens = tokens.filter(({ number }) => !number);
       return _caseConvert(tokens, '_', keepLetterCase ? ({ code }) => code : ({ code }) => code.toLowerCase());
   }
+
   function splitWords(str) {
       return _splitVar(str).map(({ code }) => code);
   }
+
+  function uncapitalize(str) {
+      if (!str)
+          return str;
+      return str.charAt(0).toLowerCase() + str.slice(1);
+  }
+
   function compose(...composeFunc) {
       if (composeFunc.length === 0) {
           throw new Error('Invalid composeFunc parameter: composeFunc is empty');
@@ -1092,10 +1338,12 @@ See the Mulan PSL v2 for more details.
           return result;
       };
   }
+
   const _ = Object.freeze({ '@@functional/placeholder': true });
   function isPlaceholder(arg) {
       return typeof arg === 'object' && Boolean(arg) && arg['@@functional/placeholder'] === true;
   }
+
   const _curry1 = function _curry1(fn) {
       return function curried1(arg1) {
           if (arguments.length < 1 || isPlaceholder(arg1)) {
@@ -1106,6 +1354,7 @@ See the Mulan PSL v2 for more details.
           }
       };
   };
+
   const _curry2 = function _curry2(fn) {
       return function curried2(arg1, arg2) {
           const p1 = arguments.length < 1 || isPlaceholder(arg1);
@@ -1128,6 +1377,7 @@ See the Mulan PSL v2 for more details.
           }
       };
   };
+
   const _curry3 = function _curry3(fn) {
       return function curried3(arg1, arg2, arg3) {
           const p1 = arguments.length < 1 || isPlaceholder(arg1);
@@ -1175,6 +1425,7 @@ See the Mulan PSL v2 for more details.
           }
       };
   };
+
   const _curryAny = function _curryAny(fn, args) {
       return function curriedAny(...currentArguments) {
           const currArgs = _mergeArguments(args, currentArguments);
@@ -1203,6 +1454,7 @@ See the Mulan PSL v2 for more details.
       }
       return args.length;
   }
+
   function _curryMore(fn) {
       if (typeof fn !== 'function') {
           throw new Error('Invalid fn parameter: fn is not a function.');
@@ -1225,6 +1477,54 @@ See the Mulan PSL v2 for more details.
               return _curryAny(fn, []);
       }
   }
+
+  function _throttle(fn, delay, options) {
+      var _a, _b, _c;
+      const trailing = (_a = options === null || options === void 0 ? void 0 : options.trailing) !== null && _a !== void 0 ? _a : false;
+      const trailingRunLast = (_b = options === null || options === void 0 ? void 0 : options.trailingRunLast) !== null && _b !== void 0 ? _b : true;
+      const leading = (_c = options === null || options === void 0 ? void 0 : options.leading) !== null && _c !== void 0 ? _c : true;
+      let timer = null;
+      let lastTime = 0;
+      const clearTimer = () => {
+          if (timer) {
+              clearInterval(timer);
+              timer = null;
+          }
+      };
+      const reset = () => {
+          clearTimer();
+          lastTime = 0;
+      };
+      return Object.assign(function (...args) {
+          const now = Date.now();
+          const timeGap = now - lastTime - delay;
+          if (timeGap >= 0) {
+              lastTime = now;
+              clearTimer();
+          }
+          if (timeGap < 0 && trailing && trailingRunLast && timer) {
+              clearTimer();
+          }
+          if (timeGap >= 0 && leading) {
+              fn.apply(this, args);
+          }
+          else if (timeGap >= 0 || (timeGap < 0 && trailing && !timer)) {
+              timer = setTimeout(() => {
+                  lastTime = Date.now();
+                  timer = null;
+                  fn.apply(this, args);
+              }, timeGap >= 0 ? delay : -timeGap);
+          }
+      }, { reset });
+  }
+
+  function debounce(fn, delay, options) {
+      if (!isNumber(delay) || !isFinite(delay) || delay <= 0) {
+          throw new Error('Invalid delay parameter');
+      }
+      return _throttle(fn, delay, Object.assign({ trailing: true, leading: false, trailingRunLast: true }, options));
+  }
+
   function _cloneArray(obj, map, cloner, ...args) {
       const res = obj.slice();
       map.set(obj, res);
@@ -1261,6 +1561,17 @@ See the Mulan PSL v2 for more details.
       new Uint8Array(res).set(new Uint8Array(obj));
       return res;
   }
+  function _cloneBlob(obj, map) {
+      const res = obj.slice(0, obj.size, obj.type);
+      map.set(obj, res);
+      return res;
+  }
+  function _cloneFile(obj, map) {
+      const res = new File([obj], obj.name, { type: obj.type, lastModified: obj.lastModified });
+      map.set(obj, res);
+      return res;
+  }
+
   function _deepClone(obj, map, options) {
       if (map.has(obj))
           return map.get(obj);
@@ -1304,6 +1615,12 @@ See the Mulan PSL v2 for more details.
           res = new DataView(map.has(obj.buffer) ? map.get(obj.buffer) : _cloneArrayBuffer(obj.buffer, map), obj.byteOffset, obj.byteLength);
           map.set(obj, res);
       }
+      else if (isFile(obj)) {
+          res = _cloneFile(obj, map);
+      }
+      else if (isBlob(obj)) {
+          res = _cloneBlob(obj, map);
+      }
       else if (isWrapperObject(obj)) {
           res = Object(obj.valueOf());
           map.set(obj, res);
@@ -1329,6 +1646,7 @@ See the Mulan PSL v2 for more details.
       }
       return res;
   }
+
   function deepClone(obj, options, map) {
       if (!isMap(map))
           map = new Map();
@@ -1336,6 +1654,7 @@ See the Mulan PSL v2 for more details.
       map.clear();
       return res;
   }
+
   function _fastClone(obj, map) {
       if (map.has(obj))
           return map.get(obj);
@@ -1367,6 +1686,7 @@ See the Mulan PSL v2 for more details.
       }
       return res;
   }
+
   function fastClone(obj, map) {
       if (!isMap(map))
           map = new Map();
@@ -1374,6 +1694,7 @@ See the Mulan PSL v2 for more details.
       map.clear();
       return res;
   }
+
   function isEmpty(value) {
       if (value === null || value === undefined)
           return true;
@@ -1400,6 +1721,7 @@ See the Mulan PSL v2 for more details.
           return true;
       }
   }
+
   function _getKey(args) {
       function toString(item) {
           if (isBigInt(item))
@@ -1450,9 +1772,11 @@ See the Mulan PSL v2 for more details.
           return res;
       };
   }
+
   function not(value) {
       return !Boolean(value);
   }
+
   function pass(value) {
       return value;
   }
@@ -1462,6 +1786,7 @@ See the Mulan PSL v2 for more details.
           return arg;
       });
   }
+
   function pipe(...pipeFunc) {
       if (pipeFunc.length === 0) {
           throw new Error('Invalid pipeFunc parameter: pipeFunc is empty');
@@ -1479,18 +1804,30 @@ See the Mulan PSL v2 for more details.
           return result;
       };
   }
+
+  function throttle(fn, delay, options) {
+      if (!isNumber(delay) || !isFinite(delay) || delay <= 0) {
+          throw new Error('Invalid delay parameter');
+      }
+      return _throttle(fn, delay, Object.assign({ trailing: false, leading: true }, options));
+  }
+
   exports._ = _;
   exports.acceptableFileName = acceptableFileName;
   exports.acceptableFileType = acceptableFileType;
   exports.camelCase = camelCase;
+  exports.capitalize = capitalize;
   exports.caseCamel = caseCamel;
   exports.caseConvert = caseConvert;
   exports.caseKebab = caseKebab;
   exports.casePascal = casePascal;
   exports.caseSnake = caseSnake;
+  exports.clamp = clamp;
   exports.compose = compose;
   exports.curry = _curryMore;
+  exports.debounce = debounce;
   exports.deepClone = deepClone;
+  exports.defer = defer;
   exports.fastClone = fastClone;
   exports.getAcceptableExtByMIME = getAcceptableExtByMIME;
   exports.getAcceptableMIMEByExt = getAcceptableMIMEByExt;
@@ -1502,6 +1839,7 @@ See the Mulan PSL v2 for more details.
   exports.isBigInt = isBigInt;
   exports.isBigInt64Array = isBigInt64Array;
   exports.isBigUint64Array = isBigUint64Array;
+  exports.isBlob = isBlob;
   exports.isBoolean = isBoolean;
   exports.isBuffer = isBuffer;
   exports.isDataView = isDataView;
@@ -1548,6 +1886,7 @@ See the Mulan PSL v2 for more details.
   exports.memo = memo;
   exports.noop = noop;
   exports.not = not;
+  exports.parallel = parallel;
   exports.pascalCase = pascalCase;
   exports.pass = pass;
   exports.passWith = passWith;
@@ -1559,13 +1898,17 @@ See the Mulan PSL v2 for more details.
   exports.randomIntFloor = randomIntFloor;
   exports.randomString = randomString;
   exports.range = range;
+  exports.remove = remove;
+  exports.retry = retry;
   exports.shuffle = shuffle;
   exports.sleep = sleep;
   exports.snakeCase = snakeCase;
   exports.splitWords = splitWords;
+  exports.throttle = throttle;
   exports.titleCase = titleCase;
   exports.tryit = tryit;
   exports.ulid = ulid;
+  exports.uncapitalize = uncapitalize;
   exports.uuidNil = uuidNil;
   exports.uuidV4 = uuidV4;
   exports.withResolvers = withResolvers;

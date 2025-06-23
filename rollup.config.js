@@ -2,7 +2,7 @@ import typescript from '@rollup/plugin-typescript'
 import { dts } from 'rollup-plugin-dts'
 
 const banner = `/*!
-Copyright (c) 2025 moushu
+Copyright (c) 2024 moushu
 foreslash is licensed under Mulan PSL v2.
 You can use this software according to the terms and conditions of the Mulan PSL v2.
 You may obtain a copy of Mulan PSL v2 at:
