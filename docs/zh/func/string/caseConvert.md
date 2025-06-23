@@ -1,8 +1,8 @@
 ---
 prev: false
 next:
-  text: 'camelCase 小驼峰格式'
-  link: './camelCase'
+  text: 'capitalize 首字母大写'
+  link: './capitalize'
 ---
 
 # caseConvert

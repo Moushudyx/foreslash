@@ -1,7 +1,7 @@
 ---
 prev:
-  text: 'caseConvert 格式转换'
-  link: './caseConvert'
+  text: 'capitalize 首字母大写'
+  link: './capitalize'
 next:
   text: 'pascalCase 大驼峰格式'
   link: './pascalCase'

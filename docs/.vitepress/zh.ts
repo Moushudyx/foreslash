@@ -153,6 +153,7 @@ function sidebarIs(): DefaultTheme.SidebarItem[] {
       collapsed: false,
       items: [
         { text: 'caseConvert 格式转换', link: 'caseConvert' },
+        { text: 'capitalize 首字母大写', link: 'capitalize' },
         { text: 'camelCase 小驼峰格式', link: 'camelCase' },
         { text: 'pascalCase 大驼峰格式', link: 'pascalCase' },
         { text: 'kebabCase 串行格式', link: 'kebabCase' },
