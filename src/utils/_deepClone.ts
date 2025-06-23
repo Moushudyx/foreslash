@@ -80,7 +80,6 @@ export function _deepClone<T>(obj: T, map: Map<any, any>, options: CloneOptions)
   } else if (isFile(obj)) {
     // File 继承自 Blob 所以需要先判断
     res = _cloneFile(obj, map)
-    console.log('_cloneFile\n', obj, '\n', res);
   } else if (isBlob(obj)) {
     // Blob
     res = _cloneBlob(obj, map)
