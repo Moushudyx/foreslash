@@ -38,7 +38,7 @@ type RetryOption = {
  * ```js
  * // 基本用法, 默认重试 3 次, 每次失败后会立即重新调用
  * const res = await retry(() => fetch(url, params))
- * // 重试 10 次
+ * // 重试 10 次, 最多会调用传入的函数 10 次
  * const res = await retry(() => fetch(url, params), { times: 10 })
  * // 延迟模式, 每次失败后会等待 1 秒再重新调用
  * const res = await retry(() => fetch(url, params), { delay: 1000 })
