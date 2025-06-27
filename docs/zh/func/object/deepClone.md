@@ -1,8 +1,8 @@
 ---
 prev: false
 next:
-  text: 'isEmpty 判断为空'
-  link: './isEmpty'
+  text: 'deepMerge 深合并'
+  link: './deepMerge'
 ---
 
 # deepClone

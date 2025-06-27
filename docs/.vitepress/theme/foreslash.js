@@ -3,7 +3,7 @@ Copyright (c) 2024 moushu
 foreslash is licensed under Mulan PSL v2.
 You can use this software according to the terms and conditions of the Mulan PSL v2.
 You may obtain a copy of Mulan PSL v2 at:
-          http://license.coscl.org.cn/MulanPSL2
+        http://license.coscl.org.cn/MulanPSL2
 THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
 EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
 MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
@@ -1655,6 +1655,201 @@ See the Mulan PSL v2 for more details.
       return res;
   }
 
+  const $$Empty = Object.freeze({ '@@merge/placeholder': true });
+  function getMergeStrategy(targetType, sourceType, strategy) {
+      return (strategy[`${sourceType}2${targetType}`] ||
+          strategy[`${sourceType}2Any`] ||
+          strategy[`Any2${targetType}`] ||
+          strategy[`Any2Any`] ||
+          'override');
+  }
+  function getBaseMargeType(obj) {
+      if (isMergeEmptyPlaceholder(obj))
+          return 'Empty';
+      const _tag = getTag(obj);
+      if (/Function/.test(_tag))
+          return 'Function';
+      if (/Iterator/.test(_tag))
+          return 'Iterator';
+      if (/(?:8|16|32|64)Array/.test(_tag))
+          return 'TypedArray';
+      if (/Error/.test(_tag))
+          return 'Error';
+      return _tag;
+  }
+  function isMergeEmptyPlaceholder(arg) {
+      return typeof arg === 'object' && Boolean(arg) && arg['@@merge/placeholder'] === true;
+  }
+
+  function _deepMergeBase(target, source, option, map, path, cloner) {
+      const targetType = getBaseMargeType(target);
+      const sourceType = getBaseMargeType(source);
+      const strategy = getMergeStrategy(targetType, sourceType, option.typeStrategy);
+      if (isFunction(strategy)) {
+          const merger = _curryMore(_deepMergeBase)(_, _, option, map, _, cloner);
+          const mergeRes = strategy({
+              target,
+              source,
+              cloner,
+              merger,
+              path,
+              typeStrategy: option.typeStrategy,
+              unhandledValue: $$Empty,
+              map,
+          });
+          if (!isMergeEmptyPlaceholder(mergeRes))
+              return mergeRes;
+      }
+      if (strategy === 'keep') {
+          if (isMergeEmptyPlaceholder(target))
+              return $$Empty;
+          return cloner(target);
+      }
+      else if (strategy === 'override') {
+          return cloner(source);
+      }
+      else {
+          return cloner(source);
+      }
+  }
+  const defaultMergeStrategy = {
+      Any2Any: 'override',
+      Any2Empty: 'override',
+      Any2Null: 'override',
+      Any2Undefined: 'override',
+      Null2Any: 'keep',
+      Undefined2Any: 'keep',
+      Null2Empty: 'override',
+      Undefined2Empty: 'override',
+      Number2Any: 'keep',
+      Number2Number: 'override',
+      String2Any: 'keep',
+      String2String: 'override',
+      Boolean2Any: 'keep',
+      Boolean2Boolean: 'override',
+      Symbol2Any: 'keep',
+      Symbol2Symbol: 'override',
+      BigInt2Any: 'keep',
+      BigInt2BigInt: 'override',
+      Number2Empty: 'override',
+      String2Empty: 'override',
+      Boolean2Empty: 'override',
+      Symbol2Empty: 'override',
+      BigInt2Empty: 'override',
+      Number2Null: 'override',
+      String2Null: 'override',
+      Boolean2Null: 'override',
+      Symbol2Null: 'override',
+      BigInt2Null: 'override',
+      Number2Undefined: 'override',
+      String2Undefined: 'override',
+      Boolean2Undefined: 'override',
+      Symbol2Undefined: 'override',
+      BigInt2Undefined: 'override',
+      Object2Object: (({ target, source, cloner, path, merger }) => {
+          const res = cloner(target);
+          Reflect.ownKeys(source).forEach((key) => {
+              const newPath = [...path, key];
+              if (key in res) {
+                  res[key] = merger(res[key], source[key], newPath);
+              }
+              else {
+                  const mergeRes = merger($$Empty, source[key], newPath);
+                  if (!isMergeEmptyPlaceholder(mergeRes))
+                      res[key] = mergeRes;
+              }
+          });
+          return res;
+      }),
+      Object2FormData: (({ target, source, cloner, path, merger }) => {
+          const res = cloner(target);
+          Reflect.ownKeys(source).forEach((key) => {
+              if (isSymbol(key))
+                  return;
+              const newPath = [...path, key];
+              if (res.has(key)) {
+                  res.set(key, merger(res.get(key), source[key], newPath));
+              }
+              else {
+                  const mergeRes = merger($$Empty, source[key], newPath);
+                  if (!isMergeEmptyPlaceholder(mergeRes))
+                      res.set(key, mergeRes);
+              }
+          });
+          return res;
+      }),
+      FormData2Object: (({ target, source, cloner, path, merger }) => {
+          const res = cloner(target);
+          source.forEach((val, key) => {
+              const newPath = [...path, key];
+              if (key in res) {
+                  res[key] = merger(res[key], val, newPath);
+              }
+              else {
+                  const mergeRes = merger($$Empty, val, newPath);
+                  if (!isMergeEmptyPlaceholder(mergeRes))
+                      res[key] = mergeRes;
+              }
+          });
+          return res;
+      }),
+      FormData2FormData: (({ target, source, cloner, path, merger }) => {
+          const res = cloner(target);
+          source.forEach((val, key) => {
+              const newPath = [...path, key];
+              if (res.has(key)) {
+                  res.set(key, merger(res.get(key), val, newPath));
+              }
+              else {
+                  const mergeRes = merger($$Empty, val, newPath);
+                  if (!isMergeEmptyPlaceholder(mergeRes))
+                      res.set(key, mergeRes);
+              }
+          });
+          return res;
+      }),
+      Set2Set: (({ target, source, cloner }) => {
+          const res = cloner(target);
+          for (const item of source)
+              res.add(cloner(item));
+          return res;
+      }),
+      Map2Map: (({ target, source, cloner }) => {
+          const res = cloner(target);
+          for (const [key, val] of source)
+              res.set(cloner(key), cloner(val));
+          return res;
+      }),
+      Array2Array: (({ target, source, cloner }) => {
+          const res = cloner(target);
+          for (const item of source)
+              res.push(cloner(item));
+          return res;
+      }),
+      Set2Array: (({ target, source, cloner }) => {
+          const res = cloner(target);
+          for (const item of source)
+              res.push(cloner(item));
+          return res;
+      }),
+      Array2Set: (({ target, source, cloner }) => {
+          const res = cloner(target);
+          for (const item of source)
+              res.add(cloner(item));
+          return res;
+      }),
+  };
+
+  function deepMerge(target, source, option) {
+      const typeStrategy = Object.assign(Object.assign({}, defaultMergeStrategy), ((option === null || option === void 0 ? void 0 : option.typeStrategy) || {}));
+      const cloneOptions = Object.assign({ cloneSymbol: true, clonePrototype: false, cloneDescriptor: false, customCloner: [] }, ((option === null || option === void 0 ? void 0 : option.cloneOptions) || {}));
+      const map = new Map();
+      const cloner = _curryMore(_deepClone)(_, map, cloneOptions);
+      const res = _deepMergeBase(target, source, { typeStrategy, cloneOptions }, map, [], cloner);
+      map.clear();
+      return res;
+  }
+
   function _fastClone(obj, map) {
       if (map.has(obj))
           return map.get(obj);
@@ -1812,6 +2007,7 @@ See the Mulan PSL v2 for more details.
       return _throttle(fn, delay, Object.assign({ trailing: false, leading: true }, options));
   }
 
+  exports.$$Empty = $$Empty;
   exports._ = _;
   exports.acceptableFileName = acceptableFileName;
   exports.acceptableFileType = acceptableFileType;
@@ -1827,6 +2023,7 @@ See the Mulan PSL v2 for more details.
   exports.curry = _curryMore;
   exports.debounce = debounce;
   exports.deepClone = deepClone;
+  exports.deepMerge = deepMerge;
   exports.defer = defer;
   exports.fastClone = fastClone;
   exports.getAcceptableExtByMIME = getAcceptableExtByMIME;
@@ -1856,6 +2053,7 @@ See the Mulan PSL v2 for more details.
   exports.isInteger = isInteger;
   exports.isIterable = isIterable;
   exports.isMap = isMap;
+  exports.isMergeEmptyPlaceholder = isMergeEmptyPlaceholder;
   exports.isNil = isNil;
   exports.isNull = isNull;
   exports.isNumber = isNumber;

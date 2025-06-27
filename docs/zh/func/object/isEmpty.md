@@ -1,7 +1,7 @@
 ---
 prev:
-  text: 'deepClone 深拷贝'
-  link: './deepClone'
+  text: 'deepMerge 深合并'
+  link: './deepMerge'
 next: false
 ---
 
