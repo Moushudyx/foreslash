@@ -10,6 +10,7 @@ describe('deepClone', () => {
     const key2 = Symbol('key2')
     const typedArray = new BigInt64Array([BigInt(1), BigInt(2), BigInt(3)])
     const ab = new ArrayBuffer(8)
+    const ab16 = new ArrayBuffer(16)
     const blob = new Blob(['123'], { type: 'text/plain' })
     const file = new File(['456'], 'test.txt', { type: 'text/plain' })
     const obj = {
@@ -24,7 +25,7 @@ describe('deepClone', () => {
       l: { l1: Object(1), l2: Object('2'), l3: Object(true) },
       m: { m1: typedArray, m2: typedArray },
       n: { n1: ab, n2: ab },
-      o: { o1: new DataView(ab, 4, 4), o2: new DataView(ab, 2, 4) },
+      o: { o1: new DataView(ab, 4, 4), o2: new DataView(ab, 2, 4), o3: new DataView(ab16, 2, 4) },
       p: { p1: blob, p2: blob, p3: file, p4: file },
       [key1]: Symbol('value'),
       [key2]: Object(Symbol('value')),
@@ -55,6 +56,7 @@ describe('deepClone', () => {
     expect(clonedObj.o !== obj.o).toBe(true)
     expect(clonedObj.o.o1 !== obj.o.o1).toBe(true)
     expect(clonedObj.o.o2 !== obj.o.o2).toBe(true)
+    expect(clonedObj.o.o3 !== obj.o.o3).toBe(true)
     expect(clonedObj.p.p1 !== obj.p.p1).toBe(true)
     expect(clonedObj.p.p2 !== obj.p.p2).toBe(true)
     expect(clonedObj.p.p1 === clonedObj.p.p2).toBe(true)
@@ -81,7 +83,9 @@ describe('deepClone', () => {
     expect(clonedObj[key2].valueOf() === obj[key2].valueOf()).toBe(true)
     expect(clonedObj.o.o1.byteLength === obj.o.o1.byteLength).toBe(true)
     expect(clonedObj.o.o2.byteOffset === obj.o.o2.byteOffset).toBe(true)
+    expect(clonedObj.o.o3.byteOffset === obj.o.o3.byteOffset).toBe(true)
     expect(clonedObj.o.o1.buffer === clonedObj.o.o2.buffer).toBe(true) // 复制的 ArrayBuffer 是同一个
+    expect(clonedObj.o.o1.buffer === clonedObj.o.o3.buffer).toBe(false)
     expect(clonedObj.p.p1.type === clonedObj.p.p2.type).toBe(true)
     expect(clonedObj.p.p3.type === obj.p.p3.type).toBe(true)
     expect(clonedObj.p.p3.name === obj.p.p3.name).toBe(true)
