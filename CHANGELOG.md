@@ -4,13 +4,13 @@
 
 Unstable version
 
-- Feat 🥥 Functions added: `capitalize`
+- Feat 🥥 Functions added: `capitalize` `deepmerge` `isBlob` and so forth
 - Feat 🥥 Function change: `deepClone` now support `Blob` and `File`
 - Other fixes and improvements
 
 不稳定版本
 
-- 功能 🥥 添加函数: `capitalize`
+- 功能 🥥 添加函数: `capitalize` `deepmerge` `isBlob` 等
 - 功能 🥥 变更函数: `deepClone` 现在支持 `Blob` 和 `File`
 - 其他修复与优化
 
