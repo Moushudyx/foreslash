@@ -1,16 +1,16 @@
 # Change Log
 
-## Version 0.3.0 - 2025-06-
+## Version 0.3.0 - 2025-07-01
 
 Unstable version
 
-- Feat 🥥 Functions added: `capitalize` `deepmerge` `isBlob` and so forth
+- Feat 🥥 Functions added: `capitalize` `deepMerge` `isBlob` and so forth
 - Feat 🥥 Function change: `deepClone` now support `Blob` and `File`
 - Other fixes and improvements
 
 不稳定版本
 
-- 功能 🥥 添加函数: `capitalize` `deepmerge` `isBlob` 等
+- 功能 🥥 添加函数: `capitalize` `deepMerge` `isBlob` 等
 - 功能 🥥 变更函数: `deepClone` 现在支持 `Blob` 和 `File`
 - 其他修复与优化
 
