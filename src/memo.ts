@@ -26,7 +26,15 @@ function _getKey(args: any[]) {
  * - `getKey` 自定义 key 的生成规则, 默认使用内部方法生成 key
  * - `ttl` 缓存的过期时间, 单位毫秒, 为 0 表示不过期, 默认不过期
  * - `count` 缓存最大使用次数, 为 0 表示不限次数, 默认不限次数
- * @returns
+ * @returns 记忆化的函数, 输入相同参数再次调用时会直接返回之前的结果而不会调用原函数
+ * @example
+ * ```js
+ * // 计算斐波那契数列
+ * const fib = memo(function (n) {
+ *   if (n < 2) return n
+ *   return fib(n - 1) + fib(n - 2)
+ * })
+ * ```
  */
 export function memo<TArgs extends any[], TRes>(
   fn: (...args: TArgs) => TRes,
