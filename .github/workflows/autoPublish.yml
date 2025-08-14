@@ -25,11 +25,11 @@ jobs:
     runs-on: ubuntu-latest
     environment: production
     steps:
-      - name: 🔍 Checkout code # 获取代码
+      - name: 📋️ Checkout code # 获取代码
         uses: actions/checkout@v4
         with:
           fetch-depth: 2  # 获取前一次提交, 对比版本
-      - name: ⚙️ Setup Node # 安装 Node
+      - name: 📦 Setup Node # 安装 Node
         uses: actions/setup-node@v4
         with:
           node-version: 20
@@ -49,10 +49,10 @@ jobs:
 
           echo "Current version: $CURRENT_VERSION"
           echo "Previous version: $PREV_VERSION"
+          echo "version=$CURRENT_VERSION" >> $GITHUB_OUTPUT
 
           if [ "$CURRENT_VERSION" != "$PREV_VERSION" ]; then
             echo "Version changed - automatic publish process"
-            echo "version=$CURRENT_VERSION" >> $GITHUB_OUTPUT
             echo "version_changed=true" >> $GITHUB_OUTPUT
           else
             echo "No version change detected - skipping publish"
@@ -69,7 +69,7 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: 📝 Generate release notes # 生成 Release 相关信息
-        # if: steps.version_check.outputs.version_changed == 'true'
+        if: steps.version_check.outputs.version_changed == 'true'
         id: changelog
         run: |
           # 提取 CHANGELOG.md 中第一个二级标题下的内容
@@ -85,12 +85,14 @@ jobs:
 
           # 生成日期格式 YYYY-MM-DD
           DATE=$(date +'%Y-%m-%d')
-          echo "Version ${{ steps.version_check.outputs.version }} - $DATE"
+
+          # 输出
           echo "release_title=Version ${{ steps.version_check.outputs.version }} - $DATE" >> $GITHUB_OUTPUT
           echo "release_notes<<EOF" >> $GITHUB_OUTPUT
           echo "$(cat release_notes.txt)" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
           # echo "release_notes=$(cat release_notes.txt)" >> $GITHUB_OUTPUT
+          echo "Version ${{ steps.version_check.outputs.version }} - $DATE"
           echo "$(cat release_notes.txt)"
       - name: 🚀 Create GitHub Release # 发布 Release
         if: steps.version_check.outputs.version_changed == 'true'
