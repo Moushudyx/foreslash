@@ -165,6 +165,8 @@ function sidebarIs(): DefaultTheme.SidebarItem[] {
         { text: 'snakeCase 蛇行格式', link: 'snakeCase' },
         { text: 'titleCase 标题格式', link: 'titleCase' },
         { text: 'splitWords 词分割', link: 'splitWords' },
+        { text: 'dedent 取消缩进', link: 'dedent' },
+        { text: 'indent 缩进', link: 'indent' },
       ],
     },
     {
