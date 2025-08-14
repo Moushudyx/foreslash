@@ -6,5 +6,7 @@ export * from './titleCase'
 
 export * from './capitalize'
 export * from './caseConvert'
+export * from './dedent'
+export * from './indent'
 export * from './splitWords'
 export * from './uncapitalize'
