@@ -46,8 +46,7 @@
     "lib",
     "util",
     "typescript",
-    "functional",
-    "modules"
+    "functional"
   ],
   "devDependencies": {
     "@rollup/plugin-typescript": "^12.1.2",
