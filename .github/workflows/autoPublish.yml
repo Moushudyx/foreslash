@@ -74,20 +74,21 @@ jobs:
         run: |
           # 提取 CHANGELOG.md 中第一个二级标题下的内容
           awk '
-          /^## / {
-            if (count == 1) exit;
-            count++;
+          /^## / && !found {
+            found=1;
             next
           }
-          count == 1 {
-            if (/^## /) exit;
-            print
-          }' CHANGELOG.md > release_notes.txt
+          found && /^#/ {
+            exit
+          }
+          found' CHANGELOG.md > release_notes.txt
 
           # 生成日期格式 YYYY-MM-DD
           DATE=$(date +'%Y-%m-%d')
+          echo "Version ${{ steps.version_check.outputs.version }} - $DATE"
           echo "release_title=Version ${{ steps.version_check.outputs.version }} - $DATE" >> $GITHUB_OUTPUT
           echo "release_notes=$(cat release_notes.txt)" >> $GITHUB_OUTPUT
+          echo "$(cat release_notes.txt)"
       # - name: 🚀 Create GitHub Release # 发布 Release
       #   if: steps.version_check.outputs.version_changed == 'true'
       #   uses: softprops/action-gh-release@v1
