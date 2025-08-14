@@ -32,7 +32,7 @@ jobs:
       - name: 📦 Setup Node # 安装 Node
         uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 20
           cache: yarn
       - name: 📦 Setup Pages # 安装 Github Pages
         uses: actions/configure-pages@v4
@@ -42,6 +42,8 @@ jobs:
         run: yarn docs:build # touch ./docs/.vitepress/dist/.nojekyll
       - name: 🚀 Upload artifact # 上传编译结果
         uses: actions/upload-pages-artifact@v3
+        if: | # 仅在 Moushudyx/foreslash 下发布, 防止 fork 后误操作
+          startsWith(github.repository, 'Moushudyx')
         with:
           path: ./docs/.vitepress/dist
   # 部署

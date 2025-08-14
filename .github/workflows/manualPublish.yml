@@ -13,6 +13,11 @@ permissions:
   contents: write
   pull-requests: write
 
+# 不允许同时进行多个部署，跳过非正在运行、非最新队列的运行队列，且不取消正在运行的工作流
+concurrency:
+  group: publish
+  cancel-in-progress: false
+
 jobs:
   # 构建
   build:
@@ -21,12 +26,14 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 20
           cache: yarn
           registry-url: 'https://registry.npmjs.org'
       - name: 📦 Install dependencies # 安装依赖
         run: yarn install
       - name: 🚀 Build & Publish Package # 编译并发布
         run: npm publish
+        if: | # 仅在 Moushudyx/foreslash 下发布, 防止别人 fork 后误操作
+          startsWith(github.repository, 'Moushudyx')
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
