@@ -1,15 +1,17 @@
 # Change Log
 
-## Version 0.3.1 - 2025-08-
+## Version 0.3.1 - 2025-08-14
 
 Unstable version
 
 - Feat 🥥 Functions added: `indent` and so forth
+- Use GitHub Actions to automate the npm publish/github release process
 - Other fixes and improvements
 
 不稳定版本
 
 - 功能 🥥 添加函数: `indent` 等
+- 使用 GitHub Actions 实现自动化 npm 发版/github release 流程
 - 其他修复与优化
 
 ## Version 0.3.0 - 2025-07-01
