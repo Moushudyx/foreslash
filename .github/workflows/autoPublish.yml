@@ -59,14 +59,14 @@ jobs:
             echo "version_changed=false" >> $GITHUB_OUTPUT
           fi
 
-      # - name: 📦 Install dependencies # 安装依赖
-      #   if: steps.version_check.outputs.version_changed == 'true'
-      #   run: yarn install
-      # - name: 🚀 Build & Publish Package # 编译并发布
-      #   if: steps.version_check.outputs.version_changed == 'true'
-      #   run: npm publish
-      #   env:
-      #     NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: 📦 Install dependencies # 安装依赖
+        if: steps.version_check.outputs.version_changed == 'true'
+        run: yarn install
+      - name: 🚀 Build & Publish Package # 编译并发布
+        if: steps.version_check.outputs.version_changed == 'true'
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: 📝 Generate release notes # 生成 Release 相关信息
         # if: steps.version_check.outputs.version_changed == 'true'
@@ -87,16 +87,19 @@ jobs:
           DATE=$(date +'%Y-%m-%d')
           echo "Version ${{ steps.version_check.outputs.version }} - $DATE"
           echo "release_title=Version ${{ steps.version_check.outputs.version }} - $DATE" >> $GITHUB_OUTPUT
-          echo "release_notes=$(cat release_notes.txt)" >> $GITHUB_OUTPUT
+          echo "release_notes<<EOF" >> $GITHUB_OUTPUT
+          echo "$(cat release_notes.txt)" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+          # echo "release_notes=$(cat release_notes.txt)" >> $GITHUB_OUTPUT
           echo "$(cat release_notes.txt)"
-      # - name: 🚀 Create GitHub Release # 发布 Release
-      #   if: steps.version_check.outputs.version_changed == 'true'
-      #   uses: softprops/action-gh-release@v1
-      #   with:
-      #     tag_name: v${{ steps.version_check.outputs.version }}
-      #     name: ${{ steps.changelog.outputs.release_title }}
-      #     body: ${{ steps.changelog.outputs.release_notes }}
-      #     draft: false
-      #     prerelease: false
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: 🚀 Create GitHub Release # 发布 Release
+        if: steps.version_check.outputs.version_changed == 'true'
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: v${{ steps.version_check.outputs.version }}
+          name: ${{ steps.changelog.outputs.release_title }}
+          body: ${{ steps.changelog.outputs.release_notes }}
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
