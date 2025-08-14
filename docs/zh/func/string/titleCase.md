@@ -22,8 +22,8 @@ next:
 // 默认情况 不保留大小写 保留数字
 titleCase("getTestUuid1234") // "Get Test Uuid 1234"
 // 保留大小写 保留数字
-titleCase("getTestUuid1234", { keepLetterCase: true }) // "Get Test UUID 1234"
+titleCase("getTestUUID1234", { keepLetterCase: true }) // "Get Test UUID 1234"
 // 保留大小写 不保留数字
-titleCase("getTestUuid1234", { keepLetterCase: true, keepNumber: false }) // "Get Test UUID"
+titleCase("getTestUUID1234", { keepLetterCase: true, keepNumber: false }) // "Get Test UUID"
 ```
 

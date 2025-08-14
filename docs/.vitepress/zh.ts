@@ -10,7 +10,7 @@ export const zh = defineConfig({
   themeConfig: {
     nav: nav(),
 
-    sidebar: { 'func/': [...sidebarIs()], 'guide/': [...sidebarGuide()] },
+    sidebar: { 'func/': [...sidebarIs()] /* , 'guide/': [...sidebarGuide()] */ },
 
     editLink: {
       pattern: 'https://github.com/Moushudyx/foreslash/edit/master/docs/:path',
@@ -50,11 +50,11 @@ export const zh = defineConfig({
 
 function nav(): DefaultTheme.NavItem[] {
   return [
-    {
-      text: '指南',
-      link: '/guide/',
-      activeMatch: '/guide/',
-    },
+    // {
+    //   text: '指南',
+    //   link: '/guide/',
+    //   activeMatch: '/guide/',
+    // },
     {
       text: '总览',
       link: '/func/',
@@ -81,6 +81,10 @@ function sidebarIs(): DefaultTheme.SidebarItem[] {
     {
       text: '总览',
       link: 'func/index',
+    },
+    {
+      text: '简介',
+      link: 'func/intro',
     },
     {
       text: '对象操作',
@@ -213,12 +217,12 @@ function sidebarIs(): DefaultTheme.SidebarItem[] {
   ]
 }
 
-function sidebarGuide(): DefaultTheme.SidebarItem[] {
-  return [
-    { text: '快速开始', link: 'guide/index' },
-    { text: '简介', link: 'guide/intro' },
-  ]
-}
+// function sidebarGuide(): DefaultTheme.SidebarItem[] {
+//   return [
+//     { text: '快速开始', link: 'guide/index' },
+//     { text: '简介', link: 'guide/intro' },
+//   ]
+// }
 
 export const zhSearch: DefaultTheme.LocalSearchOptions['locales'] = {
   zh: {

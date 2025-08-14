@@ -2,7 +2,9 @@
 prev:
   text: 'titleCase 标题格式'
   link: './titleCase'
-next: false
+next:
+  text: 'dedent 取消缩进'
+  link: './dedent'
 ---
 
 # splitWords

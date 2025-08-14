@@ -9,10 +9,10 @@ hero:
   actions:
     - theme: brand
       text: 快速开始
-      link: /guide
-    - theme: alt
-      text: 文档
       link: /func
+    - theme: alt
+      text: 简介
+      link: /func/intro
 
 features:
   - title: 零依赖

@@ -20,10 +20,10 @@ next:
 
 ```js
 // 默认情况 不保留大小写 保留数字
-kebabCase("getTestUuid1234") // "get-test-uuid-1234"
+kebabCase("getTestUUID1234") // "get-test-uuid-1234"
 // 保留大小写 保留数字
-kebabCase("getTestUuid1234", { keepLetterCase: true }) // "get-Test-UUID-1234"
+kebabCase("getTestUUID1234", { keepLetterCase: true }) // "get-Test-UUID-1234"
 // 保留大小写 不保留数字
-kebabCase("getTestUuid1234", { keepLetterCase: true, keepNumber: false }) // "get-Test-UUID"
+kebabCase("getTestUUID1234", { keepLetterCase: true, keepNumber: false }) // "get-Test-UUID"
 ```
 

@@ -20,10 +20,10 @@ next:
 
 ```js
 // 默认情况 不保留大小写 保留数字
-snakeCase("getTestUuid1234") // "get_test_uuid_1234"
+snakeCase("getTestUUID1234") // "get_test_uuid_1234"
 // 保留大小写 保留数字
-snakeCase("getTestUuid1234", { keepLetterCase: true }) // "get_Test_UUID_1234"
+snakeCase("getTestUUID1234", { keepLetterCase: true }) // "get_Test_UUID_1234"
 // 保留大小写 不保留数字
-snakeCase("getTestUuid1234", { keepLetterCase: true, keepNumber: false }) // "get_Test_UUID"
+snakeCase("getTestUUID1234", { keepLetterCase: true, keepNumber: false }) // "get_Test_UUID"
 ```
 

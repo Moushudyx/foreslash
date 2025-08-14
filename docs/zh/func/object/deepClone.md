@@ -31,6 +31,8 @@ clone.map.get(clone) === 'val' // true
 
 ### 高级用法
 
+出于兼容性考虑, `deepClone` 并不支持复制 `HTMLElement`, 但是可以自定义如何复制某个对象
+
 以下例子展示了如何自定义拷贝方法使 `deepClone` 可以支持复制 `HTMLElement`
 
 ```js
@@ -48,7 +50,7 @@ deepClone({ id: 'app', el: document.querySelector('#app') }, { customCloner })
 
 `fastClone` 是 `deepClone` 的简化版, 拥有更好的性能, 但是功能会少一些
 
-- 快速是相对 `deepClone` 而言的，功能比许多互联网上常见的深拷贝代码片段更多
+- 快速是相对 `deepClone` 而言的，功能远比许多互联网上常见的深拷贝代码片段更多
 - 支持处理的情况：**循环引用**、数组、`Date`、正则、`Set`、`Map`、`FormData`
 - 对象上以 `Symbol` 为键的属性无法拷贝
 - 无法拷贝的内容将视为原生数据类型, 直接复制(如函数、`Promise`、`WeakMap`、`WeakSet`)
