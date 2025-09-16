@@ -35,7 +35,7 @@
   "scripts": {
     "dev": "rollup -c -w",
     "build": "rollup -c",
-    "test": "jest --coverage",
+    "test": "tsd --files /test/**/*.test-d.ts && jest --coverage",
     "prepublishOnly": "npm run build && npm run test",
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",
@@ -57,6 +57,7 @@
     "rollup-plugin-dts": "^6.2.1",
     "sass-embedded": "^1.90.0",
     "ts-jest": "^29.2.5",
+    "tsd": "^0.33.0",
     "tslib": "^2.7.0",
     "typescript": "^5.5.4",
     "vitepress": "^1.6.3",
