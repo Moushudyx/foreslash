@@ -1,11 +1,15 @@
 ---
-prev: false
+prev:
+  text: 'chunk 分簇'
+  link: './chunk'
 next:
   text: 'remove 移除'
   link: './remove'
 ---
 
 # range
+
+<VersionTag version="0.2.0" />
 
 返回一个按照一定规律生成的数组, 可以用于计数、生成数列等场景
 
