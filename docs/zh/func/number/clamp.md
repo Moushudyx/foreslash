@@ -5,6 +5,8 @@ next: false
 
 # clamp
 
+<VersionTag version="0.2.2" />
+
 将一个数字限制在指定范围内, 广泛用于数据处理
 
 ## 基本用法

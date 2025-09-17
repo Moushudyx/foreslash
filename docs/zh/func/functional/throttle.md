@@ -9,6 +9,8 @@ next:
 
 # throttle
 
+<VersionTag version="0.2.2" />
+
 将一个高频调用的函数处理为节流函数, 调用一次后一段时间内不再响应
 
 - 与 [debounce 防抖](./debounce)类似, 区别在于防抖会合并多次触发, 并延迟调用

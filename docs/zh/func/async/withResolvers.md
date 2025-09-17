@@ -7,6 +7,8 @@ next: false
 
 # withResolvers
 
+<VersionTag version="0.2.0" />
+
 此方法实现了 ES2024(ES15) 引入 `Promise.withResolvers` 的 ponyfill
 
 ## 基本用法

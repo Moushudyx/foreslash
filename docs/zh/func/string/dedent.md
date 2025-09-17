@@ -9,7 +9,7 @@ next:
 
 # dedent
 
-<VersionTag version="3.0.1" />
+<VersionTag version="0.3.1" />
 
 消除字符串的缩进, 一般用于大段文字的处理
 

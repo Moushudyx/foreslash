@@ -9,6 +9,8 @@ next:
 
 # tryit
 
+<VersionTag version="0.2.0" />
+
 将一个函数处理为“错误优先”(error-first)的函数, 支持同步函数和异步函数
 
 ## 基本用法

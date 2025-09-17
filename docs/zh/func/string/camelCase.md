@@ -9,6 +9,8 @@ next:
 
 # camelCase
 
+<VersionTag version="0.2.0" />
+
 将想要转换格式的字符串(一般是变量名或字段名)处理成小驼峰格式
 
 ## 基本用法

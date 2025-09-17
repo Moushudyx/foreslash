@@ -7,6 +7,8 @@ next: false
 
 # remove
 
+<VersionTag version="0.2.2" />
+
 根据给定的条件来移除数组中的元素(不会影响原数组), 功能类似 `Array.prototype.filter` 但是更加灵活
 
 ## 基本用法

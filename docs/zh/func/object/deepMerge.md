@@ -9,6 +9,8 @@ next:
 
 # deepMerge
 
+<VersionTag version="0.3.0" />
+
 `deepMerge` 可以合并两个对象, 返回合并后的新对象, 可以指定合并的规则实现更多复杂效果
 
 作为基底的对象称为**目标对象**(`target`), 往之合并内容的对象称为**来源对象**(`source`)

@@ -9,6 +9,8 @@ next:
 
 ## deepClone 深拷贝 {#deepClone}
 
+<VersionTag version="0.2.0" />
+
 `deepClone` 可以复制你能在 JS 中用到的绝大多数内容, 且支持定制
 
 - 如果您只想复制一些简单的内容, 推荐使用 `fastClone`

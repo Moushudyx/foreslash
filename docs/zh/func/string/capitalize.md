@@ -9,6 +9,8 @@ next:
 
 # capitalize
 
+<VersionTag version="0.3.0" />
+
 将字符串处理成首字母大写的格式
 
 ## 基本用法
@@ -18,6 +20,8 @@ capitalize('hello world') // 'Hello world'
 ```
 
 ## uncapitalize
+
+<VersionTag version="0.3.0" />
 
 将字符串处理成首字母小写的格式
 

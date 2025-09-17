@@ -9,6 +9,8 @@ next:
 
 # sleep
 
+<VersionTag version="0.2.0" />
+
 返回一个一定时间后自行完成的 `Promise`, 内部实现是 `setTimeout` 因此计时可能不准确
 
 ## 基本用法
