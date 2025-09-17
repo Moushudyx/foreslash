@@ -5,6 +5,7 @@ export * from './number/index'
 export * from './misc/index'
 export * from './random/index'
 export * from './string/index'
+export * from './types/index'
 export * from './utils/index'
 
 export * from './compose'
