@@ -1,1 +1,5 @@
 export * from './clamp'
+export * from './decimalNotation'
+export * from './format'
+export * from './isOdd'
+export * from './round'
