@@ -1,7 +1,7 @@
 import DefaultTheme from 'vitepress/theme'
 import VersionTag from './components/VersionTag.vue'
-import './foreslash'
-import './index.css'
+import '../../../lib/index.umd'
+import './index.scss'
 
 export default {
   ...DefaultTheme,

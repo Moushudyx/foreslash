@@ -18,9 +18,9 @@ features:
   - title: 零依赖
     details: 除类型库外, 没有任何依赖项
   - title: 强类型
-    details: 使用 Typescript 编写, 类型推导完整
-  - title: 高性能
-    details: 尽可能简洁地功能实现, 性能优异
+    details: 使用 Typescript 编写, 类型推导完整, 无需额外类型库
+  - title: 高品质
+    details: 自动化测试覆盖率达 99% 以上, 保证代码质量
 ---
 
 <div style="display: flex; align-items: center; justify-content: center; flex-wrap: wrap; padding: 2rem 1rem .5rem 1rem; gap: .5rem;">
