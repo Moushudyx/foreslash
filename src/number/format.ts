@@ -12,7 +12,7 @@ import { roundBank, roundBase, roundCeil, roundFloor } from './round'
  * - `precision` 小数精度, 默认为 `2`
  * - `round` 数值修约规则
  *   - `'round'` 四舍五入
- *   - `'banker'` 四舍六入五留双
+ *   - `'banker'` 四舍六入五成双
  *   - `'floor'` 向下取整
  *   - `'ceil'` 向上取整
  * @returns 返回一个指定格式的十进制数字

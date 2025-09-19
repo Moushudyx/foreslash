@@ -102,6 +102,7 @@ function sidebarIs(): DefaultTheme.SidebarItem[] {
       base: 'func/array/',
       collapsed: false,
       items: [
+        { text: 'chunk 分簇', link: 'chunk' },
         { text: 'range 范围计数', link: 'range' },
         { text: 'remove 移除', link: 'remove' },
       ],
@@ -110,7 +111,12 @@ function sidebarIs(): DefaultTheme.SidebarItem[] {
       text: '数字操作',
       base: 'func/number/',
       collapsed: false,
-      items: [{ text: 'clamp 限制范围', link: 'clamp' }],
+      items: [
+        { text: 'clamp 限制范围', link: 'clamp' },
+        { text: 'decimalNotation 十进制展示', link: 'decimalNotation' },
+        { text: 'format 格式化', link: 'format' },
+        { text: 'round 数值修约', link: 'round' },
+      ],
     },
     {
       text: '异步函数',

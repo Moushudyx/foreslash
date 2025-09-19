@@ -1,5 +1,4 @@
-import { IsNegative, IsZero } from '@src/types'
-
+import { IsNegative, IsZero } from '../types'
 /**
  * 将一个数组或类数组对象分割成多个指定大小的小块\
  * 类似 Lodash 的 `chunk` 或是 Radash 的 `cluster`\

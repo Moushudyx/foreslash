@@ -1,5 +1,21 @@
 # Change Log
 
+## Version 0.3.2 - 2025-09-
+
+Unstable version
+
+- Feat 🥥 Functions added: `chunk` `decimalNotation` `round` `format` `isOdd` **and** so forth
+- Feat 🥥 Type Utils: `Not` `IsNegative` `IsZero` `IsPositive` `Stringify`
+- Fix 🥕 Document: Added version tags to 19 methods
+- Other fixes and improvements
+
+不稳定版本
+
+- 功能 🥥 添加函数: `chunk` `decimalNotation` `round` `format` `isOdd` 等
+- 功能 🥥 类型工具: `Not` `IsNegative` `IsZero` `IsPositive` `Stringify`
+- 修复 🥕 文档: 补充 19 个方法的版本标签
+- 其他修复与优化
+
 ## Version 0.3.1 - 2025-08-14
 
 Unstable version

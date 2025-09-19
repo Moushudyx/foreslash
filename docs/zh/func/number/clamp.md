@@ -1,6 +1,8 @@
 ---
 prev: false
-next: false
+next:
+  text: 'decimalNotation 十进制展示'
+  link: './decimalNotation'
 ---
 
 # clamp
