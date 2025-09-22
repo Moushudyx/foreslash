@@ -18,9 +18,9 @@ const props = withDefaults(
 )
 const styleColor = computed(() => {
   const { color } = props
-  const colorMap = {
-    primary: 'var(--primary-color, #6cf)',
-    default: 'var(--secondary-color, #6cf)',
+  const colorMap: Record<string, string> = {
+    primary: 'var(--primary-color, #6be)',
+    default: 'var(--secondary-color, #6be)',
   }
   if (!color) return colorMap.default
   if (colorMap[color]) return colorMap[color]
@@ -48,7 +48,7 @@ const styleColor = computed(() => {
     left: 0;
     bottom: 0;
     width: 100%;
-    opacity: 0.12;
+    opacity: 0.1;
     background-color: var(--tag-color);
     pointer-events: none;
     z-index: 0;
