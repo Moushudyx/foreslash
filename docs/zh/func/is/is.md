@@ -253,6 +253,35 @@ isObject(null) // false
 isObject(function () {}) // false
 ```
 
+## isPlainObject 普通对象 {#PlainObject}
+
+判断传入的第一个参数是否为普通对象
+
+- 判断字面量和 `Object.create(null)` 创建的对象
+
+```js
+isPlainObject({}) // true
+isPlainObject(Object.create(null)) // true
+isPlainObject([]) // false
+isPlainObject(null) // false
+isPlainObject(function () {}) // false
+```
+
+### 安全性处理
+
+`isPlainObject` 为安全性做了特殊处理, 可以应对绝大多数恶意构造的对象
+
+```js
+// isPlainObject 做了深度判断, 可以应付下面这种恶意构造的对象
+function Malicious() {
+  Object.defineProperty(this, 'aaa', { enumerable: false })
+}
+Malicious.prototype = Object.create(Object.prototype) // 将原型指向 Object.prototype
+Malicious.prototype.constructor = Object.prototype.constructor // 伪造 constructor
+const obj = new Malicious()
+isPlainObject(obj) // false 成功拦截, 与此同时 radash 等库的同名方法会在这里返回 true
+```
+
 ## isPrimitive 原始类型 {#Primitive}
 
 判断传入的第一个参数是否为原始类型
