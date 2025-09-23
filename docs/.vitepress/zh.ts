@@ -102,6 +102,7 @@ function sidebarIs(): DefaultTheme.SidebarItem[] {
       base: 'func/array/',
       collapsed: false,
       items: [
+        { text: 'cartesianProduct 笛卡尔积', link: 'cartesianProduct' },
         { text: 'chunk 分簇', link: 'chunk' },
         { text: 'range 范围计数', link: 'range' },
         { text: 'remove 移除', link: 'remove' },

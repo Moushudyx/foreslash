@@ -1,5 +1,7 @@
 ---
-prev: false
+prev:
+  text: 'cartesianProduct 笛卡尔积'
+  link: './cartesianProduct'
 next:
   text: 'range 范围计数'
   link: './range'
