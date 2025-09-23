@@ -74,13 +74,14 @@ describe('round', () => {
   })
   it('round', () => {
     // 四舍五入
+    expect(round(12345, 1)).toBe('12345.0') // 补 0
     expect(round(1.95, 1)).toBe('2.0')
     expect(round('1.95', 1)).toBe('2.0')
     expect(round(1.5, 0)).toBe('2')
     expect(round('-1.5', 0)).toBe('-2')
     expect(round(1.5, 0, 'round')).toBe('2')
     expect(round('-1.5', 0, 'round')).toBe('-2')
-     // 遇到不认识的修约方法是默认使用四舍五入
+    // 遇到不认识的修约方法是默认使用四舍五入
     // @ts-ignore
     expect(round(1.5, 0, '12313')).toBe('2')
     // @ts-ignore
@@ -102,5 +103,9 @@ describe('round', () => {
     expect(round(-1.95, 1, 'ceil')).toBe('-1.9')
     expect(round(1.5, 0, 'ceil')).toBe('2')
     expect(round('-1.5', 0, 'ceil')).toBe('-1')
+    // 遇到无法识别的数字
+    expect(round('NaN', 1)).toBe('NaN')
+    expect(round('Infinity', 1)).toBe('Infinity')
+    expect(round(-Infinity, 1)).toBe('-Infinity')
   })
 })

@@ -111,4 +111,23 @@ describe('deepMerge', () => {
     expect(mergeObj1.i.j).toBe('2')
     expect('k' in mergeObj1.i).toBe(false)
   })
+  it('合并策略识别有误时兜底使用覆盖', () => {
+    const iterator = String(1)[Symbol.iterator]
+    const obj1 = { a: { awa: 'qwq' }, d: iterator, e: new Error('1') }
+    const obj2 = { a: { b: 1, c: '2' }, d: new Error('2'), e: iterator }
+    const mergeObj1 = deepMerge(obj1, obj2, {
+      typeStrategy: {
+        Number2Empty: 'keep',
+        // @ts-ignore
+        String2Empty: '111',
+        Any2Any: undefined, // 去掉兜底
+        Iterator2Any: 'override',
+      },
+    })
+    expect(mergeObj1.a.awa).toBe('qwq')
+    expect(mergeObj1.a.b).toBe(undefined)
+    expect(mergeObj1.a.c).toBe('2')
+    expect(mergeObj1.d.message).toBe('2') // 去掉兜底之后, 仍然有一个 override 策略兜底
+    expect(mergeObj1.e).toBe(String(1)[Symbol.iterator])
+  })
 })

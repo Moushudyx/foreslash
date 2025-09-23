@@ -45,7 +45,7 @@ export function _deepMergeBase<Target, Source, Result = Target & Source>(
   } else if (strategy === 'override') {
     return cloner(source) as unknown as Result
   } else {
-    // 未知情况, 默认覆盖
+    // 理论上代码永远不会走到这里, 这行代码只是为了避免 typescript 报错
     return cloner(source) as unknown as Result
   }
 }

@@ -100,7 +100,7 @@ export function getMergeStrategy(
     'override' // 确保 typescript 不报错
   )
 }
-
+/** 根据传入的值, 返回能够内部识别的值类型 */
 export function getBaseMargeType(obj: any): BaseMargeType | 'Empty' {
   if (isMergeEmptyPlaceholder(obj)) return 'Empty'
   const _tag = getTag(obj)

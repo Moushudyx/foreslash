@@ -82,5 +82,6 @@ export async function retry<T>(asyncFunction: RetryFunction<T>, option?: RetryOp
     const delayTime = getDelayTime(retryCounts)
     if (delayTime > 0) await sleep(delayTime)
   }
+  // 理论上代码永远不会走到这里, 这行代码只是为了避免 typescript 报错
   throw new Error('retry failed')
 }

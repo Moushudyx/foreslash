@@ -115,12 +115,9 @@ export function roundBank(
     if (rightNumber > 5) return increase(integer, splitF) // 六入
     // 特殊场景, 后一位确实是 5 但是再后面的数字不是 0
     const rightNumbers = fractional.substring(precision)
-    console.log('rightNumbers:', rightNumbers);
     if (!/^50*$/.test(rightNumbers)) return increase(integer, splitF) // 1.450001 的场景
     // 五成双
     const leftNumber = Number(precision ? fractional[precision - 1] : integer[integer.length - 1])
-    console.log('leftNumber:', leftNumber);
-    console.log('isEven(leftNumber):', isEven(leftNumber));
     if (isEven(leftNumber)) return [integer, splitF] // 五成双 前一位是偶数则不作处理
     else return increase(integer, splitF)
   }
