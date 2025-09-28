@@ -31,3 +31,14 @@ cartesianProduct([1, 2], '12', { 0: 3, 1: 4, length: 2 })
 cartesianProduct([1, 2, 3, 4, 5], '12345', [])
 // []
 ```
+
+## 类型提示
+
+在传入参数数量小于等于 `8` 的情况下会以元组数组的形式提供类型提示
+
+- 超出此数量时会仅返回 `any[][]`
+
+```js
+cartesianProduct([1, 2, 3]) // [number][]
+cartesianProduct([1, 2], '12', { 0: 3, 1: 4, length: 2 }) // [number, string, number][]
+```

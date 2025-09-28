@@ -112,18 +112,14 @@ export function cartesianProduct(...arrList: ArrayLike<any>[]): any[][] {
   // return res;
 }
 // 生成函数重载声明的脚本
-// {
+// with (foreslash) {
 //   const gfn = (num) => {
-//     const arr = Array(num)
-//       .fill(0)
-//       .map((_, i) => i + 1)
-//     return `export function cartesianProduct<${arr.map((n) => 'T' + n).join(', ')}>(${arr
-//       .map((n) => `arr${n}: ArrayLike<T${n}>`)
-//       .join(', ')}): [${arr.map((n) => 'T' + n).join(', ')}][]`
+//     const arr = range(1, num, { getter: (n) => 'T' + n })
+//     return `export function cartesianProduct<${arr.join(', ')}>(${range(1, num, {
+//       getter: (n) => `arr${n}: ArrayLike<T${n}>`,
+//     }).join(', ')}): [${arr.join(', ')}][]`
 //   }
-//   const arr = Array(8)
-//     .fill(0)
-//     .map((_, i) => i + 1)
+//   const arr = range(1, 8)
 //   console.log(arr.map((n) => gfn(n)).join('\n'))
 // }
 // // 会打印:
