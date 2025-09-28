@@ -60,16 +60,10 @@ mergeObj 最终结果如下:
 - `"keep"` 保留目标对象的值
 - `"override"` 保留来源对象的值
 
-传入方法:
-  - 类型 `(param: { target: any; source: any; path: (string | symbol)[]; unhandledValue: any; map: Map<any, any> }) => any`
-  - `target` 当前目标对象上这个位置的值
-  - `source` 当前来源对象上这个位置的值
-  - `path` 当前处理的值在对象上的位置
-  - `map` 用于处理循环引用等情况的 Map 对象
-  - `unhandledValue` 将这个值返回, 可以跳过处理, 交给兜底逻辑
-  - 返回值: 合并后的对象
+### 合并类型
 
-合并类型: 一个字符串 `${来源对象值类型}2${目标对象值类型}`, 常见类型见下
+一个字符串, 用于指定来源对象应该如何合并到目标对象上
+- `${来源对象值类型}2${目标对象值类型}`, 常见**类型**见下
   - 基本类型 `"Number"` `"String"` `"Boolean"` `"Symbol"` `"BigInt"` `"Null"` `"Undefined"`
   - 常见对象 `"Object"` `"Array"` `"Set"` `"Map"` `"FormData"` `"Date"` `"RegExp"` `"Promise"`
   - 函数 `"Function"`
@@ -114,6 +108,35 @@ mergeObj 最终结果如下:
 {
   a: {},
   d: { e: 3, f: 4 }
+}
+*/
+```
+
+### 传入方法(高级用法)
+
+可以传入一个方法用于接管合并过程, 内置默认的 对象、数组、`Map`、`Set` 等深度合并用的就是这个功能
+- 类型 `(param: { target: any; source: any; path: (string | symbol)[]; unhandledValue: any; map: Map<any, any> }) => any`
+  - `target` 当前目标对象上这个位置的值
+  - `source` 当前来源对象上这个位置的值
+  - `path` 当前处理的值在对象上的位置
+  - `map` 用于处理循环引用等情况的 Map 对象
+  - `unhandledValue` 将这个值返回, 可以跳过处理, 交给兜底逻辑
+  - 返回值: 合并后的对象
+
+```js
+const obj1 = { a: { b: '1', c: 3 }, d: { e: '5', f: 6 } }
+const obj2 = { a: { b: '2', c: 2 }, d: { e: '3', f: 4 } }
+const mergeObj = deepMerge(obj1, obj2, {
+  typeStrategy: {
+    Number2Number: ({ target, source }) => target + source,
+    String2String: ({ target, source }) => target + source,
+  },
+})
+/*
+mergeObj 最终结果如下:
+{
+  a: { b: '12', c: 5 },
+  d: { e: '53', f: 10 }
 }
 */
 ```
