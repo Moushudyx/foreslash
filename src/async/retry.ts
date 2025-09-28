@@ -74,7 +74,7 @@ export async function retry<T>(asyncFunction: RetryFunction<T>, option?: RetryOp
         throw { $$exit_retry: err }
       }
     )
-    if (!err) return res as T
+    if (!err) return res
     retryCounts++
     if (err && (err as Error & { $$exit_retry: any }).$$exit_retry)
       throw (err as Error & { $$exit_retry: any }).$$exit_retry
