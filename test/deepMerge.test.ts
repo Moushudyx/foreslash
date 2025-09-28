@@ -111,6 +111,17 @@ describe('deepMerge', () => {
     expect(mergeObj1.i.j).toBe('2')
     expect('k' in mergeObj1.i).toBe(false)
   })
+  it('自定义合并策略', () => {
+    const obj1 = { a: { b: '1', c: 3 }, d: { e: '5', f: 6 } }
+    const obj2 = { a: { b: '2', c: 2 }, d: { e: '3', f: 4 } }
+    const mergeObj = deepMerge(obj1, obj2, {
+      typeStrategy: {
+        Number2Number: ({ target, source }) => target + source,
+        String2String: ({ target, source }) => target + source,
+      },
+    })
+    expect(mergeObj).toEqual({ a: { b: '12', c: 5 }, d: { e: '53', f: 10 } })
+  })
   it('合并策略识别有误时兜底使用覆盖', () => {
     const iterator = String(1)[Symbol.iterator]
     const obj1 = { a: { awa: 'qwq' }, d: iterator, e: new Error('1') }
