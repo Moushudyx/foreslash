@@ -1,7 +1,7 @@
 ---
 prev:
-  text: 'format 格式化'
-  link: './format'
+  text: 'lerp 线性插值'
+  link: './lerp'
 next: false
 ---
 

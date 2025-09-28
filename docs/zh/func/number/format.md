@@ -3,8 +3,8 @@ prev:
   text: 'decimalNotation 十进制展示'
   link: './decimalNotation'
 next:
-  text: 'round 数值修约'
-  link: './round'
+  text: 'lerp 线性插值'
+  link: './lerp'
 ---
 
 # format

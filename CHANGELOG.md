@@ -1,5 +1,17 @@
 # Change Log
 
+## Version 0.3.3 - 2025-
+
+Unstable version
+
+- Feat 🥥 Functions added: `lerp` and so forth
+- Other fixes and improvements
+
+不稳定版本
+
+- 功能 🥥 添加函数: `lerp` 等
+- 其他修复与优化
+
 ## Version 0.3.2 - 2025-09-23
 
 Unstable version
