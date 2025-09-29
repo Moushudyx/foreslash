@@ -4,6 +4,35 @@ import { isArray, isNumber } from '../is'
  * @param val1 第一个值, 当 权重=0 时返回的将是这个值, 可以是数组或二维数组
  * @param val2 第二个值, 当 权重=0 时返回的将是这个值, 可以是数组或二维数组
  * @param t 权重
+ * @example
+ * ```js
+ * // 传入数值
+ * lerp(1, 2, 0) // 1
+ * lerp(1, 2, 0.5) // 1.5
+ * lerp(1, 2, 1) // 2
+ * lerp(1, 2, 3) // 4
+ *
+ * // 传入数组(数组长度必须一致否则会报错)
+ * lerp([1, 2], [2, 4], 0.5) // [1.5, 3]
+ *
+ * // 传入二维数组(数组长度必须一致否则会报错)
+ * lerp(
+ *   [
+ *     [1, 2],
+ *     [3, 4],
+ *   ],
+ *   [
+ *     [11, 12],
+ *     [13, 14],
+ *   ],
+ *   0.5
+ * )
+ * // [
+ * //   [6, 7],
+ * //   [8, 9],
+ * // ]
+ * ```
+ * @version 0.3.3
  */
 export function lerp(val1: number, val2: number, t: number): number
 export function lerp(val1: [number], val2: [number], t: number): [number]
