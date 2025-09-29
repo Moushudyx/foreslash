@@ -3,14 +3,15 @@ import { clamp } from './clamp'
 import { decimalNotation } from './decimalNotation'
 import { roundBank, roundBase, roundCeil, roundFloor } from './round'
 /**
- * 将一个数字转换为指定的格式(如千分位逗号分隔)
+ * 将一个数字转换为指定的格式(如千分位逗号分隔)\
+ * 如果想要将数字转换为科学计数法, 请使用 `scientificNotation`
  * @param num 需要格式化的数字
  * @param options 格式化配置\
- * - `separator` 分割符, 默认为 `','`
- * - `separate` 按位分割, 默认为 `3`
- * - `decimal` 小数点, 默认为 `'.'`
- * - `precision` 小数精度, 默认为 `2`
- * - `round` 数值修约规则
+ * `separator` 分割符, 默认为 `','`\
+ * `separate` 按位分割, 默认为 `3`\
+ * `decimal` 小数点, 默认为 `'.'`\
+ * `precision` 小数精度, 默认为 `2`\
+ * `round` 数值修约规则
  *   - `'round'` 四舍五入
  *   - `'banker'` 四舍六入五成双
  *   - `'floor'` 向下取整
