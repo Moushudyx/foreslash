@@ -1,7 +1,7 @@
 ---
 prev:
-  text: 'decimalNotation 十进制展示'
-  link: './decimalNotation'
+  text: 'scientificNotation 科学计数法'
+  link: './scientificNotation'
 next:
   text: 'lerp 线性插值'
   link: './lerp'
@@ -34,6 +34,8 @@ format('-Infinity') // -Infinity
 ## 格式化配置
 
 格式化具体配置如下, 默认配置是千分位逗号分割、保留两位小数
+
+四种数值修约方法可以参考 [round](./round) 方法的文档
 
 - `separator` 分割符, 默认为 `','`
 - `separate` 按位分割, 默认为 `3`

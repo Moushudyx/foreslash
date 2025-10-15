@@ -115,6 +115,7 @@ function sidebarIs(): DefaultTheme.SidebarItem[] {
       items: [
         { text: 'clamp 限制范围', link: 'clamp' },
         { text: 'decimalNotation 十进制展示', link: 'decimalNotation' },
+        { text: 'scientificNotation 科学计数法', link: 'scientificNotation' },
         { text: 'format 格式化', link: 'format' },
         { text: 'lerp 线性插值', link: 'lerp' },
         { text: 'round 数值修约', link: 'round' },

@@ -12,6 +12,8 @@ describe('scientificNotation', () => {
     // 多种输出测试
     expect(scientificNotation(1.234e-6, { type: 'exp' })).toEqual('1.234e-6')
     expect(scientificNotation(1.234e6, { type: 'exp' })).toEqual('1.234e+6')
+    expect(scientificNotation(6.534e-6, { type: 'js' })).toEqual('6.534*10**-6')
+    expect(scientificNotation(6.534e6, { type: 'js' })).toEqual('6.534*10**6')
     expect(scientificNotation(6.534e-6, { type: 'code' })).toEqual('6.534*10^-6')
     expect(scientificNotation(6.534e6, { type: 'code' })).toEqual('6.534*10^6')
     expect(scientificNotation(-4.321e-8, { type: 'html' })).toEqual('-4.321&#x00d7;10<sup>-8</sup>')
@@ -25,5 +27,10 @@ describe('scientificNotation', () => {
     expect(scientificNotation(-9.87e9, { type: 'json', precision: 1, round: 'floor' })).toEqual(
       '{"number":"-9.9","exp":9}'
     )
+  })
+  it('非法参数测试', () => {
+    expect(scientificNotation(NaN)).toBe('NaN')
+    expect(scientificNotation(Infinity)).toBe('Infinity')
+    expect(scientificNotation('not a number')).toBe('NaN')
   })
 })

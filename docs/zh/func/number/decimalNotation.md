@@ -3,8 +3,8 @@ prev:
   text: 'clamp 限制范围'
   link: './clamp'
 next:
-  text: 'format 格式化'
-  link: './format'
+  text: 'scientificNotation 科学计数法'
+  link: './scientificNotation'
 ---
 
 # decimalNotation

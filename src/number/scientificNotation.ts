@@ -14,7 +14,7 @@ import { roundBank, roundBase, roundCeil, roundFloor } from './round'
  *   - `'js'` 适合用于 JavaScript 的算式 `1.23*10**456`
  *   - `'code'` 适合用于其他计算机语言的算式 `1.23*10^456`
  *   - `'html'` 适合用于 HTML 展示的字符串 `1.23&#x00d7;10<sup>456</sup>`
- *   - `'json'` 一个 JSON 字符串, 可以自由处理 `{ "number": 1.23, "exp": 456 }`
+ *   - `'json'` 一个 JSON 字符串, 可以自由处理 `{"number":1.23,"exp":456}`
  *
  * `precision` 小数精度, 默认不作数值修约\
  * `round` 数值修约规则
