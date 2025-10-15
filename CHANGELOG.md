@@ -1,15 +1,15 @@
 # Change Log
 
-## Version 0.3.3 - 2025-
+## Version 0.3.3 - 2025-10-
 
 Unstable version
 
-- Feat 🥥 Functions added: `lerp` `scientificNotation` and so forth
+- Feat 🥥 Functions added: `lerp` `scientificNotation` `castArray` and so forth
 - Other fixes and improvements
 
 不稳定版本
 
-- 功能 🥥 添加函数: `lerp` `scientificNotation` 等
+- 功能 🥥 添加函数: `lerp` `scientificNotation` `castArray` 等
 - 其他修复与优化
 
 ## Version 0.3.2 - 2025-09-23

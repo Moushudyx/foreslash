@@ -103,6 +103,7 @@ function sidebarIs(): DefaultTheme.SidebarItem[] {
       collapsed: false,
       items: [
         { text: 'cartesianProduct 笛卡尔积', link: 'cartesianProduct' },
+        { text: 'castArray 转换为数组', link: 'castArray' },
         { text: 'chunk 分簇', link: 'chunk' },
         { text: 'range 范围计数', link: 'range' },
         { text: 'remove 移除', link: 'remove' },

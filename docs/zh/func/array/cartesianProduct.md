@@ -1,8 +1,8 @@
 ---
 prev: false
 next:
-  text: 'chunk 分簇'
-  link: './chunk'
+  text: 'castArray 转换为数组'
+  link: './castArray'
 ---
 
 # cartesianProduct

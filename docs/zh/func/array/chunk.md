@@ -1,7 +1,7 @@
 ---
 prev:
-  text: 'cartesianProduct 笛卡尔积'
-  link: './cartesianProduct'
+  text: 'castArray 转换为数组'
+  link: './castArray'
 next:
   text: 'range 范围计数'
   link: './range'

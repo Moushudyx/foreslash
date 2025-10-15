@@ -1,4 +1,5 @@
 export * from './cartesianProduct'
+export * from './castArray'
 export * from './chunk'
 export * from './range'
 export * from './remove'
