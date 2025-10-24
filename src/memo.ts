@@ -35,6 +35,7 @@ function _getKey(args: any[]) {
  *   return fib(n - 1) + fib(n - 2)
  * })
  * ```
+ * @version 0.2.1
  */
 export function memo<TArgs extends any[], TRes>(
   fn: (...args: TArgs) => TRes,
