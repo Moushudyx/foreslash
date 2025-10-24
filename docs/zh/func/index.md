@@ -34,6 +34,32 @@ Foreslash 打包为 ESM、CJS、UMD 格式, 可以直接在浏览器与 Node.js 
 >
 > 由于不同的环境存在客观差异(比如只有 Node.js 环境存在原生的 `Buffer` 对象), 因此不同环境下, 同一个方法的下行为不完全一致
 
+### 在线使用
+
+你可以在网页上引入 UMD 包来使用 Foreslash
+
+```html
+<script src="https://cdn.jsdelivr.net/npm/foreslash@latest/lib/index.umd.js"></script>
+```
+
+如果你想现在就尝试, 这个文档加载了全局变量 `foreslash` 你可以:
+
+打开浏览器控制台, 输入如下代码
+
+```js
+with (foreslash) {
+  // foreslash.range 返回一个按照一定规律生成的数组
+  const _list = range(1, 5) // [1, 2, 3, 4, 5]
+  const list = range(1, 5, { getter: (num) => ' '.repeat(5 - num) + '*'.repeat(num) })
+  console.log(list.join('\n'))
+}
+//     *
+//    **
+//   ***
+//  ****
+// *****
+```
+
 ### 示例
 
 常用的方法有深拷贝 [deepClone](../func/object/deepClone)、柯里化 [curry](../func/functional/curry) 等

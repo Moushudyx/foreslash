@@ -47,6 +47,6 @@ isEmpty(undefined) // true
 isEmpty(() => 0) // false
 
 // 此方法会将包装对象视为空
-isEmpty(new Number(0)) // true
-isEmpty(new String('')) // true
+isEmpty(new Number(1145)) // true
+isEmpty(new String('14')) // true
 ```
