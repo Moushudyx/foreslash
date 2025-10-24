@@ -11,7 +11,7 @@ export function _cloneArray<T extends Array<any>>(obj: T, map: Map<any, any>, cl
   map.set(obj, res)
   // 使用经典 for 循环以避免 for...of 或者 forEach 调用迭代器的开销
   for (let index = 0; index < obj.length; index++) {
-    res[index] = cloner(obj[index], map, ...args);
+    res[index] = cloner(obj[index], map, ...args)
   }
   return res
 }
@@ -65,7 +65,7 @@ export function _cloneFormData<T extends FormData>(obj: T, map: Map<any, any>, c
  * @param obj 要拷贝的 `ArrayBuffer`
  * @param map 缓存对象，用于处理循环引用
  */
-export function _cloneArrayBuffer<T extends ArrayBuffer>(obj: T, map: Map<any, any>): T {
+export function _cloneArrayBuffer<T extends ArrayBuffer | SharedArrayBuffer>(obj: T, map: Map<any, any>): T {
   const res = new ArrayBuffer(obj.byteLength) as T
   map.set(obj, res)
   new Uint8Array(res).set(new Uint8Array(obj))
@@ -77,7 +77,7 @@ export function _cloneArrayBuffer<T extends ArrayBuffer>(obj: T, map: Map<any, a
  * @param map 缓存对象，用于处理循环引用
  */
 export function _cloneBlob<T extends Blob>(obj: T, map: Map<any, any>): T {
-  const res = obj.slice(0, obj.size, obj.type) as T;
+  const res = obj.slice(0, obj.size, obj.type) as T
   map.set(obj, res)
   return res
 }

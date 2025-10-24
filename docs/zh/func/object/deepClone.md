@@ -14,16 +14,16 @@ next:
 `deepClone` 可以复制你能在 JS 中用到的绝大多数内容, 且支持定制
 
 - 如果您只想复制一些简单的内容, 推荐使用 `fastClone`
-- 支持处理包括**循环引用**、数组、正则、`DataView`、`TypedArray` 等复杂数据类型
+- 在 `fastClone` 的基础上, 支持处理包括 `DataView`、`TypedArray`、`File`、`Blob` 等复杂数据类型
 - 可以配置是否拷贝对象的原型、属性 descriptor、以 `Symbol` 为键的属性
   - 默认**不拷贝**对象的原型、**不拷贝**属性 descriptor、**拷贝**以 `Symbol` 为键的属性
 - 无法拷贝的内容将视为原生数据类型, 直接复制(如函数、`Promise`、`WeakMap`、`WeakSet`)
   - 您可以自定义拷贝方法, 以满足特殊的业务需求
 - 层级过深(500 层以上)时可能导致栈溢出
 
-```js
+```js {2,7}
 const obj = { map: new Map() }
-obj.map.set(obj, 'val')
+obj.map.set(obj, 'val') // 循环引用
 // 用 deepClone 复制带有 Map 和循环引用的对象
 const clone = deepClone(obj)
 clone === obj // false

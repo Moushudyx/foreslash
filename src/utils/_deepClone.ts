@@ -1,12 +1,16 @@
 import {
   isArray,
+  isArrayBuffer,
   isBlob,
+  isDataView,
+  isDate,
   isFile,
   isFormData,
   isFunction,
   isMap,
   isObject,
   isPromise,
+  isRegExp,
   isSet,
   isTypedArray,
   isWeakMap,
@@ -53,15 +57,15 @@ export function _deepClone<T>(obj: T, map: Map<any, any>, options: CloneOptions)
   if (isFormData(obj)) return _cloneFormData(obj, map, _deepClone, options)
   // 其他情况
   let res: T
-  if (obj instanceof Date) {
+  if (isDate(obj)) {
     // 日期
     res = new Date(obj.valueOf()) as T
     map.set(obj, res)
-  } else if (obj instanceof RegExp) {
+  } else if (isRegExp(obj)) {
     // 正则
     res = new RegExp(obj.source, obj.flags) as T
     map.set(obj, res)
-  } else if (obj instanceof ArrayBuffer) {
+  } else if (isArrayBuffer(obj)) {
     // ArrayBuffer
     res = _cloneArrayBuffer(obj, map)
     // map.set(obj, res) // _cloneArrayBuffer 内部有处理
@@ -69,7 +73,7 @@ export function _deepClone<T>(obj: T, map: Map<any, any>, options: CloneOptions)
     // TypedArray
     res = new (obj.constructor as any)(_cloneArrayBuffer(obj.buffer, map), obj.byteOffset, obj.length)
     map.set(obj, res)
-  } else if (obj instanceof DataView) {
+  } else if (isDataView(obj)) {
     // DataView
     res = new DataView(
       map.has(obj.buffer) ? map.get(obj.buffer) : _cloneArrayBuffer(obj.buffer, map),
