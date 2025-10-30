@@ -1,5 +1,5 @@
+import { chunk } from '../array'
 import { decimalNotation } from './decimalNotation'
-// \u0305
 /**
  * 将一个数字转换为罗马数字, 罗马数字没有 `0`、小数和负数
  * @param num 需要转换的数字
@@ -15,7 +15,7 @@ import { decimalNotation } from './decimalNotation'
  *   - `'strict'` 严格区分千分位
  *
  * `zero` 用什么字符串表示 `0` (罗马数字里没有 `0`), 不填默认为 `'0'`\
- * `one` 用什么字符串表示 `1` (罗马数字里可能写作 `Yo`), 不填默认为 `'I'`
+ * `one` 用什么字符串表示 `1` (你可以设置一个彩蛋, 比如输出 `Yo`), 不填默认为 `'I'`, 这项**只会影响数字 1**
  * @returns 返回一个罗马数字表示的数字
  * @example
  * ```js
@@ -35,7 +35,8 @@ export function romanNumerals(
   if (/NaN|Inf/.test(str)) return str
   const type = (options || {}).type || 'unicode'
   const thousand = (options || {}).thousand || 'normal'
-  const [integer] = str.split('.')
+  const forceSplitThousand = thousand === 'strict'
+  const integer = str.split('.')[0].replace('-', '')
   // 特殊处理 0 和 1
   if (integer === '0') {
     const zero = (options || {}).zero || '0'
@@ -47,7 +48,43 @@ export function romanNumerals(
     if (type === 'json') return `['${one}']`
     else return one
   }
-  // TODO
+  const chunks = chunk(Array.from(integer).reverse(), 3)
+  const romanChunks: string[] = []
+  for (let i = 0; i < chunks.length; i++) {
+    const val = Number(chunks[i])
+    if (i === chunks.length - 2 && !forceSplitThousand && Number(chunks[i + 1]) < 4) {
+      romanChunks.push(number2roman(val + Number(chunks[i + 1]) * 1000))
+      break
+    } else {
+      romanChunks.push(number2roman(val))
+    }
+  }
+  // 处理输出
+  switch (type) {
+    case 'js':
+      // I\\u0305V\\u0305XC
+      return romanChunks
+        .map((str, index) => str.split('').map((s) => s + '\\\\u0305'.repeat(index)))
+        .reverse()
+        .join('')
+    case 'html':
+      // I&#x0305;V&#x0305;XC
+      return romanChunks
+        .map((str, index) => str.split('').map((s) => s + '&#x0305;'.repeat(index)))
+        .reverse()
+        .join('')
+    case 'json':
+      // ['XC', 'IV']
+      return `[${romanChunks.join(', ')}]`
+    case 'unicode':
+    default:
+      // I̅V̅XC
+      // \u0305 上划线
+      return romanChunks
+        .map((str, index) => str.split('').map((s) => s + '\u0305'.repeat(index)))
+        .reverse()
+        .join('')
+  }
 }
 /** 标准处理, 数字转罗马数字 */
 function number2roman(num: number) {
