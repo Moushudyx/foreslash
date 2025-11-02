@@ -4,13 +4,13 @@
 
 Unstable version
 
-- Feat 🥥 Functions added: `lerp` `scientificNotation` `castArray` and so forth
+- Feat 🥥 Functions added: `lerp` `scientificNotation` `castArray` `randomDistribution` and so forth
 - Fix 🥕 Document: Added version tags to `memo` and description to several methods
 - Other fixes and improvements
 
 不稳定版本
 
-- 功能 🥥 添加函数: `lerp` `scientificNotation` `castArray` 等
+- 功能 🥥 添加函数: `lerp` `scientificNotation` `castArray` `randomDistribution` 等
 - 修复 🥕 文档: 补充 `memo` 的版本标签和部分方法的说明
 - 其他修复与优化
 

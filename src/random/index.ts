@@ -1,4 +1,5 @@
 export * from './randomChoice'
+export * from './randomDistribution'
 export * from './randomInt'
 export * from './randomString'
 export * from './shuffle'

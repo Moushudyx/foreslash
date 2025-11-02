@@ -1,8 +1,8 @@
 ---
 prev: false
 next:
-  text: 'randomInt 随机数字'
-  link: './randomInt'
+  text: 'randomDistribution 随机分布'
+  link: './randomDistribution'
 ---
 
 # randomChoice

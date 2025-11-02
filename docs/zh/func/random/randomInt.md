@@ -1,7 +1,7 @@
 ---
 prev:
-  text: 'randomChoice 随机抽选'
-  link: './randomChoice'
+  text: 'randomDistribution 随机分布'
+  link: './randomDistribution'
 next:
   text: 'randomString 随机字符串'
   link: './randomString'

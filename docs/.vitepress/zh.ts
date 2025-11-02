@@ -155,6 +155,7 @@ function sidebarIs(): DefaultTheme.SidebarItem[] {
       collapsed: false,
       items: [
         { text: 'randomChoice 随机抽选', link: 'randomChoice' },
+        { text: 'randomDistribution 随机分布', link: 'randomDistribution' },
         { text: 'randomInt 随机数字', link: 'randomInt' },
         { text: 'randomString 随机字符串', link: 'randomString' },
         { text: 'shuffle 打乱数组', link: 'shuffle' },
