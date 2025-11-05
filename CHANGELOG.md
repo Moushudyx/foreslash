@@ -1,6 +1,6 @@
 # Change Log
 
-## Version 0.3.3 - 2025-11-
+## Version 0.3.3 - 2025-11-05
 
 Unstable version
 
