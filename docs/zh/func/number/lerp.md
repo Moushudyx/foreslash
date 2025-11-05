@@ -1,7 +1,7 @@
 ---
 prev:
-  text: 'format 格式化'
-  link: './format'
+  text: 'romanNumerals 罗马数字'
+  link: './romanNumerals'
 next:
   text: 'round 数值修约'
   link: './round'

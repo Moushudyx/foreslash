@@ -3,8 +3,8 @@ prev:
   text: 'scientificNotation 科学计数法'
   link: './scientificNotation'
 next:
-  text: 'lerp 线性插值'
-  link: './lerp'
+  text: 'romanNumerals 罗马数字'
+  link: './romanNumerals'
 ---
 
 # format

@@ -1,10 +1,10 @@
 # Change Log
 
-## Version 0.3.3 - 2025-10-
+## Version 0.3.3 - 2025-11-
 
 Unstable version
 
-- Feat 🥥 Functions added: `lerp` `scientificNotation` `castArray` `randomDistribution` and so forth
+- Feat 🥥 Functions added: `lerp` `scientificNotation` `castArray` `romanNumerals` `randomDistribution` and so forth
 - Fix 🥕 Document: Added version tags to `memo` and description to several methods
 - Other fixes and improvements
 

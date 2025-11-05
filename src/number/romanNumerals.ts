@@ -8,10 +8,10 @@ import { decimalNotation } from './decimalNotation'
  *   - `'unicode'` 使用 Unicode 表示 `'I̅V̅XC'`
  *   - `'js'` 适合用于 JavaScript 代码字符串 `'I\\u0305V\\u0305XC'`
  *   - `'html'` 适合用于 HTML 展示的字符串 `'I&#x0305;V&#x0305;XC'`
- *   - `'json'` 一个 JSON 字符串, 具体数值是下标^1000 `['XC', 'IV']`
+ *   - `'json'` 一个 JSON 字符串, 具体数值是下标^1000 `["XC", "IV"]`
  *
  * `thousand` 千分位类型, 默认为 `normal`
- *   - `'normal'` 超过 3999 的部分才使用上划线区分
+ *   - `'normal'` 习惯用法, 超过 3999 的部分才使用上划线区分
  *   - `'strict'` 严格区分千分位
  *
  * `zero` 用什么字符串表示 `0` (罗马数字里没有 `0`), 不填默认为 `'0'`\
@@ -19,13 +19,15 @@ import { decimalNotation } from './decimalNotation'
  * @returns 返回一个罗马数字表示的数字
  * @example
  * ```js
+ * romanNumerals(2025) // MMXXV
+ * romanNumerals(2025, { thousand: 'strict' }) // I̅I̅XXV
  * ```
  * @version 0.3.3
  */
 export function romanNumerals(
   num: string | number,
   options?: {
-    type?: 'unicode' | 'exp' | 'js' | 'code' | 'html' | 'json'
+    type?: 'unicode' | 'js' | 'html' | 'json'
     thousand?: 'normal' | 'strict'
     zero?: string
     one?: string
@@ -40,18 +42,18 @@ export function romanNumerals(
   // 特殊处理 0 和 1
   if (integer === '0') {
     const zero = (options || {}).zero || '0'
-    if (type === 'json') return `['${zero}']`
+    if (type === 'json') return `["${zero}"]`
     else return zero
   }
   if (integer === '1') {
     const one = (options || {}).one || 'I'
-    if (type === 'json') return `['${one}']`
+    if (type === 'json') return `["${one}"]`
     else return one
   }
   const chunks = chunk(Array.from(integer).reverse(), 3)
   const romanChunks: string[] = []
   for (let i = 0; i < chunks.length; i++) {
-    const val = Number(chunks[i])
+    const val = Number(chunks[i].reverse().join(''))
     if (i === chunks.length - 2 && !forceSplitThousand && Number(chunks[i + 1]) < 4) {
       romanChunks.push(number2roman(val + Number(chunks[i + 1]) * 1000))
       break
@@ -64,24 +66,39 @@ export function romanNumerals(
     case 'js':
       // I\\u0305V\\u0305XC
       return romanChunks
-        .map((str, index) => str.split('').map((s) => s + '\\\\u0305'.repeat(index)))
+        .map((str, index) =>
+          str
+            .split('')
+            .map((s) => s + '\\\\u0305'.repeat(index))
+            .join('')
+        )
         .reverse()
         .join('')
     case 'html':
       // I&#x0305;V&#x0305;XC
       return romanChunks
-        .map((str, index) => str.split('').map((s) => s + '&#x0305;'.repeat(index)))
+        .map((str, index) =>
+          str
+            .split('')
+            .map((s) => s + '&#x0305;'.repeat(index))
+            .join('')
+        )
         .reverse()
         .join('')
     case 'json':
-      // ['XC', 'IV']
-      return `[${romanChunks.join(', ')}]`
+      // ["XC", "IV"]
+      return `[${romanChunks.map((str) => `"${str}"`).join(', ')}]`
     case 'unicode':
     default:
       // I̅V̅XC
       // \u0305 上划线
       return romanChunks
-        .map((str, index) => str.split('').map((s) => s + '\u0305'.repeat(index)))
+        .map((str, index) =>
+          str
+            .split('')
+            .map((s) => s + '\u0305'.repeat(index))
+            .join('')
+        )
         .reverse()
         .join('')
   }
