@@ -5,6 +5,7 @@ describe('scientificNotation', () => {
     // 四舍五入
     expect(scientificNotation(1e12)).toEqual('1×10¹²')
     expect(scientificNotation(1e12, { precision: 2 })).toEqual('1.00×10¹²')
+    expect(scientificNotation(1.1, { precision: 2 })).toEqual('1.10×10⁰')
     expect(scientificNotation(3)).toEqual('3×10⁰')
     expect(scientificNotation(3.2357, { precision: 3 })).toEqual('3.236×10⁰')
     expect(scientificNotation(-2.33e-8)).toEqual('-2.33×10⁻⁸')

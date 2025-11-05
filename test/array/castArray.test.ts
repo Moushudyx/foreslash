@@ -6,5 +6,7 @@ describe('castArray', () => {
     expect(castArray([])).toEqual([])
     expect(castArray([1])).toEqual([1])
     expect(castArray(['1'])).toEqual(['1'])
+    expect(castArray(1)).toEqual([1])
+    expect(castArray('1')).toEqual(['1'])
   })
 })
