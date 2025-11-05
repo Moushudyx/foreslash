@@ -31,7 +31,7 @@ describe('randomChoice', () => {
   })
   it('高精度测试', () => {
     const threshold = 5e-8
-    const hpTestCount = 5e6
+    const hpTestCount = 1e7
     // 0.12345
     let count = 0
     const T1 = 0.12345
