@@ -1,6 +1,6 @@
 import { pipe, randomDistribution } from '../../src/index'
 
-const testCount = 1e4
+const testCount = 5e4
 
 describe('randomChoice', () => {
   it('基本测试', () => {
@@ -59,5 +59,21 @@ describe('randomChoice', () => {
       count += p3()
     }
     expect(count / hpTestCount).toBeCloseTo(T3, 3)
+  })
+  it('非法参数测试', () => {
+    // 1
+    let count = 0
+    const p1 = pipe(randomDistribution(1.5), Number)
+    for (let i = 0; i < testCount; i++) {
+      count += p1()
+    }
+    expect(count).toBe(testCount)
+    // 0
+    count = 0
+    const p2 = pipe(randomDistribution(-1), Number)
+    for (let i = 0; i < testCount; i++) {
+      count += p2()
+    }
+    expect(count).toBe(0)
   })
 })

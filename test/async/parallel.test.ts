@@ -23,7 +23,7 @@ describe('defer', () => {
     // 总计 1.2 秒
     const fn = jest.fn(async (n: number) => {
       runOrder.push(n)
-      await sleep([0, 800, 500, 400, 300, 200][n])
+      await sleep([0, 800, 500, 400, 300, 250][n])
       return n * 2
     })
     let runOrder: number[] = []
