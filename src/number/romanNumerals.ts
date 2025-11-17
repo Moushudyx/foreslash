@@ -8,7 +8,7 @@ import { decimalNotation } from './decimalNotation'
  *   - `'unicode'` 使用 Unicode 表示 `'I̅V̅XC'`
  *   - `'js'` 适合用于 JavaScript 代码字符串 `'I\\u0305V\\u0305XC'`
  *   - `'html'` 适合用于 HTML 展示的字符串 `'I&#x0305;V&#x0305;XC'`
- *   - `'json'` 一个 JSON 字符串, 具体数值是下标^1000 `["XC", "IV"]`
+ *   - `'json'` 一个 JSON 字符串, 具体数值是下标^1000 `'["XC", "IV"]'`
  *
  * `thousand` 千分位类型, 默认为 `normal`
  *   - `'normal'` 习惯用法, 超过 3999 的部分才使用上划线区分
