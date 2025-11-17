@@ -55,7 +55,7 @@ export function scientificNotation(
   if (/NaN|Inf/.test(str)) return str
   const type = (options || {}).type || 'unicode'
   const _precision = (options || {}).precision
-  const precision = isNumber(_precision) ? clamp(_precision ?? 2, 0, Infinity) : null
+  const precision = isNumber(_precision) ? clamp(_precision, 0, Infinity) : null
   const round = (options || {}).round || 'round'
   let [integer, fractional] = str.split('.')
   let sign = ''
