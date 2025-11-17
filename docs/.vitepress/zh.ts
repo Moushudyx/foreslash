@@ -95,6 +95,8 @@ function sidebarIs(): DefaultTheme.SidebarItem[] {
         { text: 'fastClone 快速深拷贝', link: 'deepClone#fastClone' },
         { text: 'deepMerge 深合并', link: 'deepMerge' },
         { text: 'isEmpty 判断为空', link: 'isEmpty' },
+        { text: 'omit 排除键', link: 'omit' },
+        { text: 'pick 选择键', link: 'pick' },
       ],
     },
     {

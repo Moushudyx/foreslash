@@ -2,7 +2,9 @@
 prev:
   text: 'deepMerge 深合并'
   link: './deepMerge'
-next: false
+next:
+  text: 'omit 判断为空'
+  link: './omit'
 ---
 
 # isEmpty

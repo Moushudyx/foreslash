@@ -1,5 +1,17 @@
 # Change Log
 
+## Version 0.3.4 - 2025-11-
+
+Unstable version
+
+- Feat 🥥 Functions added: `omit` `pick`
+- Other fixes and improvements
+
+不稳定版本
+
+- 功能 🥥 添加函数: `omit` `pick`
+- 其他修复与优化
+
 ## Version 0.3.3 - 2025-11-05
 
 Unstable version
