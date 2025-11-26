@@ -4,8 +4,8 @@
  * @returns 如果是奇数则返回 true 否则返回 false
  * @version 0.3.2
  */
-export function isOdd(num: number) {
-  return !!(num & 1)
+export function isOdd(num: number | bigint) {
+  return !!(typeof num === 'bigint' ? num & BigInt(1) : num & 1)
 }
 /**
  * 检查一个数字是否为偶数
@@ -13,6 +13,6 @@ export function isOdd(num: number) {
  * @returns 如果是偶数则返回 true 否则返回 false
  * @version 0.3.2
  */
-export function isEven(num: number) {
-  return !(num & 1)
+export function isEven(num: number | bigint) {
+  return !(typeof num === 'bigint' ? num & BigInt(1) : num & 1)
 }
