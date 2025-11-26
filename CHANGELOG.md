@@ -4,12 +4,14 @@
 
 Unstable version
 
-- Feat 🥥 Functions added: `omit` `pick`
+- Feat 🥥 Functions added: `omit` `pick` `uuidV7`
+- Feat 🥥 Function change: `isOdd` and `isEven` now support BigInt
 - Other fixes and improvements
 
 不稳定版本
 
-- 功能 🥥 添加函数: `omit` `pick`
+- 功能 🥥 添加函数: `omit` `pick` `uuidV7`
+- 功能 🥥 变更函数: `isOdd` 和 `isEven` 现在支持 BigInt
 - 其他修复与优化
 
 ## Version 0.3.3 - 2025-11-05

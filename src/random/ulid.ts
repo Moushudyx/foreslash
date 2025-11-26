@@ -24,6 +24,7 @@ let lastNum2 = 0
  * ulid(true, 0) // 0000000000D64N3ZR75CXM1J83 同一时间戳单调递增
  * ulid(false, 0) // 0000000000Z3VJ5THVXV4ZE6CO 取消单调性
  * ```
+ * @version 0.1.2
  */
 export function ulid(monotonic = true, time = NaN) {
   const now = isInteger(time) ? time : Date.now()

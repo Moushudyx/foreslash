@@ -9,6 +9,8 @@ next:
 
 # ulid
 
+<VersionTag version="0.1.2" />
+
 生成一个标准的 ULID 格式字符串
 
 字符串格式为 `TTTTTTTTTT-RRRRRRRRRRRRRRRR`

@@ -7,6 +7,7 @@
  * shuffle('abcdefg') // ['d', 'e', 'a', 'c', 'g', 'f', 'b']
  * shuffle([1, 2, 3, 4, 5, 6, 7, 8]) // [3, 2, 6, 5, 8, 1, 7, 4]
  * ```
+ * @version 0.1.1
  */
 export function shuffle<T>(arr: ArrayLike<T> | Iterable<T>): Array<T> {
   const array = Array.from(arr)

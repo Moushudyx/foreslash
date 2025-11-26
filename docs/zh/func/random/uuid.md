@@ -7,6 +7,8 @@ next: false
 
 # uuid
 
+<VersionTag version="0.1.2" />
+
 生成一个符合标准的 UUID V4 和 UUID V7 字符串
 
 字符串格式为
@@ -15,6 +17,9 @@ next: false
   - 其中 `t` 的部分是时间戳
 
 具体逻辑可以看 [UUID 标准](https://www.rfc-editor.org/rfc/rfc9562.html)
+
+> [!NOTE] 注意
+> `uuidV7` 方法需要 `0.3.4` 或更高版本才能使用
 
 ## 基本用法
 

@@ -9,6 +9,8 @@ next:
 
 # shuffle
 
+<VersionTag version="0.1.1" />
+
 使用 Fisher-Yates 算法打乱一个数组, 返回打乱后的新数组
 
 - 这个算法的时间复杂度是 O(n) 因此不必担心性能问题

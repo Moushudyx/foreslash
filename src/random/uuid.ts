@@ -8,6 +8,7 @@ export const uuidNil = '00000000-0000-0000-0000-000000000000'
  * ```js
  * uuidV4() // "ea64fb4f-a0a2-4193-8374-d291a522d8b3"
  * ```
+ * @version 0.1.2
  */
 export function uuidV4() {
   const r = randomHexString(30) // 8 + 4 + 3 + 3 + 12
