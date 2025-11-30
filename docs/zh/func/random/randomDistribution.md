@@ -9,6 +9,8 @@ next:
 
 # randomDistribution
 
+<VersionTag version="0.3.3" />
+
 一个广泛使用的[伪随机数生成算法(PRD)](https://github.com/Moushudyx/pseudo-random-distribution), 包括
 
 返回一个方法, 输出为布尔型, 可以生成一个比正常随机序列**分布更加均匀的伪随机数列**
