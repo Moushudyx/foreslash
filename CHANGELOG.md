@@ -1,17 +1,31 @@
 # Change Log
 
-## Version 0.3.4 - 2025-11-
+## Version 0.3.5 - 2025-11-30
 
 Unstable version
 
-- Feat 🥥 Functions added: `omit` `pick` `uuidV7`
+- Feat 🥥 Functions added: `uuidV7`
 - Feat 🥥 Function change: `isOdd` and `isEven` now support BigInt
+- Fix 🥕 Document: Added version tags to several methods
 - Other fixes and improvements
 
 不稳定版本
 
-- 功能 🥥 添加函数: `omit` `pick` `uuidV7`
+- 功能 🥥 添加函数: `uuidV7`
 - 功能 🥥 变更函数: `isOdd` 和 `isEven` 现在支持 BigInt
+- 修复 🥕 文档: 补充部分方法的版本标签
+- 其他修复与优化
+
+## Version 0.3.4 - 2025-11-17
+
+Unstable version
+
+- Feat 🥥 Functions added: `omit` `pick`
+- Other fixes and improvements
+
+不稳定版本
+
+- 功能 🥥 添加函数: `omit` `pick`
 - 其他修复与优化
 
 ## Version 0.3.3 - 2025-11-05
