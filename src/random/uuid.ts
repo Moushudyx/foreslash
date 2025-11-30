@@ -30,7 +30,7 @@ export function uuidV7() {
   const r = randomHexString(18) // 3 + 3 + 12
   let t = Date.now().toString(16)
   if (t.length < 12) t = '0'.repeat(12 - t.length) + t
-  t = t.slice(0, 12)
+  t = t.slice(t.length - 12, t.length)
   return (
     `${t.slice(0, 8)}-${t.slice(8, 12)}-7${r.slice(0, 3)}-` +
     `${'89ab'[Math.floor(Math.random() * 4)]}${r.slice(3, 6)}-${r.slice(6)}`
