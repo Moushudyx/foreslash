@@ -3,8 +3,8 @@ prev:
   text: 'throttle 节流'
   link: './throttle'
 next:
-  text: 'pipe 管道'
-  link: './pipe'
+  text: 'deprecate 废弃标记'
+  link: './deprecate'
 ---
 
 # memo

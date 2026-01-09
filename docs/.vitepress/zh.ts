@@ -148,6 +148,7 @@ function sidebarIs(): DefaultTheme.SidebarItem[] {
         { text: 'debounce 防抖', link: 'debounce' },
         { text: 'throttle 节流', link: 'throttle' },
         { text: 'memo 记忆化', link: 'memo' },
+        { text: 'deprecate 废弃标记', link: 'deprecate' },
         { text: 'pipe 管道', link: 'pipe' },
         { text: '辅助函数', link: 'misc' },
       ],

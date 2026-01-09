@@ -1,11 +1,9 @@
----
 prev:
-  text: 'memo 记忆化'
-  link: './memo'
+  text: 'deprecate 废弃标记'
+  link: './deprecate'
 next:
   text: '辅助函数'
   link: './misc'
----
 
 # pipe
 

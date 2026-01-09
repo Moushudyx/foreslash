@@ -1,5 +1,21 @@
 # Change Log
 
+## Version 0.3.6 - 2026-01-
+
+Unstable version
+
+Added some Base64 related methods
+
+- Feat 🥥 Functions added: `encodeBase64` `decodeBase64` `blobToBase64` `base64ToBlob` `deprecate` and so forth
+- Other fixes and improvements
+
+不稳定版本
+
+添加了一些 Base64 相关的方法
+
+- 功能 🥥 添加函数: `encodeBase64` `decodeBase64` `blobToBase64` `base64ToBlob` `deprecate` 等
+- 其他修复与优化
+
 ## Version 0.3.5 - 2025-11-30
 
 Unstable version
