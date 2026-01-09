@@ -1,6 +1,6 @@
 # Change Log
 
-## Version 0.3.6 - 2026-01-
+## Version 0.3.6 - 2026-01-09
 
 Unstable version
 

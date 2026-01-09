@@ -180,7 +180,7 @@ function sidebarIs(): DefaultTheme.SidebarItem[] {
         { text: 'snakeCase 蛇行格式', link: 'snakeCase' },
         { text: 'titleCase 标题格式', link: 'titleCase' },
         { text: 'splitWords 词分割', link: 'splitWords' },
-            { text: 'base64 Base64 编码', link: 'base64' },
+        { text: 'base64 Base64 编码', link: 'base64' },
         { text: 'dedent 取消缩进', link: 'dedent' },
         { text: 'indent 缩进', link: 'indent' },
       ],
