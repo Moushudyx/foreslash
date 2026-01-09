@@ -36,6 +36,7 @@
     "dev": "rollup -c -w",
     "build": "rollup -c",
     "test": "tsd --files /test/**/*.test-d.ts && jest --coverage",
+    "test:slow": "tsd --files /test/**/*.test-d.ts && jest --coverage --runInBand",
     "prepublishOnly": "jest --coverage && npm run build",
     "docs:dev": "rollup -c && vitepress dev docs",
     "docs:build": "rollup -c && vitepress build docs",

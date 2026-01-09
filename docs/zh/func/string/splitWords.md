@@ -3,8 +3,8 @@ prev:
   text: 'titleCase 标题格式'
   link: './titleCase'
 next:
-  text: 'dedent 取消缩进'
-  link: './dedent'
+  text: 'base64 Base64 编码'
+  link: './base64'
 ---
 
 # splitWords

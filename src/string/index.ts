@@ -4,6 +4,7 @@ export * from './pascalCase'
 export * from './snakeCase'
 export * from './titleCase'
 
+export * from './base64'
 export * from './capitalize'
 export * from './caseConvert'
 export * from './dedent'

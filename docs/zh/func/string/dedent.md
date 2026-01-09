@@ -1,7 +1,7 @@
 ---
 prev:
-  text: 'splitWords 词分割'
-  link: './splitWords'
+  text: 'base64 Base64 编码'
+  link: './base64'
 next:
   text: 'indent 缩进'
   link: './indent'
