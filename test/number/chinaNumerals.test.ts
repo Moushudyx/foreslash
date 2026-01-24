@@ -28,6 +28,17 @@ describe('chinaNumerals', () => {
       chinaNumerals(2025e16, { type: 'custom', customNumerals: '0123456789', customUnits: '拾百千万亿' })
     ).toBe('2千02拾5亿亿')
   })
+  it('自定义小数点和小数单位', () => {
+    expect(
+      chinaNumerals(12345.678, { integerUnit: '元', dot: '', fractionalUnits: ['角', '分', '厘'] })
+    ).toBe('一万二千三百四十五元六角七分八厘')
+    expect(
+      chinaNumerals(1002.3, { integerUnit: '块', dot: '又', fractionalUnits: ['毛'] })
+    ).toBe('一千零二块又三毛')
+    expect(
+      chinaNumerals(10023, { integerUnit: '块', dot: '又', fractionalUnits: ['毛'] })
+    ).toBe('一万零二十三块')
+  })
   it('下数表示法', () => {
     expect(chinaNumerals(0, { numeralsType: 'minio' })).toBe('零')
     expect(chinaNumerals(123456789.89, { numeralsType: 'minio' })).toBe('一垓二京三兆四亿五万六千七百八十九点八九')

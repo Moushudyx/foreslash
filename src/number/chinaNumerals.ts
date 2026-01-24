@@ -23,6 +23,18 @@ import { decimalNotation } from './decimalNotation'
  * `customUnits` 自定义单位字符, 类型为 `ArrayLike<string>`\
  * 用于表示进位, 如 `'十百千万亿兆京垓秭穰沟涧正载'`\
  * 前 3 个单位固定表示十(10)、百(100)、千(1000), 后续单位根据 `numeralsType` 进行调整, 仅在 `type` 为 `'custom'` 时有效
+ *
+ * `integerUnit` 自定义整数部分的单位字符, 类型为 `string`\
+ * 用于表示整数部分的单位, 如 `'元'`、`'块'` 等, 默认为空字符串 `''`\
+ * 该选项会在整数部分的数字后面添加指定的单位字符
+ *
+ * `dot` 小数点字符, 类型为 `string`\
+ * 用于表示小数点的字符, 默认为 `'点'`\
+ * 该选项会替换默认的小数点字符
+ *
+ * `fractionalUnits` 小数部分的单位字符数组, 类型为 `ArrayLike<string>`\
+ * 用于表示小数部分每一位的单位, 如 `['角', '分', '厘']` 等, 默认为空数组 `[]`\
+ * 该选项会在小数部分的每一位数字后面添加对应的单位字符, 如果小数部分的位数超过了该数组的长度, 则超出部分不添加单位字符
  * @returns 返回一个汉语表达的数字
  * @example
  * ```js
@@ -39,6 +51,9 @@ export function chinaNumerals(
     numeralsType?: 'normal' | 'minio' | 'mega'
     customNumerals?: ArrayLike<string>
     customUnits?: ArrayLike<string>
+    integerUnit?: string
+    dot?: string
+    fractionalUnits?: ArrayLike<string>
   }
 ) {
   const str = decimalNotation(num)
@@ -138,12 +153,13 @@ export function chinaNumerals(
   }
   return fractional
     ? integerPart +
-        '点' +
+        (options?.integerUnit ?? '') +
+        (options?.dot ?? '点') +
         fractional
           .split('')
-          .map((d) => numberChar[Number(d)])
+          .map((d, i) => numberChar[Number(d)] + (options?.fractionalUnits?.[i] ?? ''))
           .join('')
-    : integerPart
+    : integerPart + (options?.integerUnit ?? '')
 }
 /**
  * 中数表示法(万万为亿, 万亿为兆)下的每万数位\
