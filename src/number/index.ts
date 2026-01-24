@@ -1,3 +1,4 @@
+export * from './chinaNumerals'
 export * from './clamp'
 export * from './decimalNotation'
 export * from './format'
