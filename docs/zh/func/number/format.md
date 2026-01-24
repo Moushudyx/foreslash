@@ -3,8 +3,8 @@ prev:
   text: 'scientificNotation 科学计数法'
   link: './scientificNotation'
 next:
-  text: 'romanNumerals 罗马数字'
-  link: './romanNumerals'
+  text: 'chinaNumerals 中文数字'
+  link: './chinaNumerals'
 ---
 
 # format

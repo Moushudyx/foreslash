@@ -42,7 +42,7 @@ import { decimalNotation } from './decimalNotation'
  * chinaNumerals(2025, { type: 'upper' }) // 贰仟零贰拾伍
  * chinaNumerals(1002003, { type: 'lower' }) // 一百万二千〇三
  * ```
- * @version 0.3.6
+ * @version 0.3.7
  */
 export function chinaNumerals(
   num: string | number,

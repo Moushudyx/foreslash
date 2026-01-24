@@ -73,7 +73,7 @@ const romanNumbers = computed(() => {
   margin-top: 24px;
   border-radius: 16px;
   background: #fafafa;
-  box-shadow: 16px 16px 32px #afafaf, -16px -16px 32px #ffffff;
+	box-shadow: 8px 8px 16px #afafaf, -8px -8px 16px #ffffff;
   font-size: 16px;
   .roman-numerals__title {
     width: 100%;

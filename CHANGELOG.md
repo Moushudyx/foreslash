@@ -1,5 +1,15 @@
 # Change Log
 
+## Version 0.3.7 - 2026-01-24
+
+Add a method to convert numbers to Chinese numerals
+
+- Feat 🥥 Functions added: `chinaNumerals`
+
+添加了将数字转换为中文的方法
+
+- 功能 🥥 添加函数: `chinaNumerals`
+
 ## Version 0.3.6 - 2026-01-09
 
 Unstable version
