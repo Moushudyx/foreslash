@@ -2,15 +2,19 @@
 
 ## Version 0.3.8 - 2026-01
 
-- Feat 🥥 Functions added: `constantCase`
+- Feat 🥥 Function(s) added: `constantCase`
+- Feat 🥥 Function(s) exposed: `transferNumberToSupUniCode`
+- Other fixes and improvements
 
 - 功能 🥥 添加函数: `constantCase`
+- 功能 🥥 公开函数: `transferNumberToSupUniCode`
+- 其他修复与优化
 
 ## Version 0.3.7 - 2026-01-24
 
 Add a method to convert numbers to Chinese numerals
 
-- Feat 🥥 Functions added: `chinaNumerals`
+- Feat 🥥 Function(s) added: `chinaNumerals`
 
 添加了将数字转换为中文的方法
 

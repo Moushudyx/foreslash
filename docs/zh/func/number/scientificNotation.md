@@ -74,7 +74,7 @@ scientificNotation(-9.87e9, { type: 'json', precision: 1, round: 'floor' }) // {
 
 将一个数字字符串转换为对应的上标 Unicode 字符串
 
-> 此方法在 0.3.3 版本就已存在, 但直到 0.3.8 版本才对外暴露
+> 此方法在 0.3.3 版本就已存在, 但直到 0.3.8 版本才对外公开
 
 ```js
 transferNumberToSupUniCode('1234567890') // '¹²³⁴⁵⁶⁷⁸⁹⁰'
