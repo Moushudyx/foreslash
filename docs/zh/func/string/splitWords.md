@@ -1,7 +1,7 @@
 ---
 prev:
-  text: 'titleCase 标题格式'
-  link: './titleCase'
+  text: 'constantCase 常量格式'
+  link: './constantCase'
 next:
   text: 'base64 Base64 编码'
   link: './base64'

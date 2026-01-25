@@ -180,6 +180,7 @@ function sidebarIs(): DefaultTheme.SidebarItem[] {
         { text: 'kebabCase 串行格式', link: 'kebabCase' },
         { text: 'snakeCase 蛇行格式', link: 'snakeCase' },
         { text: 'titleCase 标题格式', link: 'titleCase' },
+        { text: 'constantCase 常量格式', link: 'constantCase' },
         { text: 'splitWords 词分割', link: 'splitWords' },
         { text: 'base64 Base64 编码', link: 'base64' },
         { text: 'dedent 取消缩进', link: 'dedent' },

@@ -3,8 +3,8 @@ prev:
   text: 'snakeCase 蛇行格式'
   link: './snakeCase'
 next:
-  text: 'splitWords 词分割'
-  link: './splitWords'
+  text: 'constantCase 常量格式'
+  link: './constantCase'
 ---
 
 # titleCase

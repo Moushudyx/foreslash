@@ -1,5 +1,11 @@
 # Change Log
 
+## Version 0.3.8 - 2026-01
+
+- Feat 🥥 Functions added: `constantCase`
+
+- 功能 🥥 添加函数: `constantCase`
+
 ## Version 0.3.7 - 2026-01-24
 
 Add a method to convert numbers to Chinese numerals
