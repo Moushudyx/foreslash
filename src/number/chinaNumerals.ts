@@ -81,8 +81,7 @@ export function chinaNumerals(
   const zeroRegex = new RegExp(`${zeroChar}+`, 'g') // 用于匹配连续的零
   const trailingZeroRegex = new RegExp(`${zeroChar}$`) // 用于匹配结尾的零
   const [integer, fractional] = str.split('.')
-  let integerPart = '',
-    fractionalPart = ''
+  let integerPart = ''
   if (numeralsType === 'minio') {
     // 下数表示法每十变更一次数位, 无法处理超出 `customUnits` 长度的数字
     // 因为下数表示法的单位变化比较特殊, 需要在每 `customUnits.length` 一组时调整单位
@@ -151,15 +150,15 @@ export function chinaNumerals(
     // 如果传入的值为 0 则直接返回 零
     integerPart = result === '' ? numberChar[0] : result
   }
+  integerPart += options?.integerUnit ?? ''
   return fractional
     ? integerPart +
-        (options?.integerUnit ?? '') +
         (options?.dot ?? '点') +
         fractional
           .split('')
           .map((d, i) => numberChar[Number(d)] + (options?.fractionalUnits?.[i] ?? ''))
           .join('')
-    : integerPart + (options?.integerUnit ?? '')
+    : integerPart
 }
 /**
  * 中数表示法(万万为亿, 万亿为兆)下的每万数位\

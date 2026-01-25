@@ -4,6 +4,7 @@ describe('chinaNumerals', () => {
   it('基本功能', () => {
     expect(chinaNumerals(0)).toBe('零')
     expect(chinaNumerals(2025)).toBe('二千零二十五')
+    expect(chinaNumerals(2026.125)).toBe('二千零二十六点一二五')
     expect(chinaNumerals(2025, { type: 'upper' })).toBe('贰仟零贰拾伍')
     expect(chinaNumerals(1002003, { type: 'lower' })).toBe('一百万二千〇三')
     expect(chinaNumerals(1002003.45, { type: 'normal' })).toBe('一百万二千零三点四五')
@@ -33,8 +34,8 @@ describe('chinaNumerals', () => {
       chinaNumerals(12345.678, { integerUnit: '元', dot: '', fractionalUnits: ['角', '分', '厘'] })
     ).toBe('一万二千三百四十五元六角七分八厘')
     expect(
-      chinaNumerals(1002.3, { integerUnit: '块', dot: '又', fractionalUnits: ['毛'] })
-    ).toBe('一千零二块又三毛')
+      chinaNumerals(1002.31, { integerUnit: '块', dot: '又', fractionalUnits: ['毛'] })
+    ).toBe('一千零二块又三毛一')
     expect(
       chinaNumerals(10023, { integerUnit: '块', dot: '又', fractionalUnits: ['毛'] })
     ).toBe('一万零二十三块')
