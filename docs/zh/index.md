@@ -27,6 +27,9 @@ features:
   <a href="https://github.com/Moushudyx/foreslash" target="_blank">
     <img alt="GitHub top lang" src="https://img.shields.io/github/languages/top/Moushudyx/foreslash" />
   </a>
+  <a href="https://codecov.io/gh/moushudyx/foreslash">
+    <img src="https://codecov.io/gh/moushudyx/foreslash/graph/badge.svg" alt="codecov" />
+  </a>
   <a href="https://github.com/Moushudyx/foreslash/blob/master/LICENSE" target="_blank">
     <img alt="GitHub license" src="https://img.shields.io/badge/license-Mulan_PSL_v2-blue" />
   </a>

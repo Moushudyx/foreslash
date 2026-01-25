@@ -3,6 +3,9 @@
 <div align="center">
   <p align="center">
     <img src="https://img.shields.io/github/languages/top/Moushudyx/foreslash" alt="GitHub top lang" />
+    <a href="https://codecov.io/gh/moushudyx/foreslash">
+      <img src="https://codecov.io/gh/moushudyx/foreslash/graph/badge.svg" alt="codecov" />
+    </a>
     <a href="https://github.com/moushudyx/foreslash/blob/master/LICENSE">
       <img src="https://img.shields.io/badge/license-Mulan_PSL_v2-blue" alt="GitHub license" />
     </a>
