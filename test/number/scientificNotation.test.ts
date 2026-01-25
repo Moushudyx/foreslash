@@ -1,4 +1,4 @@
-import { scientificNotation } from '../../src'
+import { scientificNotation, transferNumberToSupUniCode } from '../../src'
 
 describe('scientificNotation', () => {
   it('基本测试', () => {
@@ -25,6 +25,8 @@ describe('scientificNotation', () => {
   })
   it('复合输出测试', () => {
     expect(scientificNotation(1.235e6, { type: 'exp', precision: 2 })).toEqual('1.24e+6')
+    // @ts-ignore 无法识别的舍入方式会被当作 round 处理
+    expect(scientificNotation(1.235e6, { type: 'exp', precision: 2, round: 'invalid' })).toEqual('1.24e+6')
     expect(scientificNotation(6.545e-6, { type: 'code', precision: 2, round: 'banker' })).toEqual('6.54*10^-6')
     expect(scientificNotation(-9.87e9, { type: 'json', precision: 1, round: 'floor' })).toEqual(
       '{"number":"-9.9","exp":9}'
@@ -34,5 +36,9 @@ describe('scientificNotation', () => {
     expect(scientificNotation(NaN)).toBe('NaN')
     expect(scientificNotation(Infinity)).toBe('Infinity')
     expect(scientificNotation('not a number')).toBe('NaN')
+  })
+  it('transferNumberToSupUniCode 测试', () => {
+    expect(transferNumberToSupUniCode('1234567890')).toBe('¹²³⁴⁵⁶⁷⁸⁹⁰')
+    expect(transferNumberToSupUniCode('-123.45+6')).toBe('⁻¹²³.⁴⁵⁺⁶')
   })
 })

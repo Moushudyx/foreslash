@@ -67,3 +67,16 @@ scientificNotation(1.235e6, { type: 'exp', precision: 2 }) // 1.24e+6
 scientificNotation(6.545e-6, { type: 'code', precision: 2, round: 'banker' }) // 6.54*10^-6
 scientificNotation(-9.87e9, { type: 'json', precision: 1, round: 'floor' }) // {"number":"-9.9","exp":9}
 ```
+
+## 附属方法 transferNumberToSupUniCode
+
+<VersionTag version="0.3.8" />
+
+将一个数字字符串转换为对应的上标 Unicode 字符串
+
+> 此方法在 0.3.3 版本就已存在, 但直到 0.3.8 版本才对外暴露
+
+```js
+transferNumberToSupUniCode('1234567890') // '¹²³⁴⁵⁶⁷⁸⁹⁰'
+transferNumberToSupUniCode('-123.45+6') // '⁻¹²³.⁴⁵⁺⁶'
+```

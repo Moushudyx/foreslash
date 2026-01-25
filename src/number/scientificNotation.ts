@@ -111,13 +111,28 @@ export function scientificNotation(
     case 'unicode':
     default:
       // -2.33×10⁻⁸ -2.33×10⁸
-      return `${n}×10${transferNumberToUniCode(String(exp))}`
+      return `${n}×10${transferNumberToSupUniCode(String(exp))}`
   }
 }
 
-function transferNumberToUniCode(n: string) {
-  const strMap = { ...Array.from('⁰¹²³⁴⁵⁶⁷⁸⁹'), '-': '⁻', '+': '⁺' } as any as Record<string, string>
+const supMap = /*#__PURE__*/ { ...Array.from('⁰¹²³⁴⁵⁶⁷⁸⁹'), '-': '⁻', '+': '⁺' } as any as Record<string, string>
+/**
+ * 将数字字符串转换为上标 Unicode 字符串\
+ * 无法处理的字符将原样返回\
+ * 此方法在 0.3.3 版本就已存在, 但直到 0.3.8 版本才对外暴露
+ * @param n 数字字符串(可以带加减号)
+ * @returns 上标 Unicode 字符串
+ * @example
+ * ```js
+ * transferNumberToSupUniCode("123") // "¹²³"
+ * transferNumberToSupUniCode("-45") // "⁻⁴⁵"
+ * transferNumberToSupUniCode("+67") // "⁺⁶⁷"
+ * transferNumberToSupUniCode("123 + 456") // "¹²³ ⁺ ⁴⁵⁶"
+ * ```
+ * @version 0.3.8
+ */
+export function transferNumberToSupUniCode(n: ArrayLike<string>) {
   return Array.from(n)
-    .map((s) => (strMap[s] ? strMap[s] : s))
+    .map((s) => (supMap[s] ? supMap[s] : s))
     .join('')
 }
