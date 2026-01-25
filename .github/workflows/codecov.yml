@@ -1,0 +1,34 @@
+name: ☂️ Codecov
+
+on:
+  # push:
+  #   branches: [main]
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+concurrency:
+  group: codecov-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # 跑 jest --coverage 再上传到 codecov
+  codecov:
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: yarn
+          registry-url: 'https://registry.npmjs.org'
+      - name: 📦 Install dependencies # 安装依赖
+        run: yarn install
+      - name: 🔍 Run test # 运行测试
+        run: yarn test
+        if: | # 仅在 Moushudyx/foreslash 下执行, 防止别人 fork 后误操作
+          startsWith(github.repository, 'Moushudyx')
+      - name: ☂️ Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v5
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
