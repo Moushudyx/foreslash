@@ -50,7 +50,7 @@ defer((cleanUp, cancelCleanUp) => {
   cancelCleanUp(cleanUpId) // 可以用于取消指定的延迟操作
   return '取消指定的延迟操作'
 })
-// 依次输出 4 (延迟一秒) 5 6
+// 依次输出 4 (返回一个 pending 的 Promise, 并延迟一秒) 5 6
 // 返回 Promise {<fulfilled>: '取消指定的延迟操作'}
 
 // 即使出现错误也会先执行计划好的延迟操作
@@ -62,4 +62,28 @@ defer((cleanUp, cancelCleanUp) => {
 })
 // 依次输出 7 8 9
 // 返回 Promise {<rejected>: '抛出错误'}
+```
+
+### 常用场景: 页面加载中状态
+
+```jsx {5-10}
+const MyComponent = () => {
+  const [loading, setLoading] = useState(false)
+
+  useEffect(() => {
+    await defer(async (cleanUp) => {
+      setLoading(true)
+      cleanUp(() => setLoading(false))
+      // 之后即使出现异常也会执行 cleanUp 中的逻辑
+      await fetchData() // 模拟数据加载
+    })
+    // 其他异步操作
+  }, [])
+
+  return (
+    <div>
+      {loading ? <Spinner /> : <Content />}
+    </div>
+  )
+}
 ```
