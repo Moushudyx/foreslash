@@ -1,6 +1,6 @@
 # Change Log
 
-## Version 0.3.8 - 2026-01
+## Version 0.3.8 - 2026-01-25
 
 - Feat 🥥 Function(s) added: `constantCase`
 - Feat 🥥 Function(s) exposed: `transferNumberToSupUniCode`
