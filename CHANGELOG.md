@@ -1,5 +1,15 @@
 # Change Log
 
+## Version 0.3.9 - 2026
+
+Added functions to generate CSV strings
+
+- Feat 🥥 Function(s) added: `arrayToCSV` `objectListToCSV`
+
+添加了生成 CSV 字符串的函数
+
+- 功能 🥥 添加函数: `arrayToCSV` `objectListToCSV`
+
 ## Version 0.3.8 - 2026-01-25
 
 - Feat 🥥 Function(s) added: `constantCase`

@@ -1,5 +1,6 @@
----
-prev: false
+prev:
+  text: 'objectListToCSV 对象列表转 CSV'
+  link: './objectListToCSV'
 next:
   text: 'acceptableFileType 检查 MIME 类型'
   link: './acceptableFileType'
