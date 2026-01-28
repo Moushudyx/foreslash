@@ -1,5 +1,7 @@
 ---
-prev: false
+prev:
+  text: 'csvToObjectList CSV 转对象列表'
+  link: './csvToObjectList'
 next:
   text: 'objectListToCSV 对象列表转 CSV'
   link: './objectListToCSV'
@@ -25,6 +27,8 @@ arrayToCSV([
 ```
 
 ## 字符转义
+
+<VersionTag version="0.3.9" />
 
 当单元格内包含分隔符、双引号或换行符时，会自动用双引号包裹，并将内部双引号转义为两个双引号
 
@@ -52,3 +56,5 @@ arrayToCSV([
 ], { bom: true, newline: '\r\n', quoteAll: true })
 // \uFEFF"a","b"\r\n"c","d"
 ```
+
+> 若无特殊需求，不要开启 `bom` 选项，以免导致兼容性问题

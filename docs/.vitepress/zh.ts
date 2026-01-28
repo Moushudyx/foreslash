@@ -192,6 +192,8 @@ function sidebarIs(): DefaultTheme.SidebarItem[] {
       base: 'func/misc/',
       collapsed: false,
       items: [
+        { text: 'csvToArray\n解析 CSV', link: 'csvToArray' },
+        { text: 'csvToObjectList\nCSV 转对象列表', link: 'csvToObjectList' },
         { text: 'arrayToCSV\n二维数组转 CSV', link: 'arrayToCSV' },
         { text: 'objectListToCSV\n对象列表转 CSV', link: 'objectListToCSV' },
         { text: 'acceptableFileName\n检查拓展名', link: 'acceptableFileName' },

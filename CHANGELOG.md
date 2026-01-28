@@ -4,11 +4,11 @@
 
 Added functions to generate CSV strings
 
-- Feat 🥥 Function(s) added: `arrayToCSV` `objectListToCSV`
+- Feat 🥥 Function(s) added: `arrayToCSV` `objectListToCSV` `csvToArray` `csvToObjectList`
 
 添加了生成 CSV 字符串的函数
 
-- 功能 🥥 添加函数: `arrayToCSV` `objectListToCSV`
+- 功能 🥥 添加函数: `arrayToCSV` `objectListToCSV` `csvToArray` `csvToObjectList`
 
 ## Version 0.3.8 - 2026-01-25
 

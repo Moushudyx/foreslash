@@ -9,11 +9,15 @@ next:
 
 # objectListToCSV
 
+<VersionTag version="0.3.9" />
+
 根据对象列表和字段映射生成 CSV 字符串，底层使用 `arrayToCSV` 处理转义
 
 ## 基本用法
 
 第二个参数为字段映射数组，每一项是 `[对象字段名, CSV 列名]`
+
+当对象缺少对应字段时会填充为空字符串
 
 ```JS
 const objList = [
@@ -32,9 +36,9 @@ objectListToCSV(objList, fields)
 // 李四,25,新加坡
 ```
 
-## 缺失字段与自定义分隔符
+## 自定义分隔符
 
-当对象缺少对应字段时会填充为空字符串，可以通过第三个参数自定义分隔符
+可以通过第三个参数自定义分隔符
 
 ```JS
 const fields = [
