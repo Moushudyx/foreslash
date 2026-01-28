@@ -12,6 +12,8 @@ describe('csvToObjectList', () => {
       { name: '张三', age: '16' },
       { name: '李四', age: '25' },
     ])
+    // 空 CSV
+    expect(csvToObjectList('', fields)).toEqual([])
   })
 
   it('缺失字段与自定义分隔符', () => {
@@ -23,6 +25,10 @@ describe('csvToObjectList', () => {
     ]
 
     expect(csvToObjectList(csv, fields, ';')).toEqual([
+      { name: '张三', age: '16', city: '上海' },
+      { name: '李四', age: '25', city: '' },
+    ])
+    expect(csvToObjectList(csv, fields, { delimiter: ';' })).toEqual([
       { name: '张三', age: '16', city: '上海' },
       { name: '李四', age: '25', city: '' },
     ])
