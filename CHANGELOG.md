@@ -1,14 +1,18 @@
 # Change Log
 
-## Version 0.3.9 - 2026
+## Version 0.3.9 - 2026-01-31
 
 Added functions to generate CSV strings
 
 - Feat 🥥 Function(s) added: `arrayToCSV` `objectListToCSV` `csvToArray` `csvToObjectList`
+- Feat 🥥 Function(s) change: Refactor `getGlobalThis` to avoid `ReferenceError` in some case
+- Other fixes and improvements
 
 添加了生成 CSV 字符串的函数
 
 - 功能 🥥 添加函数: `arrayToCSV` `objectListToCSV` `csvToArray` `csvToObjectList`
+- 功能 🥥 变更函数: 重写 `getGlobalThis` 避免部分环境下调用出现 `ReferenceError`
+- 其他修复与优化
 
 ## Version 0.3.8 - 2026-01-25
 
