@@ -1,5 +1,11 @@
 # Change Log
 
+## Version 0.3.10 - 2026-02-01
+
+- Fix 🥕 Bug fixed: `format` config options `separator` and `decimal` now support empty string input
+
+- 修复 🥕 缺陷修复: `format` 的配置项 `separator`、`decimal` 支持传入空字符串的
+
 ## Version 0.3.9 - 2026-01-31
 
 Added functions to generate CSV strings

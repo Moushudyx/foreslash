@@ -26,6 +26,7 @@ describe('format', () => {
     expect(format(-1.2, { precision: 1 })).toBe('-1.2')
     expect(format(0, { precision: 3 })).toBe('0.000')
     expect(format('-1000', { separator: '.', decimal: ',' })).toBe('-1.000,00')
+    expect(format('-1000', { separator: '', decimal: ',' })).toBe('-1000,00')
     expect(format('123456789', { separate: 4 })).toBe('1,2345,6789.00')
     expect(format('123456789.1234', { separate: 4, separator: '.', decimal: ',', precision: 3 })).toBe(
       '1.2345.6789,123'

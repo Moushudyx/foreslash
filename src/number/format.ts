@@ -31,9 +31,9 @@ export function format(
 ) {
   const str = decimalNotation(num)
   if (/NaN|Inf/.test(str)) return str
-  const separator = (options || {}).separator || ','
-  const separate = clamp((options || {}).separate || 3, 1, Infinity)
-  const decimal = (options || {}).decimal || '.'
+  const separator = (options || {}).separator ?? ','
+  const separate = clamp((options || {}).separate ?? 3, 1, Infinity)
+  const decimal = (options || {}).decimal ?? '.'
   const precision = clamp((options || {}).precision ?? 2, 0, Infinity)
   const round = (options || {}).round || 'round'
 
