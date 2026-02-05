@@ -162,6 +162,7 @@ function sidebarIs(): DefaultTheme.SidebarItem[] {
         { text: 'randomChoice 随机抽选', link: 'randomChoice' },
         { text: 'randomDistribution 随机分布', link: 'randomDistribution' },
         { text: 'randomInt 随机数字', link: 'randomInt' },
+        { text: 'randomize 随机化', link: 'randomize' },
         { text: 'randomString 随机字符串', link: 'randomString' },
         { text: 'shuffle 打乱数组', link: 'shuffle' },
         { text: 'ulid 标准 ULID', link: 'ulid' },

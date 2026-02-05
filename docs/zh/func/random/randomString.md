@@ -1,7 +1,7 @@
 ---
 prev:
-  text: 'randomInt 随机数字'
-  link: './randomInt'
+  text: 'randomize 随机化'
+  link: './randomize'
 next:
   text: 'shuffle 打乱数组'
   link: './shuffle'

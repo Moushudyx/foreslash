@@ -5,10 +5,12 @@
 Added Agent Skills
 
 - Feat 🥥 Skill(s) added: `random-pick` `deep-clone-any-object`
+- Feat 🥥 Function(s) added: `randomize`
 
 添加了智能体技能(Agent Skills)
 
 - 功能 🥥 添加技能: `random-pick` `deep-clone-any-object`
+- 功能 🥥 添加函数: `randomize`
 
 ## Version 0.3.10 - 2026-02-01
 

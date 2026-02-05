@@ -1,6 +1,7 @@
 export * from './randomChoice'
 export * from './randomDistribution'
 export * from './randomInt'
+export * from './randomize'
 export * from './randomString'
 export * from './shuffle'
 export * from './ulid'

@@ -3,8 +3,8 @@ prev:
   text: 'randomDistribution 随机分布'
   link: './randomDistribution'
 next:
-  text: 'randomString 随机字符串'
-  link: './randomString'
+  text: 'randomize 随机化'
+  link: './randomize'
 ---
 
 # randomInt
