@@ -13,7 +13,7 @@ on:
 
 permissions:
   contents: write
-  pull-requests: write
+  pull-requests: read
 
 # 不允许同时进行多个部署，跳过非正在运行、非最新队列的运行队列，且不取消正在运行的工作流
 concurrency:
@@ -23,6 +23,9 @@ concurrency:
 jobs:
   publish:
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write # [Publishing packages with provenance via GitHub Actions](https://docs.npmjs.com/generating-provenance-statements)
+      contents: write # 创建 Release 要用这个权限
     environment: production
     steps:
       - name: 📋️ Checkout code # 获取代码
@@ -64,7 +67,7 @@ jobs:
         run: yarn install
       - name: 🚀 Build & Publish Package # 编译并发布
         if: steps.version_check.outputs.version_changed == 'true'
-        run: npm publish
+        run: npm publish --provenance
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 

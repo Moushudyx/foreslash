@@ -10,7 +10,7 @@
   "homepage": "https://github.com/Moushudyx/foreslash#readme",
   "repository": {
     "type": "git",
-    "url": "git://github.com/Moushudyx/foreslash.git"
+    "url": "https://github.com/Moushudyx/foreslash.git"
   },
   "type": "module",
   "main": "lib/index.mjs",
