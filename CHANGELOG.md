@@ -1,5 +1,15 @@
 # Change Log
 
+## Version 0.3.11 - 2026-02
+
+Added Agent Skills
+
+- Feat 🥥 Skill(s) added: `random-pick` `deep-clone-any-object`
+
+添加了智能体技能(Agent Skills)
+
+- 功能 🥥 添加技能: `random-pick` `deep-clone-any-object`
+
 ## Version 0.3.10 - 2026-02-01
 
 - Fix 🥕 Bug fixed: `format` config options `separator` and `decimal` now support empty string input
