@@ -1,5 +1,5 @@
 ---
-name: overview
+name: foreslash-overview
 description: foreslash 是一个现代化的工具库, 类似 lodash 或 radash, 不过去掉了很多可以用现代 JS 标准直接实现的功能避免赘余, 这里是到 0.3.10 版本为止可用的功能, 具体用法需访问在线文档 https://moushudyx.github.io/foreslash
 metadata:
   author: moushu
