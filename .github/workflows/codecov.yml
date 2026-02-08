@@ -11,7 +11,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  # 跑 jest --coverage 再上传到 codecov
+  # 跑 vitest --coverage 再上传到 codecov
   codecov:
     runs-on: ubuntu-latest
     environment: production
@@ -20,12 +20,16 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: yarn
+          cache: pnpm
           registry-url: 'https://registry.npmjs.org'
+      - name: 📦 Setup pnpm # 安装 pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
       - name: 📦 Install dependencies # 安装依赖
-        run: yarn install
+        run: pnpm install
       - name: 🔍 Run test # 运行测试
-        run: yarn test
+        run: pnpm test
         if: | # 仅在 Moushudyx/foreslash 下执行, 防止别人 fork 后误操作
           startsWith(github.repository, 'Moushudyx')
       - name: ☂️ Upload coverage reports to Codecov

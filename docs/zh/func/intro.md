@@ -25,7 +25,7 @@ Foreslash 还提供了一些不太常用的方法, 不过无需担心它们太�
 
 ## 可靠的代码质量
 
-Foreslash 使用 [Jest](https://github.com/facebook/jest) 作为自动化测试工具, 代码覆盖率达到 99%, 合格的代码质量会让您的项目更加可靠
+Foreslash 使用 [Vitest](https://github.com/vitest-dev/vitest) 作为自动化测试工具, 代码覆盖率达到 99%, 合格的代码质量会让您的项目更加可靠
 
 Foreslash 完全由 [TypeScript](https://github.com/microsoft/TypeScript) 编写, 提供完整的类型提示, 无需额外安装 `@types/XXX` 以获取类型, 这会让您的开发过程更加顺滑
 
@@ -33,10 +33,10 @@ Foreslash 完全由 [TypeScript](https://github.com/microsoft/TypeScript) 编写
 
 ### 自动化测试
 
-您可以执行以下指令以运行自动化测试, 如果您熟悉 Jest, 那么您也可以用自己的方式运行测试
+您可以执行以下指令以运行自动化测试, 如果您熟悉 Vitest, 那么您也可以用自己的方式运行测试
 
 ```bash
-yarn test
+pnpm test
 ```
 
 ### 基本零依赖

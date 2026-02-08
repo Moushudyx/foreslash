@@ -3,7 +3,7 @@ import { memo, sleep } from '../src/index'
 describe('memo', () => {
   it('基本功能', () => {
     const fn = (itemA: any, itemB: any) => String(itemA) + String(itemB)
-    const originFn = jest.fn(fn)
+    const originFn = vi.fn(fn)
     const memoFn = memo(originFn)
     const data1 = fn(1, 2)
     expect(memoFn(1, 2)).toBe(data1)
@@ -50,7 +50,7 @@ describe('memo', () => {
   })
   it('其他情况测试', () => {
     const fn1 = () => 1
-    const originFn1 = jest.fn(fn1)
+    const originFn1 = vi.fn(fn1)
     const memoFn1 = memo(originFn1)
     const data1 = fn1()
     expect(memoFn1()).toBe(data1)
@@ -58,7 +58,7 @@ describe('memo', () => {
     expect(memoFn1()).toBe(data1)
     expect(originFn1).toHaveBeenCalledTimes(1)
     const fn2 = (...args: string[]) => args.join(';')
-    const originFn2 = jest.fn(fn2)
+    const originFn2 = vi.fn(fn2)
     const memoFn2 = memo(originFn2)
     const data2 = fn2('a')
     expect(memoFn2('a')).toBe(data2)
@@ -73,7 +73,7 @@ describe('memo', () => {
   })
   it('复杂情况处理', () => {
     const fn = (itemA: any, itemB: any) => String(itemA) + String(itemB)
-    const originFn = jest.fn(fn)
+    const originFn = vi.fn(fn)
     const memoFn = memo(originFn)
     expect(memoFn(/1/, '2')).toBe(fn(/1/, '2'))
     expect(memoFn(/1/, '2')).toBe(fn(/1/, '2'))
@@ -113,8 +113,8 @@ describe('memo', () => {
   })
   it('缓存过期', async () => {
     const fn = (itemA: any, itemB: any) => String(itemA) + String(itemB)
-    const originFn1 = jest.fn(fn)
-    const originFn2 = jest.fn(fn)
+    const originFn1 = vi.fn(fn)
+    const originFn2 = vi.fn(fn)
     const memoFn1 = memo(originFn1, { ttl: 100 })
     const memoFn2 = memo(originFn2, { ttl: 200 })
     const data1 = fn(1, 2)
@@ -154,8 +154,8 @@ describe('memo', () => {
   })
   it('使用次数', () => {
     const fn = (itemA: any, itemB: any) => String(itemA) + String(itemB)
-    const originFn1 = jest.fn(fn)
-    const originFn2 = jest.fn(fn)
+    const originFn1 = vi.fn(fn)
+    const originFn2 = vi.fn(fn)
     const memoFn1 = memo(originFn1, { count: 1 })
     const memoFn2 = memo(originFn2, { count: 3 })
     const data1 = fn(1, 2)
@@ -193,8 +193,8 @@ describe('memo', () => {
   })
   it('自定义 key 生成', () => {
     const fn = (itemA: any, itemB: any) => String(itemA) + String(itemB)
-    const originFn1 = jest.fn(fn)
-    const originFn2 = jest.fn(fn)
+    const originFn1 = vi.fn(fn)
+    const originFn2 = vi.fn(fn)
     const memoFn1 = memo(originFn1, { getKey: (itemA, itemB) => String(itemA) + String(itemB) })
     const memoFn2 = memo(originFn2, { getKey: undefined })
     const data1 = fn(1, 2)

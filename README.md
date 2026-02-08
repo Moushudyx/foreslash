@@ -37,7 +37,7 @@
 
 Foreslash 自带完整的类型提示，无需安装 `@types/XXX`。
 
-- Foreslash 使用 [typescript](https://github.com/microsoft/TypeScript) 开发，并使用 [jest](https://github.com/facebook/jest) 和 [ts-jest](https://github.com/kulshekhar/ts-jest) 编写单元测试。
+- Foreslash 使用 [typescript](https://github.com/microsoft/TypeScript) 开发，并使用 [vitest](https://github.com/vitest-dev/vitest) 编写单元测试。
 
 ### 低副作用
 
@@ -77,9 +77,8 @@ isDigits('abc') // false
 ## 安装与使用
 
 ```bash
+pnpm add foreslash # 使用 pnpm 安装
 npm install foreslash # 使用 npm 安装
-yarn add foreslash # 使用 yarn 安装
-pnpm install foreslash # 使用 pnpm 安装
 ```
 
 Foreslash 支持 ESM、CJS、UMD 三种引入方式，推荐使用 ESM。
@@ -127,13 +126,12 @@ Foreslash 兼容任何能正确运行 ES6 代码的 Javascript 环境，包括 N
 
 Foreslash 的诞生离不开这些开源项目：
 
-- [jest](https://github.com/facebook/jest)
-- [rollup](https://github.com/rollup/rollup)
-- [ts-jest](https://github.com/kulshekhar/ts-jest)
+- [vitest](https://github.com/vitest-dev/vitest)
+- [rolldown](https://github.com/rolldown/rolldown)
 - [ts-toolbelt](https://github.com/millsp/ts-toolbelt)
 - [typescript](https://github.com/microsoft/TypeScript)
 - [vitepress](https://github.com/vuejs/vitepress)
-- [yarn](https://github.com/yarnpkg/yarn)
+- [pnpm](https://github.com/pnpm/pnpm)
 
 部分方法灵感源于以下开源项目：
 

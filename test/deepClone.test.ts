@@ -1,8 +1,8 @@
 import { deepClone, fastClone, isBigInt64Array } from '../src'
-import {Blob as BlobPolyfill, File as FilePloyFill} from 'node:buffer';
+import { Blob as BlobPolyfill, File as FilePloyFill } from 'node:buffer'
 
-global.Blob = BlobPolyfill as any; // Jest 的 Blob 不正常
-global.File = FilePloyFill as any; // Jest 的 File 不正常
+global.Blob = BlobPolyfill as any // jsdom 下的 Blob 行为与 Node 不一致
+global.File = FilePloyFill as any // jsdom 下的 File 行为与 Node 不一致
 
 describe('deepClone', () => {
   it('基本功能', () => {
@@ -197,10 +197,10 @@ describe('deepClone', () => {
     expect(typeof Object.getOwnPropertyDescriptor(clonedObj2, 'c')!.get).toBe('function')
   })
   it('自定义拷贝逻辑', () => {
-    const cloner1 = jest.fn((d: Date) => new Date(d))
-    const cloner2 = jest.fn(fastClone)
-    const judger1 = jest.fn((obj) => obj instanceof Date)
-    const judger2 = jest.fn((obj) => obj instanceof Error)
+    const cloner1 = vi.fn((d: Date) => new Date(d))
+    const cloner2 = vi.fn(fastClone)
+    const judger1 = vi.fn((obj) => obj instanceof Date)
+    const judger2 = vi.fn((obj) => obj instanceof Error)
     const customCloner = [
       {
         cloner: cloner1,

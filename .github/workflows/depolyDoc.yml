@@ -33,13 +33,17 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: yarn
+          cache: pnpm
+      - name: 📦 Setup pnpm # 安装 pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
       - name: 📦 Setup Pages # 安装 Github Pages
         uses: actions/configure-pages@v4
       - name: 📦 Install dependencies # 安装依赖
-        run: yarn install
+        run: pnpm install
       - name: 🏗️ Build with VitePress # 编译 VP
-        run: yarn docs:build # touch ./docs/.vitepress/dist/.nojekyll
+        run: pnpm docs:build # touch ./docs/.vitepress/dist/.nojekyll
       - name: 🚀 Upload artifact # 上传编译结果
         uses: actions/upload-pages-artifact@v3
         if: | # 仅在 Moushudyx/foreslash 下发布, 防止 fork 后误操作

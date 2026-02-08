@@ -1,8 +1,16 @@
 import { parallel, sleep } from '../../src'
 
 describe('defer', () => {
+  beforeEach(() => {
+    vi.useFakeTimers()
+  })
+
+  afterEach(() => {
+    vi.useRealTimers()
+  })
+
   it('基本功能', async () => {
-    const fn = jest.fn(async (n: number) => {
+    const fn = vi.fn(async (n: number) => {
       return n * 2
     })
     const res0 = parallel([], fn)
@@ -11,6 +19,7 @@ describe('defer', () => {
     expect(fn).toHaveBeenCalledTimes(0)
     const res1 = parallel([1, 2, 3, 4, 5], fn, { limit: 2 })
     expect(res1).resolves.toEqual([2, 4, 6, 8, 10])
+    await vi.runAllTimersAsync()
     await res1
     expect(fn).toHaveBeenCalledTimes(5)
   })
@@ -21,7 +30,7 @@ describe('defer', () => {
     // 800 -> 300 (1.1 秒)
     // 500 -> 400 -> 200 (1.2 秒)
     // 总计 1.2 秒
-    const fn = jest.fn(async (n: number) => {
+    const fn = vi.fn(async (n: number) => {
       runOrder.push(n)
       await sleep([0, 800, 500, 400, 300, 250][n])
       return n * 2
@@ -29,24 +38,26 @@ describe('defer', () => {
     let runOrder: number[] = []
     const res1 = parallel([1, 2, 3, 4, 5], fn, { limit: 2 })
     expect(res1).resolves.toEqual([2, 4, 6, 8, 10])
-    await sleep(300)
+    await vi.advanceTimersByTimeAsync(300)
     // 800
     // 500
     expect(fn).toHaveBeenCalledTimes(2)
-    await sleep(225)
+    await vi.advanceTimersByTimeAsync(225)
     // 800
     // 500 -> 400
     expect(fn).toHaveBeenCalledTimes(3)
-    await sleep(300)
+    await vi.advanceTimersByTimeAsync(300)
     // 800 -> 300
     // 500 -> 400
     expect(fn).toHaveBeenCalledTimes(4)
-    await sleep(300)
+    await vi.advanceTimersByTimeAsync(300)
+    await vi.runAllTimersAsync()
+    await res1
     expect(fn).toHaveBeenCalledTimes(5)
     expect(runOrder).toEqual([1, 2, 3, 4, 5])
   })
   it('错误处理', async () => {
-    const fn = jest.fn(async (n: number) => {
+    const fn = vi.fn(async (n: number) => {
       throw new Error(`${n}`)
     })
     const res0 = parallel([], fn)

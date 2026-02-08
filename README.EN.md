@@ -30,7 +30,7 @@
 
 Foreslash comes with comprehensive type definitions out of the box, eliminating the need to install `@types/XXX`.
 
-- Foreslash is developed using [typescript](https://github.com/microsoft/TypeScript), and we uses [jest](https://github.com/facebook/jest) and [ts-jest](https://github.com/kulshekhar/ts-jest) for unit testing.
+- Foreslash is developed using [typescript](https://github.com/microsoft/TypeScript), and we uses [vitest](https://github.com/vitest-dev/vitest) for unit testing.
 
 ### Minimal Side Effects
 
@@ -70,9 +70,8 @@ isDigits('abc') // false
 ## Install & Usage
 
 ```bash
+pnpm add foreslash # Install with pnpm
 npm install foreslash # Install with npm
-yarn add foreslash # Install with yarn
-pnpm install foreslash # Install with pnpm
 ```
 
 Foreslash supports ESM/CJS/UMD, and ESM is recommended.
@@ -120,13 +119,12 @@ Foreslash compatible with any Javascript runtime that runs ES6 code, including N
 
 Foreslash based on the following open source projects.
 
-- [jest](https://github.com/facebook/jest)
-- [rollup](https://github.com/rollup/rollup)
-- [ts-jest](https://github.com/kulshekhar/ts-jest)
+- [vitest](https://github.com/vitest-dev/vitest)
+- [rolldown](https://github.com/rolldown/rolldown)
 - [ts-toolbelt](https://github.com/millsp/ts-toolbelt)
 - [typescript](https://github.com/microsoft/TypeScript)
 - [vitepress](https://github.com/vuejs/vitepress)
-- [yarn](https://github.com/yarnpkg/yarn)
+- [pnpm](https://github.com/pnpm/pnpm)
 
 Some of the methods are inspired by the following open source projects.
 

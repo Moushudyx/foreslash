@@ -1,3 +1,4 @@
+import { defineConfig } from 'rolldown'
 import typescript from '@rollup/plugin-typescript'
 import { dts } from 'rollup-plugin-dts'
 
@@ -17,7 +18,7 @@ const commonOutputConfig = {
   banner,
 }
 
-export default [
+export default defineConfig([
   {
     input: 'src/index.ts',
     output: [
@@ -51,4 +52,4 @@ export default [
     ],
     plugins: [dts()],
   },
-]
+])

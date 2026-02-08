@@ -4,7 +4,7 @@ describe('noop', () => {
   it('不处理参数', () => {
     const args = [1, 'two', true, null, undefined, {}, []]
     expect(noop(...args)).toBe(undefined)
-    const spy = jest.fn()
+    const spy = vi.fn()
     noop(spy)
     expect(spy).not.toHaveBeenCalled()
   })
@@ -15,7 +15,7 @@ describe('pass', () => {
     const args = [1, 'two', true, null, undefined, {}, []] as const
     expect(pass(...args)).toBe(args[0])
     expect(pass()).toBe(undefined)
-    const spy = jest.fn()
+    const spy = vi.fn()
     pass(spy)
     expect(spy).not.toHaveBeenCalled()
   })
@@ -28,7 +28,7 @@ describe('passWith', () => {
     expect(passWith(noop)()).toBe(undefined)
   })
   it('调用函数', () => {
-    const fn = jest.fn()
+    const fn = vi.fn()
     expect(passWith(fn)(1)).toBe(1)
     expect(passWith(fn)()).toBe(undefined)
     expect(fn).toHaveBeenCalledTimes(2)

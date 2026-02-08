@@ -1,10 +1,10 @@
 import { deprecate } from '../src'
 
 describe('deprecate', () => {
-  let warnSpy: jest.SpyInstance
+  let warnSpy: ReturnType<typeof vi.spyOn>
 
   beforeEach(() => {
-    warnSpy = jest.spyOn(console, 'warn').mockImplementation(() => {})
+    warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {})
   })
 
   afterEach(() => {

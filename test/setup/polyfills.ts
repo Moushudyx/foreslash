@@ -1,4 +1,4 @@
-// Jest setup polyfills for Node/jsdom environment
+// Vitest setup polyfills for Node/jsdom environment
 // - Provide global TextEncoder/TextDecoder used by encodeBase64/decodeBase64
 // - Keep it minimal to avoid interfering with other tests
 

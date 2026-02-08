@@ -1,18 +1,15 @@
 describe('isBuffer 当 Buffer 不存在时', () => {
-  let originalBuffer: BufferConstructor
-  beforeEach(() => {
-    originalBuffer = global.Buffer;
-    global.Buffer = undefined as any;
-  });
-  afterEach(() => {
-    global.Buffer = originalBuffer
-  })
-  it('返回 false', () => {
-    const { isBuffer } = require('../../src/is/isBuffer')
+  it('返回 false', async () => {
+    vi.resetModules()
+    vi.doMock('../../src/utils/index', () => ({
+      getGlobalThis: () => ({ Buffer: undefined }),
+    }))
+    const { isBuffer } = await import('../../src/is/isBuffer')
     // console.log(global.Buffer)
     // console.log(isBuffer.toString())
     expect(isBuffer(null)).toBe(false)
     expect(isBuffer(undefined)).toBe(false)
     expect(isBuffer(new ArrayBuffer(0))).toBe(false)
+    vi.doUnmock('../../src/utils/index')
   })
 })
