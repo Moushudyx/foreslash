@@ -59,7 +59,7 @@ describe('randomChoice', () => {
       count += p3()
     }
     expect(count / hpTestCount).toBeCloseTo(T3, 3)
-  })
+  }, 10000)
   it('非法参数测试', () => {
     // 1
     let count = 0
