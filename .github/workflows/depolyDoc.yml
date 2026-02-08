@@ -33,11 +33,11 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: pnpm
+          # cache: pnpm
       - name: 📦 Setup pnpm # 安装 pnpm
         uses: pnpm/action-setup@v4
         with:
-          version: 9
+          version: 10
       - name: 📦 Setup Pages # 安装 Github Pages
         uses: actions/configure-pages@v4
       - name: 📦 Install dependencies # 安装依赖
