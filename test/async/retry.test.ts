@@ -114,6 +114,82 @@ describe('retry', () => {
     await promiseAssertion
   })
 
+  it('延迟时间函数', async () => {
+    const clearQueue = async () => {
+      await vi.advanceTimersByTimeAsync(0)
+      await Promise.resolve()
+      await vi.advanceTimersByTimeAsync(0)
+      await Promise.resolve()
+    }
+    const delayFn = vi.fn((retryCounts: number) => retryCounts * 100)
+    const fnErr = vi.fn(async () => {
+      await sleep(10)
+      throw new Error('delay-fn')
+    })
+
+    const promise = retry(fnErr, { delay: delayFn })
+    const promiseAssertion = expect(promise).rejects.toThrow('delay-fn')
+
+    await clearQueue()
+    expect(fnErr).toHaveBeenCalledTimes(1)
+    await vi.advanceTimersByTimeAsync(10)
+    await clearQueue()
+
+    await vi.advanceTimersByTimeAsync(100)
+    await clearQueue()
+    expect(fnErr).toHaveBeenCalledTimes(2)
+    await vi.advanceTimersByTimeAsync(10)
+    await clearQueue()
+
+    await vi.advanceTimersByTimeAsync(200)
+    await clearQueue()
+    expect(fnErr).toHaveBeenCalledTimes(3)
+
+    await vi.runAllTimersAsync()
+    await promiseAssertion
+    expect(delayFn).toHaveBeenCalledTimes(2)
+    expect(delayFn).toHaveBeenNthCalledWith(1, 1)
+    expect(delayFn).toHaveBeenNthCalledWith(2, 2)
+  })
+
+  it('间隔时间函数', async () => {
+    const clearQueue = async () => {
+      await vi.advanceTimersByTimeAsync(0)
+      await Promise.resolve()
+      await vi.advanceTimersByTimeAsync(0)
+      await Promise.resolve()
+    }
+    const gapFn = vi.fn((retryCounts: number) => retryCounts * 100)
+    const fnErr = vi.fn(async () => {
+      await sleep(50)
+      throw new Error('gap-fn')
+    })
+
+    const promise = retry(fnErr, { gap: gapFn })
+    const promiseAssertion = expect(promise).rejects.toThrow('gap-fn')
+
+    await clearQueue()
+    expect(fnErr).toHaveBeenCalledTimes(1)
+    await vi.advanceTimersByTimeAsync(10)
+    await clearQueue()
+
+    await vi.advanceTimersByTimeAsync(100)
+    await clearQueue()
+    expect(fnErr).toHaveBeenCalledTimes(2)
+    await vi.advanceTimersByTimeAsync(10)
+    await clearQueue()
+
+    await vi.advanceTimersByTimeAsync(200)
+    await clearQueue()
+    expect(fnErr).toHaveBeenCalledTimes(3)
+
+    await vi.runAllTimersAsync()
+    await promiseAssertion
+    expect(gapFn).toHaveBeenCalledTimes(2)
+    expect(gapFn).toHaveBeenNthCalledWith(1, 1)
+    expect(gapFn).toHaveBeenNthCalledWith(2, 2)
+  })
+
   it('提前退出', async () => {
     const exitCallback = vi.fn()
     const fnErr = vi.fn(async (cb: (err: Error) => void) => {

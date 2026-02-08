@@ -55,5 +55,10 @@ describe('base64', () => {
     expect(blob instanceof Blob).toBe(true)
     expect(blob.type).toBe('text/plain')
     expect(blob.size).toBe(13)
+    const dataUrl2 = 'data;charset=utf-8;base64,SGVsbG8sIHdvcmxkIQ=='
+    const blob2 = dataUrlToBlob(dataUrl2)
+    expect(blob2 instanceof Blob).toBe(true)
+    expect(blob2.type).toBe('text/plain')
+    expect(blob2.size).toBe(13)
   })
 })
