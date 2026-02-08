@@ -1,6 +1,6 @@
 # Change Log
 
-## Version 0.3.11 - 2026-02
+## Version 0.3.11 - 2026-02-08
 
 Added Agent Skills
 
