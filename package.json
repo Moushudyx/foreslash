@@ -27,6 +27,7 @@
   },
   "files": [
     "lib",
+    "skills",
     "README.EN.md",
     "CHANGELOG.md",
     "README.md",

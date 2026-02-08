@@ -1,5 +1,11 @@
 # Change Log
 
+## Version 0.4.0 - 2026-02
+
+Since version 0.4.0, the automated testing tool will switch to Vitest, the package manager will switch to pnpm, and the bundler will switch to rollup
+
+从 0.4.0 版本开始, 自动化测试工具将改用 Vitest, 包管理工具将改用 pnpm, 打包工具将改用 rolldown
+
 ## Version 0.3.11 - 2026-02-08
 
 Added Agent Skills
