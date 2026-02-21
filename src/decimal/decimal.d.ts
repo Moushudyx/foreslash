@@ -10,24 +10,27 @@ export interface baseForeNumber {
   _t: 1 | number
 }
 
-/** 大数字处理方案具体接口实现 */
-export abstract class ForeNumber {
+/** 大数字处理方案具体接口实现(静态) */
+export interface ForeNumberConstructor {
   /** 圆周率 */
-  static pi: ForeNumber
+  pi: ForeNumberInstance
   /** 自然对数的底 */
-  static e: ForeNumber
+  e: ForeNumberInstance
 
   /** 是否为无效数字 `NaN`, 此外实例上存在 `isNaN` 属性可以直接得知某个 ForeNumber 是否有效(`ForeNumber.prototype.isNaN`) */
-  static isNaN(value: number | string | ForeNumber): boolean
+  isNaN(value: number | string | ForeNumberInstance): boolean
   /** 是否为有限数, 此外实例上存在 `isFinite` 属性可以直接得知某个 ForeNumber 是否为有限数(`ForeNumber.prototype.isFinite`) */
-  static isFinite(value: number | string | ForeNumber): boolean
+  isFinite(value: number | string | ForeNumberInstance): boolean
   /** 是否为整数, 此外实例上存在 `isInteger` 属性可以直接得知某个 ForeNumber 是否为整数(`ForeNumber.prototype.isInteger`) */
-  static isInteger(value: number | string | ForeNumber): boolean
+  isInteger(value: number | string | ForeNumberInstance): boolean
 
   // 具体构造
 
   /** 构造函数 */
-  constructor(value: number | string | baseForeNumber)
+  constructor(value: number | string | baseForeNumber): ForeNumberInstance
+}
+/** 大数字处理方案具体接口实现(实例) */
+export interface ForeNumberInstance {
   /** 符号位 */
   _s: -1 | 0 | 1
   /** 指数位 */
@@ -40,66 +43,66 @@ export abstract class ForeNumber {
   // 运算操作
 
   /** 加法, 别名 `add` */
-  plus(value: number | string | ForeNumber): ForeNumber
+  plus(value: number | string | ForeNumberInstance): ForeNumberInstance
   /** 加法, 别名 `plus` */
-  add(value: number | string | ForeNumber): ForeNumber
+  add(value: number | string | ForeNumberInstance): ForeNumberInstance
   /** 减法, 别名 `sub` */
-  minus(value: number | string | ForeNumber): ForeNumber
+  minus(value: number | string | ForeNumberInstance): ForeNumberInstance
   /** 减法, 别名 `minus` */
-  sub(value: number | string | ForeNumber): ForeNumber
+  sub(value: number | string | ForeNumberInstance): ForeNumberInstance
   /** 乘法, 别名 `mul` */
-  multiply(value: number | string | ForeNumber): ForeNumber
+  multiply(value: number | string | ForeNumberInstance): ForeNumberInstance
   /** 乘法, 别名 `multiply` */
-  mul(value: number | string | ForeNumber): ForeNumber
+  mul(value: number | string | ForeNumberInstance): ForeNumberInstance
   /** 除法, 别名 `div` */
-  dividedBy(value: number | string | ForeNumber): ForeNumber
+  dividedBy(value: number | string | ForeNumberInstance): ForeNumberInstance
   /** 除法, 别名 `dividedBy` */
-  div(value: number | string | ForeNumber): ForeNumber
+  div(value: number | string | ForeNumberInstance): ForeNumberInstance
   /** 取模, 别名 `mod` */
-  modulo(value: number | string | ForeNumber): ForeNumber
+  modulo(value: number | string | ForeNumberInstance): ForeNumberInstance
   /** 取模, 别名 `modulo` */
-  mod(value: number | string | ForeNumber): ForeNumber
+  mod(value: number | string | ForeNumberInstance): ForeNumberInstance
   /** 幂运算, 别名 `pow` */
-  power(value: number | string | ForeNumber): ForeNumber
+  power(value: number | string | ForeNumberInstance): ForeNumberInstance
   /** 幂运算, 别名 `power` */
-  pow(value: number | string | ForeNumber): ForeNumber
+  pow(value: number | string | ForeNumberInstance): ForeNumberInstance
 
   // 其他操作
 
   /** 比较大小, 别名 `equalTo` `eq` */
-  equals(value: number | string | ForeNumber): boolean
+  equals(value: number | string | ForeNumberInstance): boolean
   /** 比较大小, 别名 `equals` `eq` */
-  equalTo(value: number | string | ForeNumber): boolean
+  equalTo(value: number | string | ForeNumberInstance): boolean
   /** 比较大小, 别名 `equals` `equalTo` */
-  eq(value: number | string | ForeNumber): boolean
+  eq(value: number | string | ForeNumberInstance): boolean
   /** 比较大小, 别名 `gt` */
-  greaterThan(value: number | string | ForeNumber): boolean
+  greaterThan(value: number | string | ForeNumberInstance): boolean
   /** 比较大小, 别名 `greaterThan` */
-  gt(value: number | string | ForeNumber): boolean
+  gt(value: number | string | ForeNumberInstance): boolean
   /** 比较大小, 别名 `lt` */
-  lessThan(value: number | string | ForeNumber): boolean
+  lessThan(value: number | string | ForeNumberInstance): boolean
   /** 比较大小, 别名 `lessThan` */
-  lt(value: number | string | ForeNumber): boolean
+  lt(value: number | string | ForeNumberInstance): boolean
   /** 比较大小, 别名 `gte` */
-  greaterThanOrEqual(value: number | string | ForeNumber): boolean
+  greaterThanOrEqual(value: number | string | ForeNumberInstance): boolean
   /** 比较大小, 别名 `greaterThanOrEqual` */
-  gte(value: number | string | ForeNumber): boolean
+  gte(value: number | string | ForeNumberInstance): boolean
   /** 比较大小, 别名 `lte` */
-  lessThanOrEqual(value: number | string | ForeNumber): boolean
+  lessThanOrEqual(value: number | string | ForeNumberInstance): boolean
   /** 比较大小, 别名 `lessThanOrEqual` */
-  lte(value: number | string | ForeNumber): boolean
+  lte(value: number | string | ForeNumberInstance): boolean
   /** 取反, 别名 `neg` */
-  negated(): ForeNumber
+  negated(): ForeNumberInstance
   /** 取反, 别名 `negated` */
-  neg(): ForeNumber
+  neg(): ForeNumberInstance
   /** 取绝对值, 别名 `abs` */
-  absoluteValue(): ForeNumber
+  absoluteValue(): ForeNumberInstance
   /** 取绝对值, 别名 `absoluteValue` */
-  abs(): ForeNumber
+  abs(): ForeNumberInstance
   /** 数值修约, 默认使用四舍五入, 别名 `round` */
-  rounded(precision?: number, roundMode?: 'round' | 'banker' | 'floor' | 'ceil'): ForeNumber
+  rounded(precision?: number, roundMode?: 'round' | 'banker' | 'floor' | 'ceil'): ForeNumberInstance
   /** 数值修约, 默认使用四舍五入, 别名 `rounded` */
-  round(precision?: number, roundMode?: 'round' | 'banker' | 'floor' | 'ceil'): ForeNumber
+  round(precision?: number, roundMode?: 'round' | 'banker' | 'floor' | 'ceil'): ForeNumberInstance
   /** 是否为无效数字 `NaN`, 想检测某个 数字/字符串/ForeNumber 是否为无效数字请使用静态方法 `ForeNumber.isNaN(...)` */
   get isNaN(): boolean
   /** 是否为有限数, 想检测某个 数字/字符串/ForeNumber 是否为有限数请使用静态方法 `ForeNumber.isFinite(...)` */
