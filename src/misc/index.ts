@@ -1,6 +1,7 @@
 export * from './acceptableFileName'
 export * from './acceptableFileType'
 export * from './arrayToCSV'
+export * from './createFormData'
 export * from './csvToArray'
 export * from './csvToObjectList'
 export * from './getAcceptableExtByMIME'

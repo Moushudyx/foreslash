@@ -197,6 +197,7 @@ function sidebarIs(): DefaultTheme.SidebarItem[] {
         { text: 'csvToObjectList\nCSV 转对象列表', link: 'csvToObjectList' },
         { text: 'arrayToCSV\n二维数组转 CSV', link: 'arrayToCSV' },
         { text: 'objectListToCSV\n对象列表转 CSV', link: 'objectListToCSV' },
+        { text: 'createFormData\n构建表单数据', link: 'createFormData' },
         { text: 'acceptableFileName\n检查拓展名', link: 'acceptableFileName' },
         { text: 'acceptableFileType\n检查 MIME 类型', link: 'acceptableFileType' },
         { text: 'getAcceptableExtByMIME\n获取拓展名', link: 'getAcceptableExtByMIME' },

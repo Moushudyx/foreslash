@@ -1,10 +1,20 @@
 # Change Log
 
-## Version 0.4.0 - 2026-02
+## Version 0.4.0 - 2026-03
 
-Since version 0.4.0, the automated testing tool will switch to Vitest, the package manager will switch to pnpm, and the bundler will switch to rollup
+Since version 0.4.0, the automated testing tool will switch to Vitest, the package manager will switch to pnpm, and the bundler will switch to rollup, these modern tools will improve development efficiency and build performance.
 
-从 0.4.0 版本开始, 自动化测试工具将改用 Vitest, 包管理工具将改用 pnpm, 打包工具将改用 rolldown
+This version introduces `createFormData`, which can encode an object into an `ArrayBuffer` of `multipart/form-data` in environments without native `FormData`, and can be sent directly as the request body. A common use case is uploading files in environments like WeChat Mini Programs.
+
+- Feat 🥥 Function(s) added: `createFormData` `createFormDataBoundary`
+- Other fixes and improvements
+
+从 0.4.0 版本开始, 自动化测试工具将改用 Vitest, 包管理工具将改用 pnpm, 打包工具将改用 rolldown, 这些现代化的工具将提升开发效率和构建性能
+
+这个版本引入的 `createFormData` 可以在没有原生 `FormData` 的环境中, 将对象编码为 `multipart/form-data` 的 `ArrayBuffer`, 可直接作为请求体发送, 常见用途是在微信小程序等环境中上传文件
+
+- 功能 🥥 添加函数: `createFormData` `createFormDataBoundary`
+- 其他修复与优化
 
 ## Version 0.3.11 - 2026-02-08
 

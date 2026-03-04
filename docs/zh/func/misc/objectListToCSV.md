@@ -3,8 +3,8 @@ prev:
   text: 'arrayToCSV 二维数组转 CSV'
   link: './arrayToCSV'
 next:
-  text: 'acceptableFileName 检查拓展名'
-  link: './acceptableFileName'
+  text: 'createFormData 构建表单数据'
+  link: './createFormData'
 ---
 
 # objectListToCSV

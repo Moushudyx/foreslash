@@ -1,6 +1,6 @@
 prev:
-  text: 'objectListToCSV 对象列表转 CSV'
-  link: './objectListToCSV'
+  text: 'createFormData 构建表单数据'
+  link: './createFormData'
 next:
   text: 'acceptableFileType 检查 MIME 类型'
   link: './acceptableFileType'
