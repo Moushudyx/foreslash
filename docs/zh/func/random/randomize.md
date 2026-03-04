@@ -9,6 +9,8 @@ next:
 
 # randomize
 
+<VersionTag version="0.3.11" />
+
 混淆 `Math.random` 使之难以预测, 但会**严重**影响性能
 
 > 理论上仍然存在被预测的可能性, 如果想要真随机数, 请使用 Crypto API(Web 环境)或 `crypto` 模块(Node.js 环境)

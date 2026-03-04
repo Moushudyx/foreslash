@@ -1,10 +1,4 @@
----
-name: deep-clone-any-object
-description: foreslash 的 deepClone 默认不支持复制部分对象, 如 HTMLElement, 但可通过自定义复制方法实现复制任意对象
-metadata:
-  author: moushu
-  lastUpdate: 2026-02-03
----
+foreslash 的 deepClone 默认不支持复制部分对象, 如 HTMLElement, 但可通过自定义复制方法实现复制任意对象
 
 以下例子展示了如何自定义复制方法使 `deepClone` 可以支持复制 `HTMLElement`
 

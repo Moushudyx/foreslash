@@ -1,19 +1,25 @@
 ---
 name: foreslash-overview
-description: foreslash 是一个现代化的工具库, 类似 lodash 或 radash, 不过去掉了很多可以用现代 JS 标准直接实现的功能避免赘余, 这里是到 0.3.10 版本为止可用的功能, 具体用法需访问在线文档 https://moushudyx.github.io/foreslash
+description: foreslash 是一个现代化的工具库, 类似 lodash 或 radash, 但去掉了可以用现代 JS 直接实现的功能以避免赘余
 metadata:
   author: moushu
-  lastUpdate: 2026-02-05
+  lastUpdate: 2026-03-03
 ---
 
-若无特殊说明，这些方法均无副作用
+这里是到 0.3.11 版本为止可用的功能
+
+若无特殊说明, 这些方法均无副作用(也不会修改传入的参数), 支持 TypeScript 类型推断
+
+可以通过访问 node_modules/foreslash/lib/index.d.ts 来查看最新版本的功能列表和类型定义, 但考虑到 token 消耗, 查看此文件时建议使用工具来仅查看需要的部分(比如理解 memo 可以搜索 `function memo` 这一行, 向前搜索最近的 `/**` 字样所在行、向后搜索最近的 `/**` 字样所在行, 中间的部分(包括第一行但不包括最后一行)就是 memo 的功能说明和类型定义)
+
+更详细的用法可访问在线文档 https://moushudyx.github.io/foreslash , 但考虑到 token 消耗, 建议先查看上述的 index.d.ts 来了解用法
 
 ## 对象操作
 
-- deepClone 深拷贝，快速深拷贝的基础上支持更多自带类型（但不支持拷贝 Web 端的 DOM 元素），支持自定义拷贝方式
-  - 如果需要拷贝自定义的对象（比如 Web 端的 DOM 元素），参考 foreslash 技能 deep-clone-any-object
-- fastClone 快速深拷贝，没有自定义拷贝方法的功能，支持 数组、Map、Set、FormData、Date、RegExp，也能正确处理循环引用等常见问题
-- deepMerge 深合并，支持控制合并策略（可以编写方法更细粒度地控制）
+- deepClone 深拷贝, 快速深拷贝的基础上支持更多自带类型（但不支持拷贝 Web 端的 DOM 元素）, 支持自定义拷贝方式
+  - 如果需要拷贝自定义的对象（比如 Web 端的 DOM 元素）, 参考下文“组合方法以实现更多功能”
+- fastClone 快速深拷贝, 没有自定义拷贝方法的功能, 支持 数组、Map、Set、FormData、Date、RegExp, 也能正确处理循环引用等常见问题
+- deepMerge 深合并, 支持控制合并策略（可以编写方法更细粒度地控制）
 - isEmpty 判断为空
 - omit 排除键
 - pick 选择键
@@ -36,8 +42,8 @@ metadata:
 - romanNumerals 罗马数字
 - lerp 线性插值
 - round 数值修约
-- isOdd 是否为奇数，支持 bigint
-- isEven 是否为偶数，支持 bigint
+- isOdd 是否为奇数, 支持 bigint
+- isEven 是否为偶数, 支持 bigint
 
 ## 异步函数
 
@@ -61,9 +67,10 @@ metadata:
 ## 随机操作
 
 - randomChoice 随机抽选
-  - 如果要在一个数组里随机抽选多个值，参考 foreslash 技能 random-pick
+  - 如果要在一个数组里随机抽选多个值, 参考下文“组合方法以实现更多功能”
 - randomDistribution 随机分布
 - randomInt 随机数字
+- randomize 混淆 `Math.random` 使之难以预测
 - randomString 随机字符串
 - shuffle 打乱数组
 - ulid 标准 ULID
@@ -132,3 +139,8 @@ metadata:
 - isSymbol 是否为 Symbol
 - isTypedArray 是否为 TypedArray
 - isWrapper 是否为包装对象
+
+## 组合方法以实现更多功能
+
+- deepClone 默认不支持复制部分对象, 如 HTMLElement, 但可通过自定义复制方法实现复制任意对象, 参考 references/deep-clone-any-object.md
+- randomChoice 没有从数组随机选择多个的 randomPick 方法但是可以通过简单的组合来实现, 参考 references/random-pick.md
