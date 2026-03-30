@@ -49,15 +49,193 @@
     - 八进制 toOctal 别名 toOct
     - 十六进制 toHexadecimal 别名 toHex
 */
-import type { baseForeNumber, ForeNumberConstructor } from './decimal.d'
-/** 大数字处理方案 */
-class ForeNumber implements ForeNumberConstructor {
-  /** 圆周率 */
-  static pi = new ForeNumber('3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679821480865132823066470938446095505822317253594081284811174502841027019385211055596446229489549303819644288109756659334461284756482337867831652712019091456485669234603486104543266482133936072602491412737245870066063155881748815209209628292540917153643678925903600113305305488204665213841469519415116094330572703657595919530921861173819326117931051185480744623799627495673518857527248912279381830119491298336733624406566430860213949463952247371907021798609437027705392171762931767523846748184676694051320005681271452635608277857713427577896091736371787214684409012249534301465495853710507922796892589235420199561121290219608640344181598136297747713099605187072113499999983729780499510597317328160963185950244594553469083026425223082533446850352619311881710100031378387528865875332083814206171776691473035982534904287554687311595628638823537875937519577818577805321712268066130019278766111959092164201989380952572010654858632789') // 最后一位是 8 再后面是 6593
-  /** 自然对数的底 */
-  static e = new ForeNumber('2.7182818284590452353602874713526624977572470936999595749669676277240766303535475945713821785251664274274663919320030599218174135966290435729003342952605956307381323286279434907632338298807531952510190115738341879307021540891499348841675092447614606680822648001684774118537423454424371075390777449920695517027618386062613313845830007520449338265602976067371132007093287091274437470472306969772093101416928368190255151086574637721112523897844250569536967707854499699679468644549059879316368892300987931277361782154249992295763514822082698951936680331825288693984964651058209392398294887933203625094431173012381970684161403970198376793206832823764648042953118023287825098194558153017567173613320698112509961818815930416903515988885193458072738667385894228792284998920868058257492796104841984443634632449684875602336248270419786232090021609902353043699418491463140934317381436405462531520961836908887070167683964243781405927145635490613031072085103837505101157477041718986106873969655212671546889570350354021234078498193343210682') // 最后一位是 1 再后面是 7012
+import type { ForeContext, ForeInput, ForeKind, ForeNumberInstance, ForeRoundMode } from './types'
+import { DEFAULT_CONTEXT } from './core/constants'
+import { parseInput } from './core/parse'
+import { normalizeState } from './core/normalize'
+import { legacyTagFromKind } from './core/kind'
+import { attachForeNumberInstanceMethods } from './attach/instanceMethods'
+import { $$pi, $$e } from './constants'
 
-  constructor(value: number | string | baseForeNumber){}
+/** 大数字处理方案 */
+class ForeNumber implements ForeNumberInstance {
+  /** 全局上下文配置 */
+  private static _context: ForeContext = { ...DEFAULT_CONTEXT }
+
+  /** 圆周率 */
+  static get pi(): ForeNumber {
+    return new ForeNumber($$pi)
+  }
+
+  /** 自然对数的底 */
+  static get e(): ForeNumber {
+    return new ForeNumber($$e)
+  }
+
+  /**
+   * 读取或更新全局上下文
+   */
+  static config(partial?: Partial<ForeContext>): ForeContext {
+    if (!partial) return { ...ForeNumber._context }
+    ForeNumber._context = {
+      ...ForeNumber._context,
+      ...partial
+    }
+    return { ...ForeNumber._context }
+  }
+
+  /** 判断输入是否为 NaN */
+  static isNaN(value: ForeInput): boolean {
+    return new ForeNumber(value).isNaN
+  }
+
+  /** 判断输入是否为有限值 */
+  static isFinite(value: ForeInput): boolean {
+    return new ForeNumber(value).isFinite
+  }
+
+  /** 判断输入是否为整数 */
+  static isInteger(value: ForeInput): boolean {
+    return new ForeNumber(value).isInteger
+  }
+
+  /**
+   * 符号位
+   * - `-1`: 负数
+   * - `0`: 零
+   * - `1`: 正数
+   */
+  _s: -1 | 0 | 1
+  /** 指数位（以 10000 为底） */
+  _e: number
+  /** 尾数 limb 数组（每个元素范围 0-9999） */
+  _d: number[]
+  /** 兼容旧版的类型标记 */
+  _t: 1 | number
+  /** 内部类型标记，用于区分 normal/nan/inf/-inf */
+  _k: ForeKind
+
+  /** 加法，别名 add */
+  plus!: (value: ForeInput) => ForeNumber
+  /** 加法，别名 plus */
+  add!: (value: ForeInput) => ForeNumber
+  /** 减法，别名 sub */
+  minus!: (value: ForeInput) => ForeNumber
+  /** 减法，别名 minus */
+  sub!: (value: ForeInput) => ForeNumber
+  /** 乘法，别名 mul */
+  multiply!: (value: ForeInput) => ForeNumber
+  /** 乘法，别名 multiply */
+  mul!: (value: ForeInput) => ForeNumber
+  /** 除法，别名 div */
+  dividedBy!: (value: ForeInput) => ForeNumber
+  /** 除法，别名 dividedBy */
+  div!: (value: ForeInput) => ForeNumber
+  /** 取模，别名 mod */
+  modulo!: (value: ForeInput) => ForeNumber
+  /** 取模，别名 modulo */
+  mod!: (value: ForeInput) => ForeNumber
+  /** 幂运算，别名 pow */
+  power!: (value: ForeInput) => ForeNumber
+  /** 幂运算，别名 power */
+  pow!: (value: ForeInput) => ForeNumber
+
+  /** 相等比较，别名 equalTo/eq */
+  equals!: (value: ForeInput) => boolean
+  /** 相等比较，别名 equals/eq */
+  equalTo!: (value: ForeInput) => boolean
+  /** 相等比较，别名 equals/equalTo */
+  eq!: (value: ForeInput) => boolean
+  /** 大于比较，别名 gt */
+  greaterThan!: (value: ForeInput) => boolean
+  /** 大于比较，别名 greaterThan */
+  gt!: (value: ForeInput) => boolean
+  /** 小于比较，别名 lt */
+  lessThan!: (value: ForeInput) => boolean
+  /** 小于比较，别名 lessThan */
+  lt!: (value: ForeInput) => boolean
+  /** 大于等于比较，别名 gte */
+  greaterThanOrEqual!: (value: ForeInput) => boolean
+  /** 大于等于比较，别名 greaterThanOrEqual */
+  gte!: (value: ForeInput) => boolean
+  /** 小于等于比较，别名 lte */
+  lessThanOrEqual!: (value: ForeInput) => boolean
+  /** 小于等于比较，别名 lessThanOrEqual */
+  lte!: (value: ForeInput) => boolean
+
+  /** 取反，别名 neg */
+  negated!: () => ForeNumber
+  /** 取反，别名 negated */
+  neg!: () => ForeNumber
+  /** 绝对值，别名 abs */
+  absoluteValue!: () => ForeNumber
+  /** 绝对值，别名 absoluteValue */
+  abs!: () => ForeNumber
+  /** 修约，别名 round */
+  rounded!: (precision?: number, roundMode?: ForeRoundMode) => ForeNumber
+  /** 修约，别名 rounded */
+  round!: (precision?: number, roundMode?: ForeRoundMode) => ForeNumber
+
+  /** 转换为十进制字符串 */
+  toString!: () => string
+  /** 转换为 JSON 字符串 */
+  toJSON!: () => string
+  /** 转换为原生 number */
+  toNumber!: () => number
+  /** 转换为二进制 */
+  toBinary!: (precision?: number) => string
+  /** 转换为二进制 */
+  toBin!: (precision?: number) => string
+  /** 转换为八进制 */
+  toOctal!: (precision?: number) => string
+  /** 转换为八进制 */
+  toOct!: (precision?: number) => string
+  /** 转换为十六进制 */
+  toHexadecimal!: (precision?: number) => string
+  /** 转换为十六进制 */
+  toHex!: (precision?: number) => string
+  /** 转换为科学计数法 */
+  toExponential!: (precision?: number, round?: ForeRoundMode) => string
+  /** 转换为科学计数法 */
+  toExp!: (precision?: number, round?: ForeRoundMode) => string
+
+  /** 当前实例是否为 NaN */
+  get isNaN(): boolean {
+    return this._k === 'nan'
+  }
+
+  /** 当前实例是否为有限值 */
+  get isFinite(): boolean {
+    return this._k === 'normal'
+  }
+
+  /** 当前实例是否为整数 */
+  get isInteger(): boolean {
+    if (this._k !== 'normal') return false
+    if (this._s === 0 || this._e >= 0) return true
+    const needZeroCount = -this._e
+    if (needZeroCount > this._d.length) return false
+    for (let i = this._d.length - needZeroCount; i < this._d.length; i++) {
+      if (this._d[i] !== 0) return false
+    }
+    return true
+  }
+
+  /**
+   * 构造 ForeNumber
+   *
+   * 支持 number/string/bigint/旧版结构/ForeNumber 实例
+   */
+  constructor(value: ForeInput) {
+    const state = normalizeState(parseInput(value))
+    this._s = state._s
+    this._e = state._e
+    this._d = state._d
+    this._k = state._k
+    this._t = legacyTagFromKind(state._k)
+  }
 }
+
+attachForeNumberInstanceMethods(ForeNumber)
 
 export default ForeNumber
