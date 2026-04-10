@@ -1,19 +1,19 @@
 import type ForeNumber from '../decimal'
 import type { ForeRoundMode } from '../types'
 
-/** 复制当前实例。 */
+/** 复制当前实例 */
 function clone(self: ForeNumber): ForeNumber {
   const Ctor = self.constructor as typeof ForeNumber
   return new Ctor(self)
 }
 
-/** 从原始值创建同构实例。 */
+/** 从原始值创建同构实例 */
 function fromValue(self: ForeNumber, value: ConstructorParameters<typeof ForeNumber>[0]): ForeNumber {
   const Ctor = self.constructor as typeof ForeNumber
   return new Ctor(value)
 }
 
-/** 从特殊 kind 构造对应值。 */
+/** 从特殊 kind 构造对应值 */
 function fromKind(self: ForeNumber, kind: ForeNumber['_k']): ForeNumber {
   if (kind === 'inf') return fromValue(self, { _s: 0, _e: 0, _d: [0], _t: Infinity })
   if (kind === '-inf') return fromValue(self, { _s: 0, _e: 0, _d: [0], _t: -Infinity })
@@ -22,7 +22,7 @@ function fromKind(self: ForeNumber, kind: ForeNumber['_k']): ForeNumber {
 }
 
 /**
- * 取反。
+ * 取反
  */
 export function negated(this: ForeNumber): ForeNumber {
   if (this._k === 'inf') return fromKind(this, '-inf')
@@ -32,7 +32,7 @@ export function negated(this: ForeNumber): ForeNumber {
 }
 
 /**
- * 取绝对值。
+ * 取绝对值
  */
 export function absoluteValue(this: ForeNumber): ForeNumber {
   if (this._k === '-inf') return fromKind(this, 'inf')
@@ -41,7 +41,7 @@ export function absoluteValue(this: ForeNumber): ForeNumber {
 }
 
 /**
- * 修约入口。
+ * 修约入口
  * @status placeholder
  */
 export function rounded(this: ForeNumber, _precision?: number, _roundMode?: ForeRoundMode): ForeNumber {

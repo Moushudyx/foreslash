@@ -22,6 +22,27 @@ describe('ForeNumber divide', () => {
     ForeNumber.config(previous)
   })
 
+  it('applies global precision quantization on arithmetic results', () => {
+    const previous = ForeNumber.config()
+    ForeNumber.config({ precision: 6, divisionPrecision: 24, rounding: 'round' })
+
+    expect(new ForeNumber('12345.6789').plus('0').toString()).toBe('12345.7')
+    expect(new ForeNumber('12345.6789').mul('1').toString()).toBe('12345.7')
+    expect(new ForeNumber('1').div('3').toString()).toBe('0.333333')
+
+    ForeNumber.config(previous)
+  })
+
+  it('can keep strict equality for terminating decimal chains', () => {
+    const previous = ForeNumber.config()
+    ForeNumber.config({ precision: 30, divisionPrecision: 30, rounding: 'round' })
+
+    const value = new ForeNumber('123456789').div('8').div('125').mul('125').mul('8')
+    expect(value.toString()).toBe('123456789')
+
+    ForeNumber.config(previous)
+  })
+
   it('handles extreme exponent gaps in division without dropping scale', () => {
     const previous = ForeNumber.config()
     ForeNumber.config({ divisionPrecision: 24, rounding: 'round' })
@@ -46,7 +67,8 @@ describe('ForeNumber divide', () => {
       .mul('7')
       .mul('3')
 
-    expect(value.toString()).toBe('123456789')
+    const diff = value.minus('123456789').abs()
+    expect(diff.lessThan('1e-150')).toBe(true)
 
     ForeNumber.config(previous)
   })
@@ -63,7 +85,8 @@ describe('ForeNumber divide', () => {
     }
 
     const elapsed = Date.now() - startedAt
-    expect(value.toString()).toBe('123456789')
+    const diff = value.minus('123456789').abs()
+    expect(diff.lessThan('1e-180')).toBe(true)
     expect(elapsed).toBeLessThan(6000)
 
     ForeNumber.config(previous)

@@ -7,7 +7,7 @@ export const FORE_BASE_DIGITS = 4
 
 /** 默认计算上下文 */
 export const DEFAULT_CONTEXT: ForeContext = {
-  /** 通用有效数字精度（预留字段，当前未直接接入四则） */
+  /** 通用有效数字精度（已接入四则运算结果统一量化） */
   precision: 50,
   /** 除法小数位精度（十进制位数），已接入除法实现 */
   divisionPrecision: 50,

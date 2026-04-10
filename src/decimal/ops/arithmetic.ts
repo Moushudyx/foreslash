@@ -1,20 +1,20 @@
 import type ForeNumber from '../decimal'
 import type { ForeInput } from '../types'
 import { legacyTagFromKind } from '../core/kind'
-import { addStates, divideStates, moduloStates, multiplyStates, subtractStates } from '../core/stateArithmetic'
+import { addStates, divideStates, moduloStates, multiplyStates, quantizeStateByPrecision, subtractStates } from '../core/stateArithmetic'
 
-/** 抛出统一的占位实现错误。 */
+/** 抛出统一的占位实现错误 */
 function notImplemented(name: string): never {
   throw new Error(`[ForeNumber] ${name} 尚未实现；当前阶段先完成类型与框架重构`)
 }
 
-/** 将任意入参标准化为 ForeNumber 实例。 */
+/** 将任意入参标准化为 ForeNumber 实例 */
 function toForeNumber(self: ForeNumber, value: ForeInput): ForeNumber {
   const Ctor = self.constructor as typeof ForeNumber
   return new Ctor(value)
 }
 
-/** 将内部 state 还原为 ForeNumber 实例。 */
+/** 将内部 state 还原为 ForeNumber 实例 */
 function fromState(self: ForeNumber, state: ReturnType<typeof addStates>): ForeNumber {
   const Ctor = self.constructor as typeof ForeNumber
   return new Ctor({
@@ -29,21 +29,27 @@ function fromState(self: ForeNumber, state: ReturnType<typeof addStates>): ForeN
  * 高精度加法。
  */
 export function plus(this: ForeNumber, value: ForeInput): ForeNumber {
-  return fromState(this, addStates(this, toForeNumber(this, value)))
+  const Ctor = this.constructor as typeof ForeNumber
+  const raw = addStates(this, toForeNumber(this, value))
+  return fromState(this, quantizeStateByPrecision(raw, Ctor.config()))
 }
 
 /**
  * 高精度减法。
  */
 export function minus(this: ForeNumber, value: ForeInput): ForeNumber {
-  return fromState(this, subtractStates(this, toForeNumber(this, value)))
+  const Ctor = this.constructor as typeof ForeNumber
+  const raw = subtractStates(this, toForeNumber(this, value))
+  return fromState(this, quantizeStateByPrecision(raw, Ctor.config()))
 }
 
 /**
  * 高精度乘法。
  */
 export function multiply(this: ForeNumber, value: ForeInput): ForeNumber {
-  return fromState(this, multiplyStates(this, toForeNumber(this, value)))
+  const Ctor = this.constructor as typeof ForeNumber
+  const raw = multiplyStates(this, toForeNumber(this, value))
+  return fromState(this, quantizeStateByPrecision(raw, Ctor.config()))
 }
 
 /**
@@ -51,7 +57,9 @@ export function multiply(this: ForeNumber, value: ForeInput): ForeNumber {
  */
 export function dividedBy(this: ForeNumber, value: ForeInput): ForeNumber {
   const Ctor = this.constructor as typeof ForeNumber
-  return fromState(this, divideStates(this, toForeNumber(this, value), Ctor.config()))
+  const context = Ctor.config()
+  const raw = divideStates(this, toForeNumber(this, value), context)
+  return fromState(this, quantizeStateByPrecision(raw, context))
 }
 
 /**
@@ -59,7 +67,9 @@ export function dividedBy(this: ForeNumber, value: ForeInput): ForeNumber {
  * 当前实现语义：截断除法余数（与 JS `%` 一致）。
  */
 export function modulo(this: ForeNumber, value: ForeInput): ForeNumber {
-  return fromState(this, moduloStates(this, toForeNumber(this, value)))
+  const Ctor = this.constructor as typeof ForeNumber
+  const raw = moduloStates(this, toForeNumber(this, value))
+  return fromState(this, quantizeStateByPrecision(raw, Ctor.config()))
 }
 
 /**

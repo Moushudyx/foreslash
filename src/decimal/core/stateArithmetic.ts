@@ -12,8 +12,17 @@ import {
   subtractDigits
 } from './limbMath'
 
+/** 除法保护位数, 用于防止除法结果精度丢失 */
+const DIVISION_GUARD_DIGITS = 16
+
 function createSpecialState(kind: ForeState['_k']): ForeState {
   return { _s: 0, _e: 0, _d: [0], _k: kind }
+}
+
+/** 获取规范化后尾数对应的十进制位数 */
+function decimalDigitLength(digits: number[]): number {
+  if (!digits.length || isZeroDigits(digits)) return 1
+  return digits[0].toString().length + (digits.length - 1) * 4
 }
 
 /** 判断状态是否表示数值零 */
@@ -92,8 +101,43 @@ function shouldRoundUp(
 }
 
 /**
- * 使用内部万进制状态执行取模
+ * 按上下文 precision 执行统一有效数字量化
  *
+ * 说明：
+ * - precision 表示有效数字位数
+ * - 该量化与除法小数位控制（divisionPrecision）互补
+ */
+export function quantizeStateByPrecision(state: ForeState, context: ForeContext): ForeState {
+  if (state._k !== 'normal' || isZeroState(state)) return state
+
+  const targetPrecision = Math.trunc(context.precision)
+  if (!Number.isFinite(targetPrecision) || targetPrecision <= 0) return state
+
+  const currentDigits = decimalDigitLength(state._d)
+  if (currentDigits <= targetPrecision) return state
+
+  const cutDigits = currentDigits - targetPrecision
+  const scale = multiplyDigitsByPowerOfTen([1], cutDigits)
+  const divided = divideDigits(state._d, scale)
+  let quotient = divided.quotient
+
+  if (shouldRoundUp(divided.remainder, scale, quotient, state._s as -1 | 1, context.rounding)) {
+    quotient = incrementDigits(quotient)
+  }
+
+  if (isZeroDigits(quotient)) {
+    return normalizeState({ _s: 0, _e: 0, _d: [0], _k: 'normal' })
+  }
+
+  const limbShift = Math.floor(cutDigits / 4)
+  const decimalShift = cutDigits % 4
+  const coefficient = decimalShift > 0 ? multiplyDigitsByPowerOfTen(quotient, decimalShift) : quotient
+
+  return buildNormalState(state._s as -1 | 1, coefficient, state._e + limbShift)
+}
+
+/**
+ * 使用内部万进制状态执行取模\
  * 当前语义使用“截断除法余数”，与 JavaScript `%` 保持一致：余数符号与被除数一致
  */
 export function moduloStates(left: ForeState, right: ForeState): ForeState {
@@ -113,7 +157,7 @@ export function moduloStates(left: ForeState, right: ForeState): ForeState {
 }
 
 /**
- * 使用内部万进制状态执行加法。
+ * 使用内部万进制状态执行加法
  */
 export function addStates(left: ForeState, right: ForeState): ForeState {
   if (left._k === 'nan' || right._k === 'nan') return createSpecialState('nan')
@@ -139,14 +183,14 @@ export function addStates(left: ForeState, right: ForeState): ForeState {
 }
 
 /**
- * 使用内部万进制状态执行减法。
+ * 使用内部万进制状态执行减法
  */
 export function subtractStates(left: ForeState, right: ForeState): ForeState {
   return addStates(left, negateState(right))
 }
 
 /**
- * 使用内部万进制状态执行乘法。
+ * 使用内部万进制状态执行乘法
  */
 export function multiplyStates(left: ForeState, right: ForeState): ForeState {
   if (left._k === 'nan' || right._k === 'nan') return createSpecialState('nan')
@@ -167,8 +211,8 @@ export function multiplyStates(left: ForeState, right: ForeState): ForeState {
 }
 
 /**
- * 使用内部万进制状态执行除法。
- * 精度按十进制小数位配置，内部使用 limb 长除法实现。
+ * 使用内部万进制状态执行除法\
+ * 精度按十进制小数位配置，内部使用 limb 长除法实现
  */
 export function divideStates(left: ForeState, right: ForeState, context: ForeContext): ForeState {
   if (left._k === 'nan' || right._k === 'nan') return createSpecialState('nan')
@@ -191,8 +235,10 @@ export function divideStates(left: ForeState, right: ForeState, context: ForeCon
 
   const sign = (left._s * right._s) as -1 | 1
   const decimalPlaces = Math.max(0, Math.trunc(context.divisionPrecision))
+  const guardDigits = decimalPlaces > 0 ? DIVISION_GUARD_DIGITS : 0
+  const internalPlaces = decimalPlaces + guardDigits
   const exponentDeltaDigits = (left._e - right._e) * 4
-  const shift = decimalPlaces + exponentDeltaDigits
+  const shift = internalPlaces + exponentDeltaDigits
 
   let dividend = left._d
   let divisor = right._d
@@ -202,7 +248,16 @@ export function divideStates(left: ForeState, right: ForeState, context: ForeCon
   let { quotient, remainder } = divideDigits(dividend, divisor)
   if (shouldRoundUp(remainder, divisor, quotient, sign, context.rounding)) {
     quotient = incrementDigits(quotient)
-    remainder = [0]
+  }
+
+  if (guardDigits > 0) {
+    const guardScale = multiplyDigitsByPowerOfTen([1], guardDigits)
+    const guardReduced = divideDigits(quotient, guardScale)
+    quotient = guardReduced.quotient
+
+    if (shouldRoundUp(guardReduced.remainder, guardScale, quotient, sign, context.rounding)) {
+      quotient = incrementDigits(quotient)
+    }
   }
 
   return stateFromScaledInteger(sign, quotient, decimalPlaces)

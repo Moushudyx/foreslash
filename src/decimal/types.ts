@@ -14,7 +14,7 @@ export type ForeRoundMode = 'round' | 'banker' | 'floor' | 'ceil'
 export interface ForeContext {
   /**
    * 通用精度（有效数字）目标值
-   * 预留给后续统一修约策略，目前尚未在四则运算中直接使用
+   * 已用于四则运算结果的统一有效数字量化
    */
   precision: number
   /**
