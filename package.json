@@ -19,9 +19,9 @@
   "types": "lib/index.d.ts",
   "exports": {
     ".": {
+      "types": "./lib/index.d.ts",
       "import": "./lib/index.mjs",
-      "require": "./lib/index.cmn.cjs",
-      "types": "./lib/index.d.ts"
+      "require": "./lib/index.cmn.cjs"
     },
     "./umd": "./lib/index.umd.js"
   },
