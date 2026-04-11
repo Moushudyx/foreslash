@@ -77,7 +77,17 @@ describe('ForeNumber 幂运算', () => {
     expect(() => new ForeNumber('9').pow('3//4')).toThrow(/分数字符串格式无效/)
     expect(() => new ForeNumber('9').pow('1/1000000001')).toThrow(/分母超过当前上限 \d+/)
     expect(() => new ForeNumber('9').pow('9007199254740992/3')).toThrow(/超出安全整数范围/)
-    expect(() => new ForeNumber('9').pow('0.123456789123456789')).toThrow(/最多 \d+ 位小数的有理数指数/)
+  })
+
+  it('支持一般实数幂近似计算', () => {
+    const previous = ForeNumber.config()
+    ForeNumber.config({ powerPrecision: 24, precision: 24, rounding: 'round' })
+
+    expect(new ForeNumber('2').pow('1.1').minus('2.1435469250725863').abs().lessThan('1e-12')).toBe(true)
+    expect(new ForeNumber('10').pow('0.5').minus('3.1622776601683795').abs().lessThan('1e-12')).toBe(true)
+    expect(new ForeNumber('9').pow('0.123456789123456789').isFinite).toBe(true)
+
+    ForeNumber.config(previous)
   })
 
   it('在高精度下保持根号迭代稳定', () => {

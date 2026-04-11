@@ -2,6 +2,7 @@ import type { ForeContext, ForeState } from '../types'
 import { addStates, divideStates, multiplyStates, quantizeStateByPrecision } from './stateArithmetic'
 import { isZeroDigits } from './limbMath'
 import { normalizeState } from './normalize'
+import { powerRealStates } from './realPowerArithmetic'
 
 /**
  * 根号迭代额外保留的保护位
@@ -521,12 +522,12 @@ export function powerStates(base: ForeState, exponent: ForeState, context: ForeC
   }
   if (classification.kind === 'unsupported-rational') {
     if (classification.reason === 'decimal-scale-too-large') {
-      throw new Error(`[ForeNumber] 当前仅自动支持最多 ${MAX_RATIONAL_DECIMAL_SCALE} 位小数的有理数指数`)
+      return powerRealStates(base, exponent, context)
     }
     throw new Error('[ForeNumber] 当前仅支持安全整数范围内的有理数指数')
   }
   if (classification.kind === 'real') {
-    throw new Error('[ForeNumber] 当前仅支持整数幂与有限小数有理数幂，其他实数幂尚未实现')
+    return powerRealStates(base, exponent, context)
   }
 
   return createSpecialState('nan')

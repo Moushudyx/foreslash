@@ -1,0 +1,48 @@
+import { describe, expect, it } from 'vitest'
+import { ForeNumber } from '../../src/decimal'
+import { legacyTagFromKind } from '../../src/decimal/core/kind'
+import { powerRealStates } from '../../src/decimal/core/realPowerArithmetic'
+import { expState, lnState } from '../../src/decimal/core/transcendentalArithmetic'
+
+/**
+ * 将内部状态包装为 ForeNumber 实例
+ */
+function fromState(state: ReturnType<typeof lnState>): ForeNumber {
+  return new ForeNumber({
+    _s: state._s,
+    _e: state._e,
+    _d: state._d,
+    _t: legacyTagFromKind(state._k)
+  })
+}
+
+describe('ForeNumber 一般实数幂前置能力', () => {
+  it('为 ln 处理精确特殊值与定义域', () => {
+    const context = ForeNumber.config()
+
+    expect(fromState(lnState(new ForeNumber('1'), context)).toString()).toBe('0')
+    expect(fromState(lnState(new ForeNumber('0'), context)).toString()).toBe('-Infinity')
+    expect(fromState(lnState(new ForeNumber('-2'), context)).toString()).toBe('NaN')
+    expect(fromState(lnState(new ForeNumber('Infinity'), context)).toString()).toBe('Infinity')
+  })
+
+  it('为 exp 处理精确特殊值', () => {
+    const context = ForeNumber.config()
+
+    expect(fromState(expState(new ForeNumber('0'), context)).toString()).toBe('1')
+    expect(fromState(expState(new ForeNumber('-Infinity'), context)).toString()).toBe('0')
+    expect(fromState(expState(new ForeNumber('Infinity'), context)).toString()).toBe('Infinity')
+    expect(fromState(expState(new ForeNumber('NaN'), context)).toString()).toBe('NaN')
+  })
+
+  it('为一般实数幂保留统一的定义域入口', () => {
+    const context = ForeNumber.config()
+
+    expect(fromState(powerRealStates(new ForeNumber('1'), new ForeNumber('3.1415926535'), context)).toString()).toBe('1')
+    expect(fromState(powerRealStates(new ForeNumber('0'), new ForeNumber('-0.5'), context)).toString()).toBe('Infinity')
+    expect(() => powerRealStates(new ForeNumber('-2'), new ForeNumber('1.1'), context)).toThrow(/负数底数暂不支持一般实数幂/)
+
+    const approximated = fromState(powerRealStates(new ForeNumber('2'), new ForeNumber('1.1'), context))
+    expect(approximated.minus('2.1435469250725863').abs().lessThan('1e-12')).toBe(true)
+  })
+})
