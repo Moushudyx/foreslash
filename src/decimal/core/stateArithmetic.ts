@@ -15,6 +15,7 @@ import {
 /** 除法保护位数, 用于防止除法结果精度丢失 */
 const DIVISION_GUARD_DIGITS = 16
 
+/** 构造特殊值状态 */
 function createSpecialState(kind: ForeState['_k']): ForeState {
   return { _s: 0, _e: 0, _d: [0], _k: kind }
 }
@@ -100,57 +101,6 @@ function shouldRoundUp(
   return false
 }
 
-/** 构造数值 1 的 normal 状态 */
-function oneState(): ForeState {
-  return { _s: 1, _e: 0, _d: [1], _k: 'normal' }
-}
-
-/** 判断 normal 状态是否为整数 */
-function isIntegerState(state: ForeState): boolean {
-  if (state._k !== 'normal') return false
-  if (state._s === 0 || state._e >= 0) return true
-  const needZeroCount = -state._e
-  if (needZeroCount > state._d.length) return false
-  for (let i = state._d.length - needZeroCount; i < state._d.length; i += 1) {
-    if (state._d[i] !== 0) return false
-  }
-  return true
-}
-
-/** 将整数状态转换为非负 limb 整数（忽略符号） */
-function integerDigitsFromState(state: ForeState): number[] {
-  if (state._s === 0) return [0]
-  if (state._e >= 0) {
-    return state._d.concat(new Array(state._e).fill(0))
-  }
-  const cut = -state._e
-  const kept = state._d.slice(0, Math.max(0, state._d.length - cut))
-  return kept.length ? kept : [0]
-}
-
-/** 判断整数 limb 是否为 0 */
-function isZeroIntegerDigits(digits: number[]): boolean {
-  return isZeroDigits(digits)
-}
-
-/** 判断整数 limb 是否为奇数 */
-function isOddIntegerDigits(digits: number[]): boolean {
-  if (isZeroDigits(digits)) return false
-  return (digits[digits.length - 1] ?? 0) % 2 === 1
-}
-
-/** 计算整数 limb 的 floor(d / 2) */
-function divideIntegerDigitsBy2(digits: number[]): number[] {
-  const out: number[] = []
-  let carry = 0
-  for (let i = 0; i < digits.length; i += 1) {
-    const cur = carry * 10000 + digits[i]
-    out.push(Math.floor(cur / 2))
-    carry = cur % 2
-  }
-  return out.length ? out.slice(out.findIndex((n) => n !== 0) >= 0 ? out.findIndex((n) => n !== 0) : out.length - 1) : [0]
-}
-
 /**
  * 按上下文 precision 执行统一有效数字量化
  *
@@ -188,7 +138,7 @@ export function quantizeStateByPrecision(state: ForeState, context: ForeContext)
 }
 
 /**
- * 使用内部万进制状态执行取模\
+ * 使用内部万进制状态执行取模
  * 当前语义使用“截断除法余数”，与 JavaScript `%` 保持一致：余数符号与被除数一致
  */
 export function moduloStates(left: ForeState, right: ForeState): ForeState {
@@ -262,7 +212,7 @@ export function multiplyStates(left: ForeState, right: ForeState): ForeState {
 }
 
 /**
- * 使用内部万进制状态执行除法\
+ * 使用内部万进制状态执行除法
  * 精度按十进制小数位配置，内部使用 limb 长除法实现
  */
 export function divideStates(left: ForeState, right: ForeState, context: ForeContext): ForeState {
@@ -312,63 +262,4 @@ export function divideStates(left: ForeState, right: ForeState, context: ForeCon
   }
 
   return stateFromScaledInteger(sign, quotient, decimalPlaces)
-}
-
-/**
- * 使用内部万进制状态执行幂运算。
- * 当前仅支持整数幂，非整数幂会抛错。
- */
-export function powerStates(base: ForeState, exponent: ForeState, context: ForeContext): ForeState {
-  const exponentIsZero = exponent._k === 'normal' && exponent._s === 0
-
-  if (base._k === 'nan') {
-    return exponentIsZero ? oneState() : createSpecialState('nan')
-  }
-  if (exponent._k !== 'normal') {
-    return createSpecialState('nan')
-  }
-
-  if (!isIntegerState(exponent)) {
-    throw new Error('[ForeNumber] 当前仅支持整数幂，非整数幂尚未实现')
-  }
-
-  if (exponentIsZero) return oneState()
-
-  const exponentNegative = exponent._s < 0
-  const exponentAbsDigits = integerDigitsFromState({ ...exponent, _s: exponent._s < 0 ? 1 : exponent._s })
-
-  if (base._k === 'inf' || base._k === '-inf') {
-    if (exponentNegative) {
-      return normalizeState({ _s: 0, _e: 0, _d: [0], _k: 'normal' })
-    }
-    if (base._k === 'inf') return createSpecialState('inf')
-    return isOddIntegerDigits(exponentAbsDigits) ? createSpecialState('-inf') : createSpecialState('inf')
-  }
-
-  if (isZeroState(base)) {
-    if (exponentNegative) return createSpecialState('inf')
-    return normalizeState({ _s: 0, _e: 0, _d: [0], _k: 'normal' })
-  }
-
-  let result = oneState()
-  let factor = base
-  let expDigits = exponentAbsDigits
-
-  while (!isZeroIntegerDigits(expDigits)) {
-    if (isOddIntegerDigits(expDigits)) {
-      result = multiplyStates(result, factor)
-    }
-    expDigits = divideIntegerDigitsBy2(expDigits)
-    if (!isZeroIntegerDigits(expDigits)) {
-      factor = multiplyStates(factor, factor)
-    }
-  }
-
-  if (!exponentNegative) return result
-
-  const reciprocalContext: ForeContext = {
-    ...context,
-    divisionPrecision: Math.max(0, Math.trunc(context.powerPrecision))
-  }
-  return divideStates(oneState(), result, reciprocalContext)
 }

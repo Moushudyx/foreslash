@@ -1,5 +1,5 @@
 import type ForeNumber from '../decimal'
-import { plus, minus, multiply, dividedBy, modulo, power } from '../ops/arithmetic'
+import { plus, minus, multiply, dividedBy, modulo, power, root, squareRoot } from '../ops/arithmetic'
 import { equals, greaterThan, lessThan, greaterThanOrEqual, lessThanOrEqual } from '../ops/comparison'
 import { negated, absoluteValue, rounded } from '../ops/unary'
 import { toDecimalString, toNumberValue } from '../convert/toString'
@@ -19,6 +19,9 @@ interface ForeNumberPrototype {
   mod: typeof modulo
   power: typeof power
   pow: typeof power
+  squareRoot: typeof squareRoot
+  sqrt: typeof squareRoot
+  root: typeof root
 
   equals: typeof equals
   equalTo: typeof equals
@@ -74,6 +77,9 @@ export function attachForeNumberInstanceMethods(ForeNumberClass: ForeNumberClass
   proto.mod = modulo
   proto.power = power
   proto.pow = power
+  proto.squareRoot = squareRoot
+  proto.sqrt = squareRoot
+  proto.root = root
 
   proto.equals = equals
   proto.equalTo = equals

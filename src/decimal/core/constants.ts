@@ -11,7 +11,7 @@ export const DEFAULT_CONTEXT: ForeContext = {
   precision: 50,
   /** 除法小数位精度（十进制位数），已接入除法实现 */
   divisionPrecision: 50,
-  /** 幂运算精度上限（预留字段，等待 power/pow 接入） */
+  /** 幂运算精度上限，已接入负整数幂 根号与有理数幂 */
   powerPrecision: 50,
   /** 默认舍入模式（已接入除法） */
   rounding: 'round',

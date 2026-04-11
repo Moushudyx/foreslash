@@ -14,22 +14,22 @@ export type ForeRoundMode = 'round' | 'banker' | 'floor' | 'ceil'
 export interface ForeContext {
   /**
    * 通用精度（有效数字）目标值
-   * 已用于四则运算结果的统一有效数字量化
+   * 用于四则运算结果的统一有效数字量化
    */
   precision: number
   /**
    * 除法结果的小数位精度（十进制位数）
-   * 已用于 `divideStates`
+   * 用于 `divideStates`
    */
   divisionPrecision: number
   /**
    * 幂运算中间结果或输出结果精度上限（有效数字）
-   * 预留给 `power/pow`，当前尚未接入
+   * 用于负整数幂 倒数路径 根号迭代 与有理数幂中间量化
    */
   powerPrecision: number
   /**
    * 默认舍入模式
-   * 已用于除法舍入
+   * 用于除法舍入
    */
   rounding: ForeRoundMode
   /**
@@ -90,6 +90,12 @@ export interface ForeNumberInstance extends baseForeNumber {
   power(value: ForeInput): ForeNumberInstance
   /** 幂运算, 别名 `power` */
   pow(value: ForeInput): ForeNumberInstance
+  /** 平方根, 别名 `sqrt` */
+  squareRoot(): ForeNumberInstance
+  /** 平方根, 别名 `squareRoot` */
+  sqrt(): ForeNumberInstance
+  /** n 次方根 */
+  root(degree: ForeInput): ForeNumberInstance
 
   /** 相等比较, 别名 `equalTo`、`eq` */
   equals(value: ForeInput): boolean
@@ -159,18 +165,27 @@ export interface ForeNumberInstance extends baseForeNumber {
 }
 
 export interface ForeNumberConstructor {
+  /** 圆周率常量 */
   readonly pi: ForeNumberInstance
+  /** 自然对数底数常量 */
   readonly e: ForeNumberInstance
 
+  /** 判断输入是否为 NaN */
   isNaN(value: ForeInput): boolean
+  /** 判断输入是否为有限值 */
   isFinite(value: ForeInput): boolean
+  /** 判断输入是否为整数 */
   isInteger(value: ForeInput): boolean
 
+  /** 读取或更新全局上下文 */
   config(partial?: Partial<ForeContext>): ForeContext
 
   new (value: ForeInput): ForeNumberInstance
 }
 
+/**
+ * decimal 模块内部使用的规范化状态
+ */
 export interface ForeState {
   _s: ForeSign
   _e: number

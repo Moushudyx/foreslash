@@ -1,14 +1,17 @@
 import { afterEach, describe, expect, it } from 'vitest'
 import { ForeNumber } from '../../src/decimal'
 
+/**
+ * 记录用例开始前的全局上下文
+ */
 const defaultContext = ForeNumber.config()
 
 afterEach(() => {
   ForeNumber.config(defaultContext)
 })
 
-describe('ForeNumber divide', () => {
-  it('supports division with context-controlled precision', () => {
+describe('ForeNumber 除法', () => {
+  it('支持受上下文精度控制的除法', () => {
     const previous = ForeNumber.config()
     ForeNumber.config({ divisionPrecision: 20, rounding: 'round' })
 
@@ -22,7 +25,7 @@ describe('ForeNumber divide', () => {
     ForeNumber.config(previous)
   })
 
-  it('applies global precision quantization on arithmetic results', () => {
+  it('对算术结果应用全局 precision 量化', () => {
     const previous = ForeNumber.config()
     ForeNumber.config({ precision: 6, divisionPrecision: 24, rounding: 'round' })
 
@@ -33,7 +36,7 @@ describe('ForeNumber divide', () => {
     ForeNumber.config(previous)
   })
 
-  it('can keep strict equality for terminating decimal chains', () => {
+  it('在有限小数链式运算中保持严格相等', () => {
     const previous = ForeNumber.config()
     ForeNumber.config({ precision: 30, divisionPrecision: 30, rounding: 'round' })
 
@@ -43,7 +46,7 @@ describe('ForeNumber divide', () => {
     ForeNumber.config(previous)
   })
 
-  it('handles extreme exponent gaps in division without dropping scale', () => {
+  it('在极端指数差下保持除法量级不丢失', () => {
     const previous = ForeNumber.config()
     ForeNumber.config({ divisionPrecision: 24, rounding: 'round' })
 
@@ -53,7 +56,7 @@ describe('ForeNumber divide', () => {
     ForeNumber.config(previous)
   })
 
-  it('keeps precision in chained divide/multiply roundtrip', () => {
+  it('在除乘链式往返中保持精度', () => {
     const previous = ForeNumber.config()
     ForeNumber.config({ divisionPrecision: 180, rounding: 'round' })
 
@@ -73,7 +76,7 @@ describe('ForeNumber divide', () => {
     ForeNumber.config(previous)
   })
 
-  it('does not hang in repeated chained division scenarios', () => {
+  it('在重复链式除法场景下不会卡住', () => {
     const previous = ForeNumber.config()
     ForeNumber.config({ divisionPrecision: 220, rounding: 'round' })
 
@@ -92,7 +95,7 @@ describe('ForeNumber divide', () => {
     ForeNumber.config(previous)
   }, 12000)
 
-  it('handles special values in division', () => {
+  it('在除法中正确处理特殊值', () => {
     expect(new ForeNumber('1').div('0').toString()).toBe('Infinity')
     expect(new ForeNumber('0').div('0').toString()).toBe('NaN')
   })

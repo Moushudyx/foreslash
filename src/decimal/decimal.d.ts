@@ -29,6 +29,9 @@ declare class ForeNumber implements ForeNumberInstance {
   mod(value: ForeInput): ForeNumber
   power(value: ForeInput): ForeNumber
   pow(value: ForeInput): ForeNumber
+  squareRoot(): ForeNumber
+  sqrt(): ForeNumber
+  root(degree: ForeInput): ForeNumber
 
   equals(value: ForeInput): boolean
   equalTo(value: ForeInput): boolean
