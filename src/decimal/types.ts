@@ -4,6 +4,8 @@ export type ForeKind = 'normal' | 'nan' | 'inf' | '-inf'
 
 export type ForeRoundMode = 'round' | 'banker' | 'floor' | 'ceil'
 
+export type ForeRealPowerMode = 'approx' | 'strict'
+
 /**
  * ForeNumber 全局计算上下文
  *
@@ -27,6 +29,12 @@ export interface ForeContext {
    * 用于负整数幂 倒数路径 根号迭代 与有理数幂中间量化
    */
   powerPrecision: number
+  /**
+   * 一般实数幂模式
+   * approx 表示允许走近似 ln exp 路径
+   * strict 表示仅允许整数和有理数幂
+   */
+  realPowerMode: ForeRealPowerMode
   /**
    * 默认舍入模式
    * 用于除法舍入

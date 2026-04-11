@@ -42,6 +42,10 @@ function isOneState(state: ForeState): boolean {
  * 当前负责统一处理特殊值 定义域 与后续 ln exp 路线的调度骨架
  */
 export function powerRealStates(base: ForeState, exponent: ForeState, context: ForeContext): ForeState {
+  if (context.realPowerMode === 'strict') {
+    throw new Error('[ForeNumber] strict 模式下仅支持整数幂与有理数幂')
+  }
+
   if (base._k === 'nan' || exponent._k === 'nan') return createSpecialState('nan')
   if (exponent._k !== 'normal') return createSpecialState('nan')
   if (exponent._s === 0) return oneState()

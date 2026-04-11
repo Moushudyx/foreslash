@@ -81,11 +81,21 @@ describe('ForeNumber 幂运算', () => {
 
   it('支持一般实数幂近似计算', () => {
     const previous = ForeNumber.config()
-    ForeNumber.config({ powerPrecision: 24, precision: 24, rounding: 'round' })
+    ForeNumber.config({ powerPrecision: 24, precision: 24, rounding: 'round', realPowerMode: 'approx' })
 
     expect(new ForeNumber('2').pow('1.1').minus('2.1435469250725863').abs().lessThan('1e-12')).toBe(true)
     expect(new ForeNumber('10').pow('0.5').minus('3.1622776601683795').abs().lessThan('1e-12')).toBe(true)
     expect(new ForeNumber('9').pow('0.123456789123456789').isFinite).toBe(true)
+
+    ForeNumber.config(previous)
+  })
+
+  it('支持在 strict 模式下禁止一般实数幂', () => {
+    const previous = ForeNumber.config()
+    ForeNumber.config({ realPowerMode: 'strict' })
+
+    expect(new ForeNumber('2').pow('1.1').minus('2.1435469250725863').abs().lessThan('1e-12')).toBe(true)
+    expect(() => new ForeNumber('9').pow('0.1234567')).toThrow(/strict 模式下仅支持整数幂与有理数幂/)
 
     ForeNumber.config(previous)
   })

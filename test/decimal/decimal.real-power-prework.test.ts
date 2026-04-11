@@ -24,6 +24,9 @@ describe('ForeNumber 一般实数幂前置能力', () => {
     expect(fromState(lnState(new ForeNumber('0'), context)).toString()).toBe('-Infinity')
     expect(fromState(lnState(new ForeNumber('-2'), context)).toString()).toBe('NaN')
     expect(fromState(lnState(new ForeNumber('Infinity'), context)).toString()).toBe('Infinity')
+
+    const large = fromState(lnState(new ForeNumber('1e100'), context))
+    expect(large.minus('230.25850929940458').abs().lessThan('1e-10')).toBe(true)
   })
 
   it('为 exp 处理精确特殊值', () => {
@@ -33,6 +36,9 @@ describe('ForeNumber 一般实数幂前置能力', () => {
     expect(fromState(expState(new ForeNumber('-Infinity'), context)).toString()).toBe('0')
     expect(fromState(expState(new ForeNumber('Infinity'), context)).toString()).toBe('Infinity')
     expect(fromState(expState(new ForeNumber('NaN'), context)).toString()).toBe('NaN')
+
+    expect(fromState(expState(new ForeNumber('800'), context)).toString()).toBe('Infinity')
+    expect(fromState(expState(new ForeNumber('-800'), context)).toString()).toBe('0')
   })
 
   it('为一般实数幂保留统一的定义域入口', () => {

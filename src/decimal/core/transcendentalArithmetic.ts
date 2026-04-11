@@ -27,6 +27,16 @@ const EXP_OVERFLOW_THRESHOLD = 709.782712893384
 const EXP_UNDERFLOW_THRESHOLD = -745.1332191019411
 
 /**
+ * exp 上溢阈值状态
+ */
+const EXP_OVERFLOW_STATE = parseDecimalString(String(EXP_OVERFLOW_THRESHOLD))
+
+/**
+ * exp 下溢阈值状态
+ */
+const EXP_UNDERFLOW_STATE = parseDecimalString(String(EXP_UNDERFLOW_THRESHOLD))
+
+/**
  * 构造特殊值状态
  */
 function createSpecialState(kind: ForeState['_k']): ForeState {
@@ -53,6 +63,38 @@ function oneState(): ForeState {
 function decimalDigitLength(digits: number[]): number {
   if (!digits.length) return 1
   return digits[0].toString().length + (digits.length - 1) * 4
+}
+
+/**
+ * 比较两个 normal 状态的绝对值
+ */
+function compareNormalAbs(left: ForeState, right: ForeState): -1 | 0 | 1 {
+  const leftMagnitude = left._e + left._d.length
+  const rightMagnitude = right._e + right._d.length
+  if (leftMagnitude !== rightMagnitude) return leftMagnitude > rightMagnitude ? 1 : -1
+
+  const exponent = Math.min(left._e, right._e)
+  const leftDigits = left._d.concat(new Array(left._e - exponent).fill(0))
+  const rightDigits = right._d.concat(new Array(right._e - exponent).fill(0))
+  const maxLength = Math.max(leftDigits.length, rightDigits.length)
+
+  for (let index = 0; index < maxLength; index += 1) {
+    const leftDigit = leftDigits[index] ?? 0
+    const rightDigit = rightDigits[index] ?? 0
+    if (leftDigit === rightDigit) continue
+    return leftDigit > rightDigit ? 1 : -1
+  }
+  return 0
+}
+
+/**
+ * 比较两个 normal 状态的大小
+ */
+function compareNormalStates(left: ForeState, right: ForeState): -1 | 0 | 1 {
+  if (left._s !== right._s) return left._s > right._s ? 1 : -1
+  if (left._s === 0) return 0
+  const absCompared = compareNormalAbs(left, right)
+  return left._s > 0 ? absCompared : (absCompared * -1) as -1 | 0 | 1
 }
 
 /**
@@ -100,6 +142,17 @@ function fromApproxNumber(value: number, context: ForeContext): ForeState {
 }
 
 /**
+ * 直接由状态估算自然对数
+ */
+function approximateNaturalLog(value: ForeState, context: ForeContext): number {
+  const significantDigits = resolveApproxDigits(context)
+  const lead = leadingDecimalDigits(value._d, significantDigits)
+  const mantissa = Number.parseFloat(`${lead[0]}${lead.length > 1 ? `.${lead.slice(1)}` : ''}`)
+  const exponent10 = value._e * 4 + decimalDigitLength(value._d) - 1
+  return Math.log(mantissa) + exponent10 * LN10
+}
+
+/**
  * 判断状态是否为零
  */
 function isZeroState(state: ForeState): boolean {
@@ -125,8 +178,7 @@ export function lnState(value: ForeState, context: ForeContext): ForeState {
   if (value._s < 0) return createSpecialState('nan')
   if (isOneState(value)) return zeroState()
 
-  const approximate = toApproxNumber(value, context)
-  return fromApproxNumber(Math.log(approximate), context)
+  return fromApproxNumber(approximateNaturalLog(value, context), context)
 }
 
 /**
@@ -139,9 +191,14 @@ export function expState(exponent: ForeState, context: ForeContext): ForeState {
   if (exponent._k === '-inf') return zeroState()
   if (isZeroState(exponent)) return oneState()
 
+  if (exponent._k === 'normal' && compareNormalStates(exponent, EXP_OVERFLOW_STATE) >= 0) {
+    return createSpecialState('inf')
+  }
+  if (exponent._k === 'normal' && compareNormalStates(exponent, EXP_UNDERFLOW_STATE) <= 0) {
+    return zeroState()
+  }
+
   const x = toApproxNumber(exponent, context)
-  if (x >= EXP_OVERFLOW_THRESHOLD) return createSpecialState('inf')
-  if (x <= EXP_UNDERFLOW_THRESHOLD) return zeroState()
 
   // 先按 ln10 分解指数 再计算余项 避免直接 exp 导致不必要上溢
   const n = Math.floor(x / LN10)

@@ -15,9 +15,10 @@ describe('ForeNumber 框架基础', () => {
 
   it('支持静态上下文配置', () => {
     const previous = ForeNumber.config()
-    const next = ForeNumber.config({ divisionPrecision: 64, powerPrecision: 80 })
+    const next = ForeNumber.config({ divisionPrecision: 64, powerPrecision: 80, realPowerMode: 'strict' })
     expect(next.divisionPrecision).toBe(64)
     expect(next.powerPrecision).toBe(80)
+    expect(next.realPowerMode).toBe('strict')
     ForeNumber.config(previous)
   })
 
