@@ -1,12 +1,7 @@
 import type ForeNumber from '../decimal'
 import type { ForeInput } from '../types'
 import { legacyTagFromKind } from '../core/kind'
-import { addStates, divideStates, moduloStates, multiplyStates, quantizeStateByPrecision, subtractStates } from '../core/stateArithmetic'
-
-/** 抛出统一的占位实现错误 */
-function notImplemented(name: string): never {
-  throw new Error(`[ForeNumber] ${name} 尚未实现；当前阶段先完成类型与框架重构`)
-}
+import { addStates, divideStates, moduloStates, multiplyStates, powerStates, quantizeStateByPrecision, subtractStates } from '../core/stateArithmetic'
 
 /** 将任意入参标准化为 ForeNumber 实例 */
 function toForeNumber(self: ForeNumber, value: ForeInput): ForeNumber {
@@ -26,7 +21,7 @@ function fromState(self: ForeNumber, state: ReturnType<typeof addStates>): ForeN
 }
 
 /**
- * 高精度加法。
+ * 高精度加法
  */
 export function plus(this: ForeNumber, value: ForeInput): ForeNumber {
   const Ctor = this.constructor as typeof ForeNumber
@@ -35,7 +30,7 @@ export function plus(this: ForeNumber, value: ForeInput): ForeNumber {
 }
 
 /**
- * 高精度减法。
+ * 高精度减法
  */
 export function minus(this: ForeNumber, value: ForeInput): ForeNumber {
   const Ctor = this.constructor as typeof ForeNumber
@@ -44,7 +39,7 @@ export function minus(this: ForeNumber, value: ForeInput): ForeNumber {
 }
 
 /**
- * 高精度乘法。
+ * 高精度乘法
  */
 export function multiply(this: ForeNumber, value: ForeInput): ForeNumber {
   const Ctor = this.constructor as typeof ForeNumber
@@ -53,7 +48,7 @@ export function multiply(this: ForeNumber, value: ForeInput): ForeNumber {
 }
 
 /**
- * 高精度除法。
+ * 高精度除法
  */
 export function dividedBy(this: ForeNumber, value: ForeInput): ForeNumber {
   const Ctor = this.constructor as typeof ForeNumber
@@ -63,8 +58,8 @@ export function dividedBy(this: ForeNumber, value: ForeInput): ForeNumber {
 }
 
 /**
- * 高精度取模。
- * 当前实现语义：截断除法余数（与 JS `%` 一致）。
+ * 高精度取模\
+ * 当前实现：截断除法余数（与 JS `%` 一致）
  */
 export function modulo(this: ForeNumber, value: ForeInput): ForeNumber {
   const Ctor = this.constructor as typeof ForeNumber
@@ -73,9 +68,11 @@ export function modulo(this: ForeNumber, value: ForeInput): ForeNumber {
 }
 
 /**
- * 高精度幂运算。
- * @status placeholder
+ * 高精度幂运算
  */
-export function power(this: ForeNumber, _value: ForeInput): ForeNumber {
-  return notImplemented('power/pow')
+export function power(this: ForeNumber, value: ForeInput): ForeNumber {
+  const Ctor = this.constructor as typeof ForeNumber
+  const context = Ctor.config()
+  const raw = powerStates(this, toForeNumber(this, value), context)
+  return fromState(this, quantizeStateByPrecision(raw, context))
 }
