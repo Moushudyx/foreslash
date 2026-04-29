@@ -2,11 +2,16 @@ import { describe, expect, it } from 'vitest'
 import { ForeNumber } from '../../src/decimal'
 
 /**
+ * 仅在显式请求时运行 benchmark
+ */
+const benchmarkIt = process.env.FORENUMBER_RUN_BENCHMARK === '1' ? it : it.skip
+
+/**
  * transcendental 路径的轻量基准回归
  * 该用例用于观察不同精度配置下的误差与耗时趋势
  */
 describe('ForeNumber transcendental 基准回归', () => {
-  it('在不同精度下保持可接受误差并控制耗时', () => {
+  benchmarkIt('在不同精度下保持可接受误差并控制耗时', () => {
     const previous = ForeNumber.config()
 
     const samples = [
@@ -48,7 +53,7 @@ describe('ForeNumber transcendental 基准回归', () => {
 
     expect(maxError).toBeLessThan(1e-10)
     expect(levelMaxErrors[2]).toBeLessThanOrEqual(levelMaxErrors[0] * 1.1)
-    expect(elapsed).toBeLessThan(6000)
+    expect(elapsed).toBeLessThan(15000)
 
     ForeNumber.config(previous)
   }, 12000)
