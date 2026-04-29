@@ -36,8 +36,8 @@
   "scripts": {
     "dev": "rolldown -c -w",
     "build": "rolldown -c",
-    "test": "vitest run --coverage",
-    "test:slow": "vitest run --coverage --no-threads",
+    "test": "node scripts/run-vitest-guarded.mjs run --coverage",
+    "test:slow": "node scripts/run-vitest-guarded.mjs run --coverage --no-file-parallelism",
     "prepublishOnly": "pnpm test && pnpm run build",
     "docs:dev": "rolldown -c && vitepress dev docs",
     "docs:build": "rolldown -c && vitepress build docs",
