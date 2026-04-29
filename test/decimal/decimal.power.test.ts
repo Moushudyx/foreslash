@@ -100,6 +100,32 @@ describe('ForeNumber 幂运算', () => {
     ForeNumber.config(previous)
   })
 
+  it('可观察区分有理数指数与实数指数', () => {
+    const previous = ForeNumber.config()
+
+    // strict 下 可被识别为有理数的指数应继续可用
+    ForeNumber.config({ realPowerMode: 'strict', powerPrecision: 24, precision: 24, rounding: 'round' })
+    expect(new ForeNumber('8').pow('1/3').toString()).toBe('2')
+    expect(new ForeNumber('8').pow('0.125').minus('1.2968395546510096').abs().lessThan('1e-12')).toBe(true)
+    expect(new ForeNumber('16').pow('0.0625').minus('1.189207115002721').abs().lessThan('1e-12')).toBe(true)
+
+    // strict 下 进入一般实数路径的指数应被禁止
+    expect(() => new ForeNumber('2').pow('0.1234567')).toThrow(/strict 模式下仅支持整数幂与有理数幂/)
+    expect(() => new ForeNumber('3').pow('0.12345')).toThrow(/strict 模式下仅支持整数幂与有理数幂/)
+
+    // approx 下 同一实数指数应可计算
+    ForeNumber.config({ realPowerMode: 'approx', powerPrecision: 24, precision: 24, rounding: 'round' })
+    const approx = new ForeNumber('2').pow('0.1234567')
+    expect(approx.isFinite).toBe(true)
+    expect(Math.abs(approx.toNumber() - Math.pow(2, 0.1234567))).toBeLessThan(1e-12)
+
+    const approx2 = new ForeNumber('3').pow('0.12345')
+    expect(approx2.isFinite).toBe(true)
+    expect(Math.abs(approx2.toNumber() - Math.pow(3, 0.12345))).toBeLessThan(1e-12)
+
+    ForeNumber.config(previous)
+  })
+
   it('在高精度下保持根号迭代稳定', () => {
     const previous = ForeNumber.config()
     ForeNumber.config({ powerPrecision: 80, precision: 90, rounding: 'round' })

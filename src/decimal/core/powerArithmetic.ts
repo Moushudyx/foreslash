@@ -336,14 +336,20 @@ export function parseFractionExponentString(input: string): RationalExponent | n
 function tryConvertExponentToRational(exponent: ForeState): ExponentClassification {
   if (exponent._k !== 'normal') return { kind: 'real' }
 
-  const scaleDigits = -exponent._e * 4
-  if (scaleDigits > MAX_RATIONAL_DECIMAL_SCALE) {
-    return { kind: 'unsupported-rational', reason: 'decimal-scale-too-large' }
-  }
-
-  const numeratorAbs = parseIntegerDigitsToSafeNumber(absState(exponent)._d)
+  let scaleDigits = Math.max(0, -exponent._e * 4)
+  let numeratorAbs = parseIntegerDigitsToSafeNumber(absState(exponent)._d)
   if (numeratorAbs === null) {
     return { kind: 'unsupported-rational', reason: 'unsafe-integer' }
+  }
+
+  // 折叠十进制尾零，避免像 0.12345 因内部补零被误判成高位小数
+  while (scaleDigits > 0 && numeratorAbs % 10 === 0) {
+    numeratorAbs = Math.floor(numeratorAbs / 10)
+    scaleDigits -= 1
+  }
+
+  if (scaleDigits > MAX_RATIONAL_DECIMAL_SCALE) {
+    return { kind: 'unsupported-rational', reason: 'decimal-scale-too-large' }
   }
 
   return {
