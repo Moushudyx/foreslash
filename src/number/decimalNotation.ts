@@ -1,4 +1,25 @@
 import { isNumber } from '../is'
+
+type ForeNumberLike = {
+  toString: () => string
+  _k?: unknown
+  _s?: unknown
+  _e?: unknown
+  _d?: unknown
+}
+
+export type DecimalNotationInput = string | number | ForeNumberLike
+
+function isForeNumberLike(input: unknown): input is ForeNumberLike {
+  if (!input || typeof input !== 'object') return false
+  return typeof (input as ForeNumberLike).toString === 'function' && '_s' in (input as ForeNumberLike) && '_e' in (input as ForeNumberLike)
+}
+
+function normalizeNumericInput(input: DecimalNotationInput): string | number {
+  if (isNumber(input) || typeof input === 'string') return input
+  if (isForeNumberLike(input)) return input.toString()
+  return String(input)
+}
 /**
  * 将一个数字转换为正常的十进制计数法
  * @param num 需要转换的数字
@@ -12,8 +33,9 @@ import { isNumber } from '../is'
  * ```
  * @version 0.3.2
  */
-export function decimalNotation(num: string | number): string {
-  const n = isNumber(num) ? num : Number(num)
+export function decimalNotation(num: DecimalNotationInput): string {
+  const normalized = normalizeNumericInput(num)
+  const n = isNumber(normalized) ? normalized : Number(normalized)
   if (!isFinite(n)) return String(n) // throw new Error('Invalid number parameter')
   let str = String(n)
   // 解析字符串是否含有字母 e, 如果不含则直接返回

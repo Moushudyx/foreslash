@@ -1,6 +1,7 @@
 import { isNumber } from '../is'
 import { clamp } from './clamp'
 import { decimalNotation } from './decimalNotation'
+import type { DecimalNotationInput } from './decimalNotation'
 import { roundBank, roundBase, roundCeil, roundFloor } from './round'
 // unicode 上标 ⁰¹²³⁴⁵⁶⁷⁸⁹⁺⁻
 // unicode 特殊字符 ±×÷∶∧∨∑∏∪∩∈∷√⊥∥∠⌒⊙∫∮≡≌≈∽∝≠≤≥∞∵∴
@@ -44,7 +45,7 @@ import { roundBank, roundBase, roundCeil, roundFloor } from './round'
  * @version 0.3.3
  */
 export function scientificNotation(
-  num: string | number,
+  num: DecimalNotationInput,
   options?: {
     type?: 'unicode' | 'exp' | 'js' | 'code' | 'html' | 'json'
     precision?: number

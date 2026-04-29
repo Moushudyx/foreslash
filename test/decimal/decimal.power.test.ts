@@ -48,6 +48,32 @@ describe('ForeNumber 幂运算', () => {
     expect(new ForeNumber('NaN').pow('0').toString()).toBe('1')
   })
 
+  it('正确处理零底数的边界场景', () => {
+    expect(new ForeNumber('0').pow('0').toString()).toBe('1')
+    expect(new ForeNumber('0').pow('5').toString()).toBe('0')
+    expect(new ForeNumber('0').pow('-2').toString()).toBe('Infinity')
+    expect(new ForeNumber('-0').pow('3').toString()).toBe('0')
+  })
+
+  it('正确处理底数为 1 和 -1 的幂', () => {
+    expect(new ForeNumber('1').pow('100').toString()).toBe('1')
+    expect(new ForeNumber('1').pow('-5').toString()).toBe('1')
+    expect(new ForeNumber('-1').pow('2').toString()).toBe('1')
+    expect(new ForeNumber('-1').pow('3').toString()).toBe('-1')
+    expect(new ForeNumber('-1').pow('-2').toString()).toBe('1')
+    expect(new ForeNumber('-1').pow('-3').toString()).toBe('-1')
+  })
+
+  it('正确处理 NaN 指数非零情况', () => {
+    expect(new ForeNumber('2').pow('NaN').toString()).toBe('NaN')
+    expect(new ForeNumber('NaN').pow('2').toString()).toBe('NaN')
+  })
+
+  it('正确处理负底数的偶次方根', () => {
+    expect(new ForeNumber('-4').pow('1/2').toString()).toBe('NaN')
+    expect(new ForeNumber('-27').pow('2/3').toString()).toBe('9')
+  })
+
   it('通过 pow 和专用方法支持 1/n 根', () => {
     expect(new ForeNumber('9').pow('0.5').toString()).toBe('3')
     expect(new ForeNumber('9').squareRoot().toString()).toBe('3')

@@ -11,32 +11,16 @@ import {
   multiplyDigitsBySmallInt,
   subtractDigits
 } from './limbMath'
+import {
+  createSpecialState,
+  decimalDigitLength,
+  isZeroState,
+  negateState,
+  signOfState
+} from './utils'
 
 /** 除法保护位数, 用于防止除法结果精度丢失 */
 const DIVISION_GUARD_DIGITS = 16
-
-/** 构造特殊值状态 */
-function createSpecialState(kind: ForeState['_k']): ForeState {
-  return { _s: 0, _e: 0, _d: [0], _k: kind }
-}
-
-/** 获取规范化后尾数对应的十进制位数 */
-function decimalDigitLength(digits: number[]): number {
-  if (!digits.length || isZeroDigits(digits)) return 1
-  return digits[0].toString().length + (digits.length - 1) * 4
-}
-
-/** 判断状态是否表示数值零 */
-function isZeroState(state: ForeState): boolean {
-  return state._k === 'normal' && (state._s === 0 || isZeroDigits(state._d))
-}
-
-/** 获取状态符号，包含无穷值 */
-function signOfState(state: ForeState): -1 | 0 | 1 {
-  if (state._k === '-inf') return -1
-  if (state._k === 'inf') return 1
-  return state._s
-}
 
 /** 将两个状态按相同指数对齐，便于做整数运算 */
 function alignStates(left: ForeState, right: ForeState) {
@@ -56,15 +40,6 @@ function buildNormalState(sign: -1 | 1, digits: number[], exponent: number): For
     _d: digits,
     _k: 'normal'
   })
-}
-
-/** 对状态取负值 */
-function negateState(state: ForeState): ForeState {
-  if (state._k === 'nan') return state
-  if (state._k === 'inf') return createSpecialState('-inf')
-  if (state._k === '-inf') return createSpecialState('inf')
-  if (isZeroState(state)) return normalizeState({ _s: 0, _e: 0, _d: [0], _k: 'normal' })
-  return { ...state, _s: (state._s * -1) as -1 | 1 }
 }
 
 /** 将按十进制位放大的整数商还原为 ForeState */

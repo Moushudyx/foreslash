@@ -24,6 +24,17 @@ describe('ForeNumber 取模', () => {
     expect(new ForeNumber('1.234e12').mod('9.876e-12').toString()).toBe('0.000000000003448')
   })
 
+  it('正确处理 NaN 取模', () => {
+    expect(new ForeNumber('NaN').mod('3').toString()).toBe('NaN')
+    expect(new ForeNumber('3').mod('NaN').toString()).toBe('NaN')
+  })
+
+  it('正确处理零相关取模', () => {
+    expect(new ForeNumber('0').mod('3').toString()).toBe('0')
+    expect(new ForeNumber('0').mod('0').toString()).toBe('NaN')
+    expect(new ForeNumber('5').mod('0').toString()).toBe('NaN')
+  })
+
   it('在取模中正确处理特殊值', () => {
     expect(new ForeNumber('Infinity').mod('3').toString()).toBe('NaN')
     expect(new ForeNumber('3').mod('Infinity').toString()).toBe('3')

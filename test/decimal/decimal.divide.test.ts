@@ -25,6 +25,37 @@ describe('ForeNumber 除法', () => {
     ForeNumber.config(previous)
   })
 
+  it('支持负数除法', () => {
+    expect(new ForeNumber('-6').div('2').toString()).toBe('-3')
+    expect(new ForeNumber('6').div('-2').toString()).toBe('-3')
+    expect(new ForeNumber('-6').div('-2').toString()).toBe('3')
+    expect(new ForeNumber('-1').div('4').toString()).toBe('-0.25')
+    expect(new ForeNumber('1').div('-4').toString()).toBe('-0.25')
+  })
+
+  it('支持 banker 舍入模式', () => {
+    const previous = ForeNumber.config()
+    ForeNumber.config({ divisionPrecision: 0, rounding: 'banker' })
+
+    expect(new ForeNumber('2.5').div('1').toString()).toBe('2')
+    expect(new ForeNumber('3.5').div('1').toString()).toBe('4')
+
+    ForeNumber.config(previous)
+  })
+
+  it('支持 floor 与 ceil 舍入模式', () => {
+    const previous = ForeNumber.config()
+    ForeNumber.config({ divisionPrecision: 0, rounding: 'floor' })
+    expect(new ForeNumber('2.8').div('1').toString()).toBe('2')
+    expect(new ForeNumber('-2.8').div('1').toString()).toBe('-3')
+
+    ForeNumber.config({ divisionPrecision: 0, rounding: 'ceil' })
+    expect(new ForeNumber('2.2').div('1').toString()).toBe('3')
+    expect(new ForeNumber('-2.2').div('1').toString()).toBe('-2')
+
+    ForeNumber.config(previous)
+  })
+
   it('对算术结果应用全局 precision 量化', () => {
     const previous = ForeNumber.config()
     ForeNumber.config({ precision: 6, divisionPrecision: 24, rounding: 'round' })
@@ -90,6 +121,18 @@ describe('ForeNumber 除法', () => {
     expect(diff.lessThan('1e-180')).toBe(true)
 
     ForeNumber.config(previous)
+  })
+
+  it('正确处理 Infinity 除法组合', () => {
+    expect(new ForeNumber('Infinity').div('Infinity').toString()).toBe('NaN')
+    expect(new ForeNumber('2').div('Infinity').toString()).toBe('0')
+    expect(new ForeNumber('Infinity').div('2').toString()).toBe('Infinity')
+    expect(new ForeNumber('-Infinity').div('2').toString()).toBe('-Infinity')
+    expect(new ForeNumber('2').div('-Infinity').toString()).toBe('0')
+  })
+
+  it('正确处理除数为零且被除数为负', () => {
+    expect(new ForeNumber('-1').div('0').toString()).toBe('-Infinity')
   })
 
   it('在除法中正确处理特殊值', () => {

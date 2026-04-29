@@ -1,41 +1,13 @@
 import type { ForeContext, ForeState } from '../types'
 import { multiplyStates } from './stateArithmetic'
 import { expState, lnState } from './transcendentalArithmetic'
-
-/**
- * 构造特殊值状态
- */
-function createSpecialState(kind: ForeState['_k']): ForeState {
-  return { _s: 0, _e: 0, _d: [0], _k: kind }
-}
-
-/**
- * 构造数值 0 的状态
- */
-function zeroState(): ForeState {
-  return { _s: 0, _e: 0, _d: [0], _k: 'normal' }
-}
-
-/**
- * 构造数值 1 的状态
- */
-function oneState(): ForeState {
-  return { _s: 1, _e: 0, _d: [1], _k: 'normal' }
-}
-
-/**
- * 判断状态是否为零
- */
-function isZeroState(state: ForeState): boolean {
-  return state._k === 'normal' && (state._s === 0 || state._d.every((digit) => digit === 0))
-}
-
-/**
- * 判断状态是否为数值 1
- */
-function isOneState(state: ForeState): boolean {
-  return state._k === 'normal' && state._s === 1 && state._e === 0 && state._d.length === 1 && state._d[0] === 1
-}
+import {
+  createSpecialState,
+  isOneState,
+  isZeroState,
+  oneState,
+  zeroState
+} from './utils'
 
 /**
  * 一般实数幂的前置入口

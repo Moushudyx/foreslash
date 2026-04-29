@@ -3,6 +3,18 @@ import { addStates, divideStates, multiplyStates, quantizeStateByPrecision } fro
 import { isZeroDigits } from './limbMath'
 import { normalizeState } from './normalize'
 import { powerRealStates } from './realPowerArithmetic'
+import {
+  absState,
+  createSpecialState,
+  decimalDigitLength,
+  integerStateFromNumber,
+  isIntegerState,
+  isZeroState,
+  negateState,
+  oneState,
+  statesEqual,
+  zeroState
+} from './utils'
 
 /**
  * 根号迭代额外保留的保护位
@@ -63,65 +75,6 @@ type ExponentClassification =
   | { kind: 'real' }
 
 /**
- * 构造特殊值状态
- */
-function createSpecialState(kind: ForeState['_k']): ForeState {
-  return { _s: 0, _e: 0, _d: [0], _k: kind }
-}
-
-/**
- * 构造数值 1 的状态
- */
-function oneState(): ForeState {
-  return { _s: 1, _e: 0, _d: [1], _k: 'normal' }
-}
-
-/**
- * 构造数值 0 的状态
- */
-function zeroState(): ForeState {
-  return { _s: 0, _e: 0, _d: [0], _k: 'normal' }
-}
-
-/**
- * 判断状态是否为数值零
- */
-function isZeroState(state: ForeState): boolean {
-  return state._k === 'normal' && (state._s === 0 || isZeroDigits(state._d))
-}
-
-/**
- * 精确比较两个内部状态是否完全一致
- */
-function statesEqual(left: ForeState, right: ForeState): boolean {
-  if (left._k !== right._k || left._s !== right._s || left._e !== right._e) return false
-  if (left._d.length !== right._d.length) return false
-  for (let i = 0; i < left._d.length; i += 1) {
-    if (left._d[i] !== right._d[i]) return false
-  }
-  return true
-}
-
-/**
- * 将安全范围内的非负整数转换为内部状态
- */
-function integerStateFromNumber(value: number): ForeState {
-  if (!Number.isFinite(value) || !Number.isInteger(value) || value < 0) {
-    throw new Error('[ForeNumber] 仅支持安全范围内的非负整数辅助参数')
-  }
-
-  if (value === 0) return zeroState()
-
-  const digits = String(value)
-  const limbs: number[] = []
-  for (let index = digits.length; index > 0; index -= 4) {
-    const start = Math.max(0, index - 4)
-    limbs.unshift(Number.parseInt(digits.slice(start, index), 10))
-  }
-  return { _s: 1, _e: 0, _d: limbs, _k: 'normal' }
-}
-
-/**
  * 将安全范围内的有符号整数转换为指数状态
  */
 function integerExponentStateFromNumber(value: number): ForeState {
@@ -131,28 +84,6 @@ function integerExponentStateFromNumber(value: number): ForeState {
   if (value === 0) return zeroState()
   const absolute = integerStateFromNumber(Math.abs(value))
   return value < 0 ? { ...absolute, _s: -1 } : absolute
-}
-
-/**
- * 计算内部 limb 数组对应的十进制位数
- */
-function decimalDigitLength(digits: number[]): number {
-  if (!digits.length || isZeroDigits(digits)) return 1
-  return digits[0].toString().length + (digits.length - 1) * 4
-}
-
-/**
- * 判断状态是否表示整数
- */
-function isIntegerState(state: ForeState): boolean {
-  if (state._k !== 'normal') return false
-  if (state._s === 0 || state._e >= 0) return true
-  const needZeroCount = -state._e
-  if (needZeroCount > state._d.length) return false
-  for (let i = state._d.length - needZeroCount; i < state._d.length; i += 1) {
-    if (state._d[i] !== 0) return false
-  }
-  return true
 }
 
 /**
@@ -209,25 +140,6 @@ function powerOfTenState(exponent10: number): ForeState {
     _d: [10 ** remainder],
     _k: 'normal'
   })
-}
-
-/**
- * 取状态的绝对值
- */
-function absState(state: ForeState): ForeState {
-  if (state._k !== 'normal') return state
-  return { ...state, _s: state._s < 0 ? 1 : state._s }
-}
-
-/**
- * 构造状态的相反数
- */
-function negateState(state: ForeState): ForeState {
-  if (state._k === 'nan') return state
-  if (state._k === 'inf') return createSpecialState('-inf')
-  if (state._k === '-inf') return createSpecialState('inf')
-  if (isZeroState(state)) return zeroState()
-  return { ...state, _s: (state._s * -1) as -1 | 1 }
 }
 
 /**

@@ -15,7 +15,7 @@ function toForeNumber(self: ForeNumber, value: ForeInput): ForeNumber {
  */
 export function equals(this: ForeNumber, value: ForeInput): boolean {
   const other = toForeNumber(this, value)
-  if (this._k === 'nan' || other._k === 'nan') return false
+  if (this._k === 'nan' || other._k === 'nan') return false // NaN 参与比较时始终返回 false (IEEE 754 无序语义)
   return compare(this, other) === 0
 }
 
@@ -23,26 +23,34 @@ export function equals(this: ForeNumber, value: ForeInput): boolean {
  * 判断当前值是否大于目标值
  */
 export function greaterThan(this: ForeNumber, value: ForeInput): boolean {
-  return compare(this, toForeNumber(this, value)) > 0
+  const other = toForeNumber(this, value)
+  if (this._k === 'nan' || other._k === 'nan') return false // NaN 参与比较时始终返回 false (IEEE 754 无序语义)
+  return compare(this, other) > 0
 }
 
 /**
  * 判断当前值是否小于目标值
  */
 export function lessThan(this: ForeNumber, value: ForeInput): boolean {
-  return compare(this, toForeNumber(this, value)) < 0
+  const other = toForeNumber(this, value)
+  if (this._k === 'nan' || other._k === 'nan') return false // NaN 参与比较时始终返回 false (IEEE 754 无序语义)
+  return compare(this, other) < 0
 }
 
 /**
  * 判断当前值是否大于等于目标值
  */
 export function greaterThanOrEqual(this: ForeNumber, value: ForeInput): boolean {
-  return compare(this, toForeNumber(this, value)) >= 0
+  const other = toForeNumber(this, value)
+  if (this._k === 'nan' || other._k === 'nan') return false // NaN 参与比较时始终返回 false (IEEE 754 无序语义)
+  return compare(this, other) >= 0
 }
 
 /**
  * 判断当前值是否小于等于目标值
  */
 export function lessThanOrEqual(this: ForeNumber, value: ForeInput): boolean {
-  return compare(this, toForeNumber(this, value)) <= 0
+  const other = toForeNumber(this, value)
+  if (this._k === 'nan' || other._k === 'nan') return false // NaN 参与比较时始终返回 false (IEEE 754 无序语义)
+  return compare(this, other) <= 0
 }

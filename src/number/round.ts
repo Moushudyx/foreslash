@@ -1,4 +1,5 @@
 import { decimalNotation } from './decimalNotation'
+import type { DecimalNotationInput } from './decimalNotation'
 import { isEven } from './isOdd'
 /**
  * 数值修约, 可以使用 4 种修约方法, 默认使用四舍五入
@@ -26,7 +27,7 @@ import { isEven } from './isOdd'
  * ```
  * @version 0.3.2
  */
-export function round(num: string | number, precision: number, type?: 'round' | 'banker' | 'floor' | 'ceil') {
+export function round(num: DecimalNotationInput, precision: number, type?: 'round' | 'banker' | 'floor' | 'ceil') {
   const str = decimalNotation(num)
   if (/NaN|Inf/.test(str)) return str
   let [_integer, _fractional] = str.split('.')

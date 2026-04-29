@@ -1,6 +1,17 @@
 import type { ForeContext, ForeState } from '../types'
 import { parseDecimalString } from './parse'
 import { divideStates, multiplyStates } from './stateArithmetic'
+import {
+  compareNormalAbs,
+  compareNormalStates,
+  createSpecialState,
+  decimalDigitLength,
+  integerStateFromNumber,
+  isOneState,
+  isZeroState,
+  oneState,
+  zeroState
+} from './utils'
 
 /**
  * 最小近似有效位数
@@ -64,45 +75,6 @@ const MAX_MANTISSA_PARSE_DIGITS = 16
 const POW2_STATE_CACHE = new Map<number, ForeState>([[0, oneState()]])
 
 /**
- * 构造特殊值状态
- */
-function createSpecialState(kind: ForeState['_k']): ForeState {
-  return { _s: 0, _e: 0, _d: [0], _k: kind }
-}
-
-/**
- * 构造数值 0 的状态
- */
-function zeroState(): ForeState {
-  return { _s: 0, _e: 0, _d: [0], _k: 'normal' }
-}
-
-/**
- * 构造数值 1 的状态
- */
-function oneState(): ForeState {
-  return { _s: 1, _e: 0, _d: [1], _k: 'normal' }
-}
-
-/**
- * 构造非负整数状态
- */
-function integerStateFromNonNegative(value: number): ForeState {
-  if (!Number.isInteger(value) || value < 0) {
-    throw new Error('[ForeNumber] 仅支持非负整数状态构造')
-  }
-  if (value === 0) return zeroState()
-
-  const digits = String(value)
-  const limbs: number[] = []
-  for (let index = digits.length; index > 0; index -= 4) {
-    const start = Math.max(0, index - 4)
-    limbs.unshift(Number.parseInt(digits.slice(start, index), 10))
-  }
-  return { _s: 1, _e: 0, _d: limbs, _k: 'normal' }
-}
-
-/**
  * 计算 2^n 的内部状态
  */
 function powerOfTwoState(n: number): ForeState {
@@ -113,7 +85,7 @@ function powerOfTwoState(n: number): ForeState {
   if (cached) return cached
 
   let result = oneState()
-  let factor = integerStateFromNonNegative(2)
+  let factor = integerStateFromNumber(2)
   let exponent = n
 
   // 快速幂生成 2^n，避免逐次乘法
@@ -142,49 +114,6 @@ function scaleStateByPowerOfTwo(state: ForeState, n: number, context: ForeContex
     ...context,
     divisionPrecision: Math.max(context.divisionPrecision, context.powerPrecision + 8)
   })
-}
-
-/**
- * 获取内部值对应的十进制位数
- */
-function decimalDigitLength(digits: number[]): number {
-  if (!digits.length) return 1
-  return digits[0].toString().length + (digits.length - 1) * 4
-}
-
-/**
- * 比较两个 normal 状态的绝对值
- */
-function compareNormalAbs(left: ForeState, right: ForeState): -1 | 0 | 1 {
-  // 先比较数量级，避免无意义的逐位对齐
-  const leftMagnitude = left._e + left._d.length
-  const rightMagnitude = right._e + right._d.length
-  if (leftMagnitude !== rightMagnitude) return leftMagnitude > rightMagnitude ? 1 : -1
-
-  // 数量级相同后，对齐到同一指数再逐位比较
-  const exponent = Math.min(left._e, right._e)
-  const leftDigits = left._d.concat(new Array(left._e - exponent).fill(0))
-  const rightDigits = right._d.concat(new Array(right._e - exponent).fill(0))
-  const maxLength = Math.max(leftDigits.length, rightDigits.length)
-
-  for (let index = 0; index < maxLength; index += 1) {
-    const leftDigit = leftDigits[index] ?? 0
-    const rightDigit = rightDigits[index] ?? 0
-    if (leftDigit === rightDigit) continue
-    return leftDigit > rightDigit ? 1 : -1
-  }
-  return 0
-}
-
-/**
- * 比较两个 normal 状态的大小
- */
-function compareNormalStates(left: ForeState, right: ForeState): -1 | 0 | 1 {
-  // 先比较符号，只有同号才需要比较绝对值
-  if (left._s !== right._s) return left._s > right._s ? 1 : -1
-  if (left._s === 0) return 0
-  const absCompared = compareNormalAbs(left, right)
-  return left._s > 0 ? absCompared : (absCompared * -1) as -1 | 0 | 1
 }
 
 /**
@@ -328,20 +257,6 @@ function expSeriesAroundZero(r: number, context: ForeContext): number {
   }
 
   return sum
-}
-
-/**
- * 判断状态是否为零
- */
-function isZeroState(state: ForeState): boolean {
-  return state._k === 'normal' && (state._s === 0 || state._d.every((digit) => digit === 0))
-}
-
-/**
- * 判断状态是否为数值 1
- */
-function isOneState(state: ForeState): boolean {
-  return state._k === 'normal' && state._s === 1 && state._e === 0 && state._d.length === 1 && state._d[0] === 1
 }
 
 /**
