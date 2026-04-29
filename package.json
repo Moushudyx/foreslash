@@ -34,14 +34,14 @@
     "LICENSE"
   ],
   "scripts": {
-    "dev": "rolldown -c -w",
-    "build": "rolldown -c",
+    "dev": "rollup -c -w",
+    "build": "rollup -c",
     "test": "node scripts/run-vitest-guarded.mjs run --coverage",
     "test:slow": "node scripts/run-vitest-guarded.mjs run --coverage --no-file-parallelism",
     "prepublishOnly": "pnpm test && pnpm run build",
-    "docs:dev": "rolldown -c && vitepress dev docs",
-    "docs:build": "rolldown -c && vitepress build docs",
-    "docs:preview": "rolldown -c && vitepress preview docs"
+    "docs:dev": "rollup -c && vitepress dev docs",
+    "docs:build": "rollup -c && vitepress build docs",
+    "docs:preview": "rollup -c && vitepress preview docs"
   },
   "keywords": [
     "foreslash",
@@ -55,7 +55,7 @@
     "@types/node": "^25.3.0",
     "@vitest/coverage-v8": "^3.2.4",
     "jsdom": "^24.1.3",
-    "rolldown": "^1.0.0-rc.1",
+    "rolldown": "^1.0.0-rc.17",
     "rollup": "^4.38.0",
     "rollup-plugin-dts": "^6.2.1",
     "sass-embedded": "^1.90.0",
