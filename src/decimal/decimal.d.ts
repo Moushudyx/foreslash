@@ -13,7 +13,6 @@ declare class ForeNumber implements ForeNumberInstance {
   _s: -1 | 0 | 1
   _e: number
   _d: number[]
-  _t: 1 | number
 
   constructor(value: ForeInput)
 

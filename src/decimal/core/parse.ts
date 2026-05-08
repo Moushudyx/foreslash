@@ -1,5 +1,4 @@
 import type { ForeInput, ForeState, baseForeNumber } from '../types'
-import { kindFromLegacyTag } from './kind'
 import { normalizeState } from './normalize'
 import { FORE_BASE_DIGITS } from './constants'
 
@@ -28,12 +27,11 @@ export function parseInput(value: ForeInput): ForeState {
  * 解析旧版对象结构
  */
 export function parseBaseForeNumber(value: baseForeNumber): ForeState {
-  const kind = kindFromLegacyTag(value._t)
   return normalizeState({
     _s: value._s,
     _e: value._e,
     _d: value._d,
-    _k: kind
+    _k: value._k ?? 'normal'
   })
 }
 
@@ -88,8 +86,8 @@ function decimalDigitsToLimbs(digits: string): number[] {
   return result.length ? result : [0]
 }
 
-/** 判断输入是否满足旧版兼容结构 */
+/** 判断输入是否为基础 ForeNumber 结构 */
 function isForeLike(value: ForeInput): value is baseForeNumber {
   if (!value || typeof value !== 'object') return false
-  return '_s' in value && '_e' in value && '_d' in value && '_t' in value
+  return '_s' in value && '_e' in value && '_d' in value
 }

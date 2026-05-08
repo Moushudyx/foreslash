@@ -14,17 +14,13 @@ describe('ForeNumber 加减法', () => {
   it('支持精确加减法与别名方法', () => {
     expect(new ForeNumber('0.1').plus('0.2').toString()).toBe('0.3')
     expect(new ForeNumber('5.5').add('4.5').toString()).toBe('10')
-    expect(new ForeNumber('10').minus('3.25').toString()).toBe('6.75')
-    expect(new ForeNumber('10').sub('3.25').toString()).toBe('6.75')
-  })
-
-  it('支持负数加减法', () => {
-    expect(new ForeNumber('-5').plus('3').toString()).toBe('-2')
     expect(new ForeNumber('-0.1').add('0.2').toString()).toBe('0.1')
     expect(new ForeNumber('3').plus('-5').toString()).toBe('-2')
-    expect(new ForeNumber('-3').minus('-7').toString()).toBe('4')
+
+    expect(new ForeNumber('10').minus('3.25').toString()).toBe('6.75')
+    expect(new ForeNumber('10').sub('3.25').toString()).toBe('6.75')
     expect(new ForeNumber('-10').sub('3').toString()).toBe('-13')
-    expect(new ForeNumber('5').minus('-3').toString()).toBe('8')
+    expect(new ForeNumber('1.5').minus('-3.1').toString()).toBe('4.6')
   })
 
   it('正确处理零的边界场景', () => {

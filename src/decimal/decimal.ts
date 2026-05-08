@@ -2,7 +2,6 @@ import type { ForeContext, ForeInput, ForeKind, ForeNumberInstance, ForeRoundMod
 import { DEFAULT_CONTEXT } from './core/constants'
 import { parseInput } from './core/parse'
 import { normalizeState } from './core/normalize'
-import { legacyTagFromKind } from './core/kind'
 import { attachForeNumberInstanceMethods } from './attach/instanceMethods'
 import { $$pi, $$e } from './constants'
 
@@ -63,8 +62,6 @@ class ForeNumber implements ForeNumberInstance {
   _e: number
   /** 尾数 limb 数组（每个元素范围 0-9999） */
   _d: number[]
-  /** 兼容旧版的类型标记 */
-  _t: 1 | number
   /** 内部类型标记，用于区分 normal/nan/inf/-inf */
   _k: ForeKind
 
@@ -191,7 +188,6 @@ class ForeNumber implements ForeNumberInstance {
     this._e = state._e
     this._d = state._d
     this._k = state._k
-    this._t = legacyTagFromKind(state._k)
   }
 }
 

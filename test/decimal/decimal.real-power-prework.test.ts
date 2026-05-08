@@ -1,6 +1,5 @@
 import { describe, expect, it } from 'vitest'
 import { ForeNumber } from '../../src/decimal'
-import { legacyTagFromKind } from '../../src/decimal/core/kind'
 import { powerRealStates } from '../../src/decimal/core/realPowerArithmetic'
 import { expState, lnState } from '../../src/decimal/core/transcendentalArithmetic'
 
@@ -12,7 +11,7 @@ function fromState(state: ReturnType<typeof lnState>): ForeNumber {
     _s: state._s,
     _e: state._e,
     _d: state._d,
-    _t: legacyTagFromKind(state._k)
+    _k: state._k
   })
 }
 

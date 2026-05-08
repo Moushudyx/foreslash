@@ -34,8 +34,10 @@ describe('特殊值运算组合', () => {
   it('Infinity ± Infinity 和 ±(-Infinity)', () => {
     expect(inf().plus('Infinity').toString()).toBe('Infinity')
     expect(inf().minus('Infinity').toString()).toBe('NaN')
+    expect(inf().minus('-Infinity').toString()).toBe('Infinity')
     expect(ninf().plus('-Infinity').toString()).toBe('-Infinity')
     expect(ninf().minus('-Infinity').toString()).toBe('NaN')
+    expect(ninf().minus('Infinity').toString()).toBe('-Infinity')
   })
 
   it('Infinity × ÷ 特殊组合', () => {
@@ -180,7 +182,7 @@ describe('取模符号边界', () => {
 
 describe('输入解析边界', () => {
   it('baseForeNumber 对象正确解析', () => {
-    const v = new ForeNumber({ _s: 1, _e: 0, _d: [5], _t: 1 })
+    const v = new ForeNumber({ _s: 1, _e: 0, _d: [5] })
     expect(v.toString()).toBe('5')
   })
 

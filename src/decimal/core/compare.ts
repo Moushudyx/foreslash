@@ -15,7 +15,7 @@ export function compare(thisValue: ForeNumber, otherValue: ForeNumber): -1 | 0 |
   return thisValue._s > 0 ? absCompare : (absCompare * -1) as -1 | 1
 }
 
-/** 比较特殊值（NaN、Infinity 等）顺序 */
+/** 比较特殊值（Infinity 等）顺序 */
 function compareSpecial(a: ForeNumber['_k'], b: ForeNumber['_k']): -1 | 0 | 1 {
   const rank: Record<ForeNumber['_k'], number> = {
     '-inf': -2,
@@ -23,9 +23,6 @@ function compareSpecial(a: ForeNumber['_k'], b: ForeNumber['_k']): -1 | 0 | 1 {
     inf: 2,
     nan: 3
   }
-  if (a === 'nan' && b === 'nan') return 0
-  if (a === 'nan') return 1
-  if (b === 'nan') return -1
   if (rank[a] === rank[b]) return 0
   return rank[a] > rank[b] ? 1 : -1
 }

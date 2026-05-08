@@ -1,6 +1,5 @@
 import type ForeNumber from '../decimal'
 import type { ForeInput } from '../types'
-import { legacyTagFromKind } from '../core/kind'
 import { addStates, divideStates, moduloStates, multiplyStates, quantizeStateByPrecision, subtractStates } from '../core/stateArithmetic'
 import { inspectFractionExponentString, nthRootState, powerStates, MAX_RATIONAL_DENOMINATOR } from '../core/powerArithmetic'
 
@@ -17,7 +16,7 @@ function fromState(self: ForeNumber, state: ReturnType<typeof addStates>): ForeN
     _s: state._s,
     _e: state._e,
     _d: state._d,
-    _t: legacyTagFromKind(state._k)
+    _k: state._k
   })
 }
 

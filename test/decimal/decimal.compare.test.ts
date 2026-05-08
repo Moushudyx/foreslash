@@ -10,27 +10,24 @@ afterEach(() => {
 describe('ForeNumber 比较运算', () => {
   describe('相等比较 (equals / equalTo / eq)', () => {
     it('判断相同数值为相等', () => {
-      expect(new ForeNumber('0.1').plus('0.2').equals('0.3')).toBe(true)
-      expect(new ForeNumber('0.1').plus('0.2').equalTo('0.3')).toBe(true)
-      expect(new ForeNumber('0.1').plus('0.2').eq('0.3')).toBe(true)
+      expect(new ForeNumber('0.1').plus(0.2).equals('0.3')).toBe(true)
+      expect(new ForeNumber(-0.1).plus('-0.2').equalTo('-0.3')).toBe(true)
+      expect(new ForeNumber('0.1').plus('0.2').eq(0.3)).toBe(true)
+      expect(new ForeNumber('-5').eq('-5')).toBe(true)
+      expect(new ForeNumber('-5').eq('5')).toBe(false)
+      expect(new ForeNumber('0.123456').eq(0.123456)).toBe(true)
+      expect(new ForeNumber('0').eq('0')).toBe(true)
+      expect(new ForeNumber('0').eq('-0')).toBe(true)
+      expect(new ForeNumber('0.0').eq(0)).toBe(true)
     })
 
     it('判断不同数值为不等', () => {
-      expect(new ForeNumber('5').equals('6')).toBe(false)
-      expect(new ForeNumber('5').equalTo('6')).toBe(false)
-      expect(new ForeNumber('5').eq('6')).toBe(false)
-    })
-
-    it('正确处理负数相等', () => {
-      expect(new ForeNumber('-5').eq('-5')).toBe(true)
-      expect(new ForeNumber('-5').eq('5')).toBe(false)
-      expect(new ForeNumber('-0.1').plus('-0.2').eq('-0.3')).toBe(true)
-    })
-
-    it('正确处理零', () => {
-      expect(new ForeNumber('0').eq('0')).toBe(true)
-      expect(new ForeNumber('0').eq('-0')).toBe(true)
-      expect(new ForeNumber('0.0').eq('0')).toBe(true)
+      expect(new ForeNumber(5).equals('6')).toBe(false)
+      expect(new ForeNumber('5').equalTo(6)).toBe(false)
+      expect(new ForeNumber('6').eq('5')).toBe(false)
+      expect(new ForeNumber(1).equals('1.00000000000000000001')).toBe(false)
+      expect(new ForeNumber('1').equalTo('1.00000000000000000001')).toBe(false)
+      expect(new ForeNumber('1').eq('1.00000000000000000001')).toBe(false)
     })
 
     it('NaN 与任何值（含自身）比较均返回 false', () => {
@@ -52,16 +49,10 @@ describe('ForeNumber 比较运算', () => {
       expect(new ForeNumber('10').gt('3')).toBe(true)
       expect(new ForeNumber('10').greaterThan('3')).toBe(true)
       expect(new ForeNumber('3').gt('10')).toBe(false)
-    })
-
-    it('正确处理负数大于比较', () => {
       expect(new ForeNumber('-3').gt('-10')).toBe(true)
       expect(new ForeNumber('-5').gt('5')).toBe(false)
       expect(new ForeNumber('5').gt('-5')).toBe(true)
-    })
-
-    it('正确处理小数大于比较', () => {
-      expect(new ForeNumber('0.3').gt('0.2')).toBe(true)
+      expect(new ForeNumber('0.0000000000001').gt('0.00000000000001')).toBe(true)
       expect(new ForeNumber('0.1').plus('0.2').gt('0.3')).toBe(false)
     })
 
@@ -79,12 +70,10 @@ describe('ForeNumber 比较运算', () => {
       expect(new ForeNumber('3').lt('10')).toBe(true)
       expect(new ForeNumber('3').lessThan('10')).toBe(true)
       expect(new ForeNumber('10').lt('3')).toBe(false)
-    })
-
-    it('正确处理负数小于比较', () => {
       expect(new ForeNumber('-10').lt('-3')).toBe(true)
       expect(new ForeNumber('5').lt('-5')).toBe(false)
       expect(new ForeNumber('-5').lt('5')).toBe(true)
+      expect(new ForeNumber('0.0000000000001').lt('0.00000000000001')).toBe(false)
     })
 
     it('正确处理特殊值小于比较', () => {
@@ -102,12 +91,11 @@ describe('ForeNumber 比较运算', () => {
       expect(new ForeNumber('10').greaterThanOrEqual('3')).toBe(true)
       expect(new ForeNumber('10').gte('10')).toBe(true)
       expect(new ForeNumber('3').gte('10')).toBe(false)
-    })
-
-    it('正确处理负数大于等于比较', () => {
       expect(new ForeNumber('-3').gte('-3')).toBe(true)
       expect(new ForeNumber('-3').gte('-10')).toBe(true)
       expect(new ForeNumber('-10').gte('-3')).toBe(false)
+      expect(new ForeNumber('0').greaterThanOrEqual('-0')).toBe(true)
+      expect(new ForeNumber('0.0000000000001').gte('0.00000000000001')).toBe(true)
     })
 
     it('正确处理特殊值大于等于比较', () => {
@@ -125,12 +113,11 @@ describe('ForeNumber 比较运算', () => {
       expect(new ForeNumber('3').lessThanOrEqual('10')).toBe(true)
       expect(new ForeNumber('10').lte('10')).toBe(true)
       expect(new ForeNumber('10').lte('3')).toBe(false)
-    })
-
-    it('正确处理负数小于等于比较', () => {
       expect(new ForeNumber('-10').lte('-3')).toBe(true)
       expect(new ForeNumber('-3').lte('-3')).toBe(true)
       expect(new ForeNumber('-3').lte('-10')).toBe(false)
+      expect(new ForeNumber('0').lessThanOrEqual('-0')).toBe(true)
+      expect(new ForeNumber('0.0000000000001').lte('0.00000000000001')).toBe(false)
     })
 
     it('正确处理特殊值小于等于比较', () => {
@@ -150,8 +137,9 @@ describe('ForeNumber 比较运算', () => {
     })
 
     it('正确处理相近大量级的比较', () => {
-      expect(new ForeNumber('1.00000000000000000001').gt('1')).toBe(true)
-      expect(new ForeNumber('1').lt('1.00000000000000000001')).toBe(true)
+      expect(new ForeNumber('10000000000000000000.00000000000000000001').gt('10000000000000000000')).toBe(true)
+      expect(new ForeNumber('10000000000000000000').lt('10000000000000000000.00000000000000000001')).toBe(true)
+      expect(new ForeNumber('10000000000000000000').eq('10000000000000000000.00000000000000000001')).toBe(false)
     })
   })
 })

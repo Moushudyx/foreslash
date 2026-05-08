@@ -52,17 +52,13 @@ export interface ForeContext {
   minExponent: number
 }
 
-/** 与旧版结构兼容的输入对象 */
+/** 基础 ForeNumber 输入对象 */
 export interface baseForeNumber {
   _s: ForeSign
   _e: number
   _d: number[]
-  /**
-   * 兼容旧版标记
-   * - 1: 普通数
-   * - NaN / Infinity / -Infinity: 特殊值
-   */
-  _t: 1 | number
+  /** 内部类型标记，用于区分 normal/nan/inf/-inf；未提供时默认为 normal */
+  _k?: ForeKind
 }
 
 /**
