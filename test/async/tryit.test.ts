@@ -17,7 +17,7 @@ describe('tryit', () => {
       return Promise.resolve(n)
     }
     const testFn2 = tryit(_testFn2)
-    expect(testFn2(1)).resolves.toEqual([undefined, 1])
-    expect(testFn2(NaN)).resolves.toEqual(['err', undefined])
+    await expect(testFn2(1)).resolves.toEqual([undefined, 1])
+    await expect(testFn2(NaN)).resolves.toEqual(['err', undefined])
   })
 })

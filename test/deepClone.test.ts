@@ -5,7 +5,7 @@ global.Blob = BlobPolyfill as any // jsdom 下的 Blob 行为与 Node 不一致
 global.File = FilePloyFill as any // jsdom 下的 File 行为与 Node 不一致
 
 describe('deepClone', () => {
-  it('基本功能', () => {
+  it('基本功能', async () => {
     const key1 = Symbol('key1')
     const key2 = Symbol('key2')
     const typedArray = new BigInt64Array([BigInt(1), BigInt(2), BigInt(3)])
@@ -91,8 +91,8 @@ describe('deepClone', () => {
     expect(clonedObj.p.p3.name === obj.p.p3.name).toBe(true)
     expect(clonedObj.p.p3.type === clonedObj.p.p4.type).toBe(true)
     expect(clonedObj.p.p3.name === clonedObj.p.p4.name).toBe(true)
-    expect(clonedObj.p.p1.text()).resolves.toBe('123')
-    expect(clonedObj.p.p3.text()).resolves.toBe('456')
+    await expect(clonedObj.p.p1.text()).resolves.toBe('123')
+    await expect(clonedObj.p.p3.text()).resolves.toBe('456')
   })
   it('循环引用', () => {
     type TestObj = { a: number; b: { c: TestObj }; d: [TestObj]; e: Set<TestObj>; f: Map<TestObj, number> }

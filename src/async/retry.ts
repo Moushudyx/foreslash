@@ -50,31 +50,27 @@ type RetryOption = {
 export async function retry<T>(asyncFunction: RetryFunction<T>, option?: RetryOption): Promise<T> {
   let retryCounts = 0
   const times = isNumber(option?.times) ? option.times : 3
-  const delay = isFunction(option?.delay)
-    ? option.delay
-    : isNumber(option?.delay)
-    ? () => option.delay as number
-    : null
+  const delay = isFunction(option?.delay) ? option.delay : isNumber(option?.delay) ? () => option.delay as number : null
   const gap = isFunction(option?.gap) ? option.gap : isNumber(option?.gap) ? () => option.gap as number : null
   let lastRunTime: number = 0
   const getDelayTime: (retryCounts: number) => number =
     !option || (!delay && !gap)
       ? () => 0
       : gap
-      ? (retryCounts: number) => {
-          const time = gap(retryCounts)
-          return time - Date.now() + lastRunTime
-        }
-      : delay!
+        ? (retryCounts: number) => {
+            const time = gap(retryCounts)
+            return time - Date.now() + lastRunTime
+          }
+        : delay!
+  let err: Error | undefined
+  let res: T | Promise<T> | undefined
   while (1) {
     // console.log('retry while')
     lastRunTime = Date.now()
-    const [err, res] = await tryit(asyncFunction as (exitCallback: (err: any) => never) => T | Promise<T>)(
-      (err: any) => {
-        throw { $$exit_retry: err }
-      }
-    )
-    if (!err) return res
+    ;[err, res] = await tryit(asyncFunction as (exitCallback: (err: any) => never) => T | Promise<T>)((err: any) => {
+      throw { $$exit_retry: err }
+    })
+    if (!err) break
     retryCounts++
     if (err && (err as Error & { $$exit_retry: any }).$$exit_retry)
       throw (err as Error & { $$exit_retry: any }).$$exit_retry
@@ -82,6 +78,5 @@ export async function retry<T>(asyncFunction: RetryFunction<T>, option?: RetryOp
     const delayTime = getDelayTime(retryCounts)
     if (delayTime > 0) await sleep(delayTime)
   }
-  // 理论上代码永远不会走到这里, 这行代码只是为了避免 typescript 报错
-  throw new Error('retry failed')
+  return res as T
 }
