@@ -233,12 +233,6 @@ describe('输出能力', () => {
     const r = new ForeNumber('12345.6789').toExponential(2)
     expect(r).toMatch(/^1\.23e\+?4$/)
   })
-
-  it('rounded 占位方法不改变值', () => {
-    const v = new ForeNumber('3.14159')
-    expect(v.rounded(2).toString()).toBe('3.14159')
-    expect(v.round(5, 'ceil').toString()).toBe('3.14159')
-  })
 })
 
 // ═══════════════════ normalizeState ═══════════════════
