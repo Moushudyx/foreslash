@@ -360,13 +360,48 @@ describe('shared utils', () => {
 describe('链式运算', () => {
   it('加减链式保持精度', () => {
     ForeNumber.config({ precision: 50 })
-    const v = new ForeNumber('1').plus('0.2').minus('0.1').plus('0.3')
-    expect(v.toString()).toBe('1.4')
+    const num = new ForeNumber('1').plus('0.2').minus('0.1').plus('0.3')
+    expect(num.toString()).toBe('1.4')
   })
 
   it('乘除回环保持精度', () => {
     ForeNumber.config({ precision: 50, divisionPrecision: 50, rounding: 'round' })
-    const v = new ForeNumber('12345').mul('6789').div('6789')
-    expect(v.toString()).toBe('12345')
+    const num = new ForeNumber('12345').mul('6789').div('6789')
+    expect(num.toString()).toBe('12345')
+  })
+})
+
+// ═══════════════════ 精度丢弃（大跨度指数） ═══════════════════
+
+describe('大跨度指数精度丢弃', () => {
+  it('加数远小于被加数时被丢弃', () => {
+    ForeNumber.config({ precision: 20, rounding: 'round' })
+    // 1e100 远大于 1e-100，后者无法影响前者的前 20 位有效数字
+    const num = new ForeNumber('1e1000000').plus('1e-1000000')
+    expect(num.eq('1e1000000')).toBe(true)
+  })
+
+  it('减数远小于被减数时不影响结果', () => {
+    ForeNumber.config({ precision: 20, rounding: 'round' })
+    const num = new ForeNumber('1e1000000').minus('1e-1000000')
+    expect(num.eq('1e1000000')).toBe(true)
+  })
+
+  it('极端指数差安全丢弃', () => {
+    ForeNumber.config({ precision: 30, rounding: 'round' })
+    // 1e123456789 远大于任何正常小数，对齐时应安全丢弃微小值
+    const num1 = new ForeNumber('1e123456789').plus('0.5')
+    expect(num1.eq('1e123456789')).toBe(true)
+    const num2 = new ForeNumber('-1e123456789').minus('0.3')
+    expect(num2.eq('-1e123456789')).toBe(true)
+  }, 30000)
+
+  it('极端指数解析', () => {
+    // 解析 1e999999999999 应瞬间完成，不应 OOM
+    const startedAt = Date.now()
+    const num = new ForeNumber('1e999999999999')
+    expect(num._k).toBe('normal')
+    expect(num._s).toBe(1)
+    expect(Date.now() - startedAt).toBeLessThan(500)
   })
 })

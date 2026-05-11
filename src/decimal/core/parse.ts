@@ -1,6 +1,7 @@
 import type { ForeInput, ForeState, baseForeNumber } from '../types'
 import { normalizeState } from './normalize'
 import { FORE_BASE_DIGITS } from './constants'
+import { multiplyDigitsByPowerOfTen } from './limbMath'
 
 const DECIMAL_RE = /^([+-])?(\d+)(?:\.(\d*))?(?:e([+-]?\d+))?$/i
 
@@ -58,11 +59,27 @@ export function parseDecimalString(input: string): ForeState {
   }
 
   let scale10 = fractional.length - exp10
+
+  // 大指数路径：避免创建巨量字符串，直接构造 limbs
   if (scale10 < 0) {
-    coeff += '0'.repeat(-scale10)
-    scale10 = 0
+    const trailingZeros = -scale10
+    const limbZeros = Math.floor(trailingZeros / FORE_BASE_DIGITS)
+    const remDigits = trailingZeros % FORE_BASE_DIGITS
+
+    let limbs = decimalDigitsToLimbs(coeff)
+    if (remDigits > 0) {
+      limbs = multiplyDigitsByPowerOfTen(limbs, remDigits)
+    }
+
+    return normalizeState({
+      _s: sign,
+      _e: limbZeros,
+      _d: limbs,
+      _k: 'normal'
+    })
   }
 
+  // scale10 >= 0：小数路径，保留原有逻辑
   const pad = (FORE_BASE_DIGITS - (scale10 % FORE_BASE_DIGITS)) % FORE_BASE_DIGITS
   if (pad) coeff += '0'.repeat(pad)
   const scale4 = (scale10 + pad) / FORE_BASE_DIGITS

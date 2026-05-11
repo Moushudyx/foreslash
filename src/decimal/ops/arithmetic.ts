@@ -25,8 +25,9 @@ function fromState(self: ForeNumber, state: ReturnType<typeof addStates>): ForeN
  */
 export function plus(this: ForeNumber, value: ForeInput): ForeNumber {
   const Ctor = this.constructor as typeof ForeNumber
-  const raw = addStates(this, toForeNumber(this, value))
-  return fromState(this, quantizeStateByPrecision(raw, Ctor.config()))
+  const context = Ctor.config()
+  const raw = addStates(this, toForeNumber(this, value), context)
+  return fromState(this, quantizeStateByPrecision(raw, context))
 }
 
 /**
@@ -34,8 +35,9 @@ export function plus(this: ForeNumber, value: ForeInput): ForeNumber {
  */
 export function minus(this: ForeNumber, value: ForeInput): ForeNumber {
   const Ctor = this.constructor as typeof ForeNumber
-  const raw = subtractStates(this, toForeNumber(this, value))
-  return fromState(this, quantizeStateByPrecision(raw, Ctor.config()))
+  const context = Ctor.config()
+  const raw = subtractStates(this, toForeNumber(this, value), context)
+  return fromState(this, quantizeStateByPrecision(raw, context))
 }
 
 /**

@@ -18,6 +18,7 @@ import {
   negateState,
   signOfState
 } from './utils'
+import { parseDecimalString } from './parse'
 
 /** 除法保护位数, 用于防止除法结果精度丢失 */
 const DIVISION_GUARD_DIGITS = 16
@@ -135,7 +136,7 @@ export function moduloStates(left: ForeState, right: ForeState): ForeState {
 /**
  * 使用内部万进制状态执行加法
  */
-export function addStates(left: ForeState, right: ForeState): ForeState {
+export function addStates(left: ForeState, right: ForeState, context: ForeContext): ForeState {
   if (left._k === 'nan' || right._k === 'nan') return createSpecialState('nan')
   if (left._k === 'inf' && right._k === '-inf') return createSpecialState('nan')
   if (left._k === '-inf' && right._k === 'inf') return createSpecialState('nan')
@@ -143,6 +144,18 @@ export function addStates(left: ForeState, right: ForeState): ForeState {
   if (right._k !== 'normal') return right
   if (isZeroState(left)) return right
   if (isZeroState(right)) return left
+
+  // 量级差过大时，较小的数无法影响结果，直接丢弃（避免大跨度指数对齐 OOM）
+  const precision = Math.trunc(context.precision)
+  if (Number.isFinite(precision) && precision > 0) {
+    const leftMag = left._e + left._d.length
+    const rightMag = right._e + right._d.length
+    const magDiff = Math.abs(leftMag - rightMag)
+    const precisionLimbs = Math.ceil(precision / 4) + 2
+    if (magDiff > precisionLimbs) {
+      return leftMag > rightMag ? left : right
+    }
+  }
 
   const aligned = alignStates(left, right)
   if (left._s === right._s) {
@@ -161,8 +174,8 @@ export function addStates(left: ForeState, right: ForeState): ForeState {
 /**
  * 使用内部万进制状态执行减法
  */
-export function subtractStates(left: ForeState, right: ForeState): ForeState {
-  return addStates(left, negateState(right))
+export function subtractStates(left: ForeState, right: ForeState, context: ForeContext): ForeState {
+  return addStates(left, negateState(right), context)
 }
 
 /**
@@ -216,6 +229,12 @@ export function divideStates(left: ForeState, right: ForeState, context: ForeCon
   const exponentDeltaDigits = (left._e - right._e) * 4
   const shift = internalPlaces + exponentDeltaDigits
 
+  // 极端指数差：切到系数分离路径，避免创建巨量 padding 数组 OOM
+  const MAX_SCALE_SHIFT = 1_000_000
+  if (Math.abs(shift) > MAX_SCALE_SHIFT) {
+    return divideStatesExtremeShift(left, right, sign, decimalPlaces, guardDigits, internalPlaces, context)
+  }
+
   let dividend = left._d
   let divisor = right._d
   if (shift >= 0) dividend = multiplyDigitsByPowerOfTen(dividend, shift)
@@ -237,4 +256,53 @@ export function divideStates(left: ForeState, right: ForeState, context: ForeCon
   }
 
   return stateFromScaledInteger(sign, quotient, decimalPlaces)
+}
+
+/**
+ * 极端指数差下的除法：系数分离 + 指数补偿，避免大数组 OOM
+ * 采用先计算系数商再作为十进制字符串结合指数解析的方式，确保修约精度
+ */
+function divideStatesExtremeShift(
+  left: ForeState,
+  right: ForeState,
+  sign: -1 | 1,
+  decimalPlaces: number,
+  guardDigits: number,
+  internalPlaces: number,
+  context: ForeContext
+): ForeState {
+  // 仅缩放系数部分（小数组），不混合指数差
+  let dividend = multiplyDigitsByPowerOfTen(left._d, internalPlaces)
+  const divisor = right._d
+
+  let { quotient, remainder } = divideDigits(dividend, divisor)
+  if (shouldRoundUp(remainder, divisor, quotient, sign, context.rounding)) {
+    quotient = incrementDigits(quotient)
+  }
+
+  if (guardDigits > 0) {
+    const guardScale = multiplyDigitsByPowerOfTen([1], guardDigits)
+    const guardReduced = divideDigits(quotient, guardScale)
+    quotient = guardReduced.quotient
+
+    if (shouldRoundUp(guardReduced.remainder, guardScale, quotient, sign, context.rounding)) {
+      quotient = incrementDigits(quotient)
+    }
+  }
+
+  // 系数商转换为十进制字符串，再追加上指数差，整体重解析
+  const coeffStr = limbsToDecimalString(quotient)
+  const totalExp10 = (left._e - right._e) * 4 - decimalPlaces
+  const resultStr = `${sign < 0 ? '-' : ''}${coeffStr}e${totalExp10 >= 0 ? '+' : ''}${totalExp10}`
+  return parseDecimalString(resultStr)
+}
+
+/** 将 limb 数组转换为无符号十进制整数字符串 */
+function limbsToDecimalString(digits: number[]): string {
+  if (isZeroDigits(digits)) return '0'
+  let str = digits[0].toString()
+  for (let i = 1; i < digits.length; i += 1) {
+    str += digits[i].toString().padStart(4, '0')
+  }
+  return str
 }

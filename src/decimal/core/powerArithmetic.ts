@@ -373,7 +373,7 @@ export function nthRootState(base: ForeState, degree: number, context: ForeConte
     const currentPow = powerIntegerStates(current, integerStateFromNumber(degree - 1), internalContext)
     const division = divideStates(positiveBase, currentPow, internalContext)
     const scaledCurrent = multiplyStates(current, integerStateFromNumber(degree - 1))
-    const next = divideBySmallInteger(addStates(scaledCurrent, division), degree, internalContext)
+    const next = divideBySmallInteger(addStates(scaledCurrent, division, internalContext), degree, internalContext)
 
     // 用稳定精度判断是否已经收敛 避免被保护位抖动影响
     const normalizedCurrent = quantizeStateByPrecision(current, stableContext)
