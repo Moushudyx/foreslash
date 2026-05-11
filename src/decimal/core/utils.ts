@@ -78,7 +78,9 @@ export function negateState(state: ForeState): ForeState {
 
 /** 取状态的绝对值 */
 export function absState(state: ForeState): ForeState {
-  if (state._k !== 'normal') return state
+  if (state._k === 'nan') return state
+  if (state._k === '-inf') return createSpecialState('inf')
+  if (state._k === 'inf') return state
   return { ...state, _s: state._s < 0 ? 1 : state._s }
 }
 

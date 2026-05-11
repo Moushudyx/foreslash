@@ -328,7 +328,8 @@ describe('shared utils', () => {
 
   it('absState 处理特殊值', () => {
     expect(absState(createSpecialState('nan'))._k).toBe('nan')
-    expect(absState(createSpecialState('-inf'))._k).toBe('-inf')
+    expect(absState(createSpecialState('inf'))._k).toBe('inf')
+    expect(absState(createSpecialState('-inf'))._k).toBe('inf')
     const neg = parseInput('-3.14')
     expect(absState(neg)._s).toBe(1)
   })
