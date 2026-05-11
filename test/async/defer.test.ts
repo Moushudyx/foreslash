@@ -1,4 +1,4 @@
-import { defer, sleep } from '../../src/index'
+import { defer } from '../../src/index'
 
 describe('defer', () => {
   it('基本功能', async () => {
@@ -54,8 +54,7 @@ describe('defer', () => {
       },
       { rethrow: true }
     ) // 依次输出 1 2 3
-    expect(errDefer1).rejects.toEqual(new Error('1'))
-    await sleep(1);
+    await expect(errDefer1).rejects.toThrowError('1')
     expect(res).toEqual([1, 2, 3])
 
     const errDefer2 = defer(
@@ -66,9 +65,8 @@ describe('defer', () => {
         throw new Error('2')
       },
       { rethrow: true }
-    )
-    expect(errDefer2).rejects.toEqual(new Error('2'))
-    await sleep(1);
+    ) // 依次输出 4 5 6
+    await expect(errDefer2).rejects.toThrowError('2')
     expect(res).toEqual([1, 2, 3, 4, 5, 6])
   })
 })

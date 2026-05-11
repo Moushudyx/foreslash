@@ -13,8 +13,8 @@ export default defineConfig({
       provider: 'v8',
       reporter: ['text', 'lcov', 'clover'],
       reportsDirectory: 'coverage',
-      include: ['src/**/*.ts'],
-      exclude: ['**/test/**', 'src/**/*.type.ts'],
+      include: ['src/**/*.{js,ts,tsx}'],
+      exclude: ['**/test/**', 'src/**/*.type.ts', 'src/**/*.d.ts'],
     },
   },
 })

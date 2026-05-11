@@ -1,6 +1,6 @@
 import { parallel, sleep } from '../../src'
 
-describe('defer', () => {
+describe('parallel', () => {
   beforeEach(() => {
     vi.useFakeTimers()
   })
@@ -14,13 +14,14 @@ describe('defer', () => {
       return n * 2
     })
     const res0 = parallel([], fn)
-    expect(res0).resolves.toEqual([])
-    await res0
+    await expect(res0).resolves.toEqual([])
     expect(fn).toHaveBeenCalledTimes(0)
+
     const res1 = parallel([1, 2, 3, 4, 5], fn, { limit: 2 })
-    expect(res1).resolves.toEqual([2, 4, 6, 8, 10])
     await vi.runAllTimersAsync()
-    await res1
+
+    await expect(res1).resolves.toEqual([2, 4, 6, 8, 10])
+
     expect(fn).toHaveBeenCalledTimes(5)
   })
   it('队列处理', async () => {
@@ -37,7 +38,6 @@ describe('defer', () => {
     })
     let runOrder: number[] = []
     const res1 = parallel([1, 2, 3, 4, 5], fn, { limit: 2 })
-    expect(res1).resolves.toEqual([2, 4, 6, 8, 10])
     await vi.advanceTimersByTimeAsync(300)
     // 800
     // 500
@@ -52,7 +52,9 @@ describe('defer', () => {
     expect(fn).toHaveBeenCalledTimes(4)
     await vi.advanceTimersByTimeAsync(300)
     await vi.runAllTimersAsync()
-    await res1
+
+    await expect(res1).resolves.toEqual([2, 4, 6, 8, 10])
+
     expect(fn).toHaveBeenCalledTimes(5)
     expect(runOrder).toEqual([1, 2, 3, 4, 5])
   })
@@ -61,14 +63,11 @@ describe('defer', () => {
       throw new Error(`${n}`)
     })
     const res0 = parallel([], fn)
-    expect(res0).resolves.toEqual([])
-    await res0
+    await expect(res0).resolves.toEqual([])
     expect(fn).toHaveBeenCalledTimes(0)
+
     const res1 = parallel([1, 2, 3, 4, 5], fn)
-    expect(res1).rejects.toThrow(new Error(`Parallel execution failed on index: 0, 1, 2, 3, 4`))
-    try {
-      await res1
-    } catch (e) {}
+    await expect(res1).rejects.toThrow(`Parallel execution failed on index: 0, 1, 2, 3, 4`)
     expect(fn).toHaveBeenCalledTimes(5)
   })
 })
