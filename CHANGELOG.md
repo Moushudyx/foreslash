@@ -1,6 +1,22 @@
 # Change Log
 
-## Version 0.4.0-snapshot.1 - 2026-04-29
+## Version 0.4.0-snapshot.2 - 2026-05-12
+
+0.4.0 Snapshot 2
+
+- Pref 🥐 Performance optimization: `ForNumber` optimized for performance in large-span calculations
+- Fix 🥕 Bug fixed: Implement `rounded` method in `ForNumber`
+- Fix 🥕 Bug fixed: `abs` method of `ForNumber` now supports negative infinity
+- Other fixes and improvements
+
+0.4.0 快照
+
+- 优化 🥐 功能优化: `ForNumber` 优化了大指数跨度运算下的性能
+- 修复 🥕 缺陷修复: `ForNumber` 补充实现 `rounded` 方法
+- 修复 🥕 缺陷修复: `ForNumber` 的 `abs` 方法支持负无穷
+- 其他修复与优化
+
+---
 
 Since version 0.4.0, the automated testing tool will switch to Vitest, the package manager will switch to pnpm, ~~and the bundler will switch to rolldown,~~ these modern tools will improve development efficiency and build performance.
 
@@ -9,11 +25,29 @@ This version introduces `createFormData`, which can encode an object into an `Ar
 - Feat 🥥 Function(s) added: `createFormData` `createFormDataBoundary`
 - Feat 🥥 Feature(s) added: `ForNumber`
 - Feat 🥥 Function(s) change: `decimalNotation` now support `ForeNumber` input
+- Change 🥟 Dependencies change: upgrade devDependencies `vitest` `@vitest/coverage-v8` `@types/node` `rolldown`
 - Other fixes and improvements
 
 从 0.4.0 版本开始, 自动化测试工具将改用 Vitest, 包管理工具将改用 pnpm, ~~打包工具将改用 rolldown,~~ 这些现代化的工具将提升开发效率和构建性能
 
 这个版本引入的 `createFormData` 可以在没有原生 `FormData` 的环境中, 将对象编码为 `multipart/form-data` 的 `ArrayBuffer`, 可直接作为请求体发送, 常见用途是在微信小程序等环境中上传文件
+
+- 功能 🥥 添加函数: `createFormData` `createFormDataBoundary`
+- 功能 🥥 添加特性: `ForNumber` 用于高精度的数值运算
+- 功能 🥥 变更函数: `decimalNotation` 现在支持 `ForeNumber` 输入
+- 变更 🥟 依赖变更: 升级开发依赖 `vitest` `@vitest/coverage-v8` `@types/node` `rolldown`
+- 其他修复与优化
+
+## Version 0.4.0-snapshot.1 - 2026-04-29
+
+0.4.0 Snapshot 1
+
+- Feat 🥥 Function(s) added: `createFormData` `createFormDataBoundary`
+- Feat 🥥 Feature(s) added: `ForNumber`
+- Feat 🥥 Function(s) change: `decimalNotation` now support `ForeNumber` input
+- Other fixes and improvements
+
+0.4.0 快照
 
 - 功能 🥥 添加函数: `createFormData` `createFormDataBoundary`
 - 功能 🥥 添加特性: `ForNumber` 用于高精度的数值运算
