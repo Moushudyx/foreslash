@@ -39,18 +39,18 @@ describe('ForeNumber 幂运算 benchmark', () => {
         [0, 123456789, '0'],
         [0, '123456789e123456789', '0'],
       ]
-      const results: boolean[] = []
+      const results: string[] = []
       const startedAt = Date.now()
 
       for (const [base, pow, expected] of testExample) {
         const result = new ForeNumber(base).pow(pow).toString()
-        results.push(result === expected)
+        results.push(result)
       }
 
       const elapsed = Date.now() - startedAt
 
       expect(elapsed).toBeLessThan(5000)
-      expect(results.every(Boolean)).toBe(true)
+      expect(results).toEqual(testExample.map(([, , expected]) => expected))
 
       ForeNumber.config(previous)
     },
@@ -68,18 +68,18 @@ describe('ForeNumber 幂运算 benchmark', () => {
         ['12345678900000000000', '-0.123456789', '0.00439564756059676906407180'], // 精确到 24 位 0.004395647560596769064071799658322...
         [9.8, 12.34567, '1727229416587.69273870978'] // 精确到 24 位 1727229416587.6927387097774...
       ]
-      const results: boolean[] = []
+      const results: string[] = []
       const startedAt = Date.now()
 
       for (const [base, pow, expected] of testExample) {
         const result = new ForeNumber(base).pow(pow).toString()
-        results.push(result === expected)
+        results.push(result)
       }
 
       const elapsed = Date.now() - startedAt
 
       expect(elapsed).toBeLessThan(5000)
-      expect(results.every(Boolean)).toBe(true)
+      expect(results).toEqual(testExample.map(([, , expected]) => expected))
 
       ForeNumber.config(previous)
     },
