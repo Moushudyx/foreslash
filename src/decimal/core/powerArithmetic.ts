@@ -9,6 +9,7 @@ import {
   decimalDigitLength,
   integerStateFromNumber,
   isIntegerState,
+  isOneState,
   isZeroState,
   negateState,
   oneState,
@@ -35,6 +36,12 @@ export const MAX_RATIONAL_DENOMINATOR = 1_000_000
  * 允许自动识别为有理数幂的最大小数位数
  */
 const MAX_RATIONAL_DECIMAL_SCALE = 6
+
+/**
+ * 自动小数识别有理数时允许的最大分母\
+ * 超过该阈值时转入一般实数幂路径, 避免超大 n 次根导致长时间阻塞
+ */
+const MAX_AUTO_RATIONAL_DENOMINATOR = 10_000
 
 /**
  * 显式分数字符串的匹配规则
@@ -95,6 +102,27 @@ function integerDigitsFromState(state: ForeState): number[] {
   const cut = -state._e
   const kept = state._d.slice(0, Math.max(0, state._d.length - cut))
   return kept.length ? kept : [0]
+}
+
+/** 判断状态是否为 -1 */
+function isNegativeOneState(state: ForeState): boolean {
+  return state._k === 'normal' && state._s < 0 && state._e === 0 && state._d.length === 1 && state._d[0] === 1
+}
+
+/**
+ * 在不展开指数 digits 的情况下判断整数指数奇偶性\
+ * 内部基数是 10000(偶数), 当 _e > 0 时指数必然为偶数
+ */
+function isOddIntegerState(state: ForeState): boolean {
+  if (state._k !== 'normal' || state._s === 0) return false
+  if (!isIntegerState(state)) return false
+
+  if (state._e > 0) return false
+  if (state._e === 0) return (state._d[state._d.length - 1] ?? 0) % 2 === 1
+
+  const integerLength = state._d.length + state._e
+  if (integerLength <= 0) return false
+  return (state._d[integerLength - 1] ?? 0) % 2 === 1
 }
 
 /**
@@ -264,9 +292,14 @@ function tryConvertExponentToRational(exponent: ForeState): ExponentClassificati
     return { kind: 'unsupported-rational', reason: 'decimal-scale-too-large' }
   }
 
+  const denominator = 10 ** scaleDigits
+  if (denominator > MAX_AUTO_RATIONAL_DENOMINATOR) {
+    return { kind: 'unsupported-rational', reason: 'decimal-scale-too-large' }
+  }
+
   return {
     kind: 'rational',
-    value: normalizeRational((exponent._s < 0 ? -1 : 1) * numeratorAbs, 10 ** scaleDigits)
+    value: normalizeRational((exponent._s < 0 ? -1 : 1) * numeratorAbs, denominator)
   }
 }
 
@@ -304,19 +337,28 @@ export function powerIntegerStates(base: ForeState, exponent: ForeState, context
   }
   if (exponentIsZero) return oneState()
 
+  // 关键快速路径：避免在这些可直接判定的场景下展开超大指数 digits
+  if (isOneState(base)) return oneState()
+  if (isNegativeOneState(base)) {
+    return isOddIntegerState(exponent)
+      ? normalizeState({ _s: -1, _e: 0, _d: [1], _k: 'normal' })
+      : oneState()
+  }
+
   const exponentNegative = exponent._s < 0
-  const exponentAbsDigits = integerDigitsFromState({ ...exponent, _s: exponent._s < 0 ? 1 : exponent._s })
 
   if (base._k === 'inf' || base._k === '-inf') {
     if (exponentNegative) return zeroState()
     if (base._k === 'inf') return createSpecialState('inf')
-    return isOddIntegerDigits(exponentAbsDigits) ? createSpecialState('-inf') : createSpecialState('inf')
+    return isOddIntegerState(exponent) ? createSpecialState('-inf') : createSpecialState('inf')
   }
 
   if (isZeroState(base)) {
     if (exponentNegative) return createSpecialState('inf')
     return zeroState()
   }
+
+  const exponentAbsDigits = integerDigitsFromState({ ...exponent, _s: exponent._s < 0 ? 1 : exponent._s })
 
   // 使用按位折半的快速幂减少乘法次数
   let result = oneState()

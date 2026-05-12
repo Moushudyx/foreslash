@@ -2,6 +2,7 @@ import type ForeNumber from '../decimal'
 import type { ForeInput } from '../types'
 import { addStates, divideStates, moduloStates, multiplyStates, quantizeStateByPrecision, subtractStates } from '../core/stateArithmetic'
 import { inspectFractionExponentString, nthRootState, powerStates, MAX_RATIONAL_DENOMINATOR } from '../core/powerArithmetic'
+import { isIntegerState } from '../core/utils'
 
 /** 将任意入参标准化为 ForeNumber 实例 */
 function toForeNumber(self: ForeNumber, value: ForeInput): ForeNumber {
@@ -94,6 +95,12 @@ export function power(this: ForeNumber, value: ForeInput): ForeNumber {
   }
 
   const raw = powerStates(this, toForeNumber(this, value), context, rationalHint)
+
+  // 幂运算结果若为精确整数，不做全局 precision 量化，避免整数尾数被截断
+  if (raw._k === 'normal' && isIntegerState(raw)) {
+    return fromState(this, raw)
+  }
+
   return fromState(this, quantizeStateByPrecision(raw, context))
 }
 
