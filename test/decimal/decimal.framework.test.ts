@@ -30,14 +30,14 @@ describe('ForeNumber 框架基础', () => {
     expect(new ForeNumber('-Infinity').toString()).toBe('-Infinity')
   })
 
-  it('静态方法 isNaN 正确工作', () => {
+  it('静态方法 isNaN', () => {
     expect(ForeNumber.isNaN('NaN')).toBe(true)
     expect(ForeNumber.isNaN(Number.NaN)).toBe(true)
     expect(ForeNumber.isNaN('123')).toBe(false)
     expect(ForeNumber.isNaN('Infinity')).toBe(false)
   })
 
-  it('静态方法 isFinite 正确工作', () => {
+  it('静态方法 isFinite', () => {
     expect(ForeNumber.isFinite('123.45')).toBe(true)
     expect(ForeNumber.isFinite('0')).toBe(true)
     expect(ForeNumber.isFinite('NaN')).toBe(false)
@@ -45,13 +45,21 @@ describe('ForeNumber 框架基础', () => {
     expect(ForeNumber.isFinite('-Infinity')).toBe(false)
   })
 
-  it('静态方法 isInteger 正确工作', () => {
+  it('静态方法 isInteger', () => {
     expect(ForeNumber.isInteger('42')).toBe(true)
     expect(ForeNumber.isInteger('-7')).toBe(true)
     expect(ForeNumber.isInteger('0')).toBe(true)
     expect(ForeNumber.isInteger('3.14')).toBe(false)
     expect(ForeNumber.isInteger('NaN')).toBe(false)
     expect(ForeNumber.isInteger('Infinity')).toBe(false)
+  })
+
+  it('静态方法 isForeNumber', () => {
+    expect(ForeNumber.isForeNumber(new ForeNumber('42'))).toBe(true)
+    expect(ForeNumber.isForeNumber('42')).toBe(false)
+    expect(ForeNumber.isForeNumber(null)).toBe(false)
+    expect(ForeNumber.isForeNumber(undefined)).toBe(false)
+    expect(ForeNumber.isForeNumber({})).toBe(false)
   })
 
   it('静态常量 pi 和 e 可用', () => {
@@ -70,7 +78,7 @@ describe('ForeNumber 框架基础', () => {
     ForeNumber.config(previous)
   })
 
-  it('取反和绝对值方法正确工作', () => {
+  it('取反和绝对值方法', () => {
     expect(new ForeNumber('5').negated().toString()).toBe('-5')
     expect(new ForeNumber('-5').neg().toString()).toBe('5')
     expect(new ForeNumber('0').neg().toString()).toBe('0')
@@ -80,7 +88,7 @@ describe('ForeNumber 框架基础', () => {
     expect(new ForeNumber('-Infinity').abs().toString()).toBe('Infinity')
   })
 
-  it('toNumber 转换正确工作', () => {
+  it('toNumber 转换', () => {
     expect(new ForeNumber('3.14').toNumber()).toBe(3.14)
     expect(new ForeNumber('-7.5').toNumber()).toBe(-7.5)
     expect(new ForeNumber('Infinity').toNumber()).toBe(Infinity)

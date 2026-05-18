@@ -51,6 +51,11 @@ class ForeNumber implements ForeNumberInstance {
     return new ForeNumber(value).isInteger
   }
 
+  /** 判断输入是否为 ForeNumber 实例 */
+  static isForeNumber(value: any): value is ForeNumber {
+    return typeof value === 'object' && value !== null && value instanceof ForeNumber
+  }
+
   /**
    * 符号位
    * - `-1`: 负数
