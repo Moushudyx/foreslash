@@ -14,7 +14,7 @@ import {
   negateState,
   oneState,
   statesEqual,
-  zeroState
+  zeroState,
 } from './utils'
 
 /**
@@ -166,7 +166,7 @@ function powerOfTenState(exponent10: number): ForeState {
     _s: 1,
     _e: limbExponent,
     _d: [10 ** remainder],
-    _k: 'normal'
+    _k: 'normal',
   })
 }
 
@@ -180,10 +180,16 @@ function approximateInitialRoot(base: ForeState, degree: number): ForeState {
   const numberApprox = Number(base._d[0])
   if (Number.isFinite(numberApprox) && numberApprox > 0) {
     const exponent10 = base._e * 4 + decimalDigitLength(base._d) - 1
-    const approx = Math.pow(numberApprox * Math.pow(10, Math.max(-300, Math.min(300, exponent10 - (base._d[0].toString().length - 1)))), 1 / degree)
+    const approx = Math.pow(
+      numberApprox * Math.pow(10, Math.max(-300, Math.min(300, exponent10 - (base._d[0].toString().length - 1)))),
+      1 / degree
+    )
     if (Number.isFinite(approx) && approx > 0) {
       const magnitude = Math.floor(exponent10 / degree)
-      return multiplyStates(normalizeState({ _s: 1, _e: 0, _d: [Math.max(1, Math.floor(approx))], _k: 'normal' }), powerOfTenState(magnitude))
+      return multiplyStates(
+        normalizeState({ _s: 1, _e: 0, _d: [Math.max(1, Math.floor(approx))], _k: 'normal' }),
+        powerOfTenState(magnitude)
+      )
     }
   }
 
@@ -220,7 +226,7 @@ function normalizeRational(numerator: number, denominator: number): RationalExpo
   const divisor = gcd(normalizedNumerator, normalizedDenominator)
   return {
     numerator: normalizedNumerator / divisor,
-    denominator: normalizedDenominator / divisor
+    denominator: normalizedDenominator / divisor,
   }
 }
 
@@ -258,7 +264,7 @@ export function inspectFractionExponentString(input: string): FractionExponentSt
 
   return {
     kind: 'ok',
-    value: normalizeRational(sign * numerator, denominator)
+    value: normalizeRational(sign * numerator, denominator),
   }
 }
 
@@ -299,7 +305,7 @@ function tryConvertExponentToRational(exponent: ForeState): ExponentClassificati
 
   return {
     kind: 'rational',
-    value: normalizeRational((exponent._s < 0 ? -1 : 1) * numeratorAbs, denominator)
+    value: normalizeRational((exponent._s < 0 ? -1 : 1) * numeratorAbs, denominator),
   }
 }
 
@@ -308,7 +314,8 @@ function tryConvertExponentToRational(exponent: ForeState): ExponentClassificati
  */
 function classifyExponent(exponent: ForeState, rationalHint?: RationalExponent): ExponentClassification {
   if (isIntegerState(exponent)) return { kind: 'integer' }
-  if (rationalHint) return { kind: 'rational', value: normalizeRational(rationalHint.numerator, rationalHint.denominator) }
+  if (rationalHint)
+    return { kind: 'rational', value: normalizeRational(rationalHint.numerator, rationalHint.denominator) }
   return tryConvertExponentToRational(exponent)
 }
 
@@ -318,7 +325,7 @@ function classifyExponent(exponent: ForeState, rationalHint?: RationalExponent):
 function divideBySmallInteger(state: ForeState, divisor: number, context: ForeContext): ForeState {
   return divideStates(state, integerStateFromNumber(divisor), {
     ...context,
-    divisionPrecision: Math.max(context.divisionPrecision, context.powerPrecision + ROOT_GUARD_DIGITS)
+    divisionPrecision: Math.max(context.divisionPrecision, context.powerPrecision + ROOT_GUARD_DIGITS),
   })
 }
 
@@ -335,14 +342,19 @@ export function powerIntegerStates(base: ForeState, exponent: ForeState, context
   if (!isIntegerState(exponent)) {
     throw new Error('[ForeNumber] 当前仅支持整数幂，非整数幂尚未实现')
   }
+
+  // 统一限制整数指数在 JS 安全整数范围内，避免超大指数触发超长计算。
+  const exponentAbsDigitsForRange = integerDigitsFromState({ ...exponent, _s: exponent._s < 0 ? 1 : exponent._s })
+  if (parseIntegerDigitsToSafeNumber(exponentAbsDigitsForRange) === null) {
+    throw new Error('[ForeNumber] 仅支持安全整数范围内的整数指数')
+  }
+
   if (exponentIsZero) return oneState()
 
   // 关键快速路径：避免在这些可直接判定的场景下展开超大指数 digits
   if (isOneState(base)) return oneState()
   if (isNegativeOneState(base)) {
-    return isOddIntegerState(exponent)
-      ? normalizeState({ _s: -1, _e: 0, _d: [1], _k: 'normal' })
-      : oneState()
+    return isOddIntegerState(exponent) ? normalizeState({ _s: -1, _e: 0, _d: [1], _k: 'normal' }) : oneState()
   }
 
   const exponentNegative = exponent._s < 0
@@ -358,7 +370,7 @@ export function powerIntegerStates(base: ForeState, exponent: ForeState, context
     return zeroState()
   }
 
-  const exponentAbsDigits = integerDigitsFromState({ ...exponent, _s: exponent._s < 0 ? 1 : exponent._s })
+  const exponentAbsDigits = exponentAbsDigitsForRange // integerDigitsFromState({ ...exponent, _s: exponent._s < 0 ? 1 : exponent._s })
 
   // 使用按位折半的快速幂减少乘法次数
   let result = oneState()
@@ -375,7 +387,7 @@ export function powerIntegerStates(base: ForeState, exponent: ForeState, context
 
   return divideStates(oneState(), result, {
     ...context,
-    divisionPrecision: Math.max(0, Math.trunc(context.powerPrecision))
+    divisionPrecision: Math.max(0, Math.trunc(context.powerPrecision)),
   })
 }
 
@@ -398,11 +410,11 @@ export function nthRootState(base: ForeState, degree: number, context: ForeConte
   const internalContext: ForeContext = {
     ...context,
     precision: Math.max(context.precision, context.powerPrecision + ROOT_GUARD_DIGITS),
-    divisionPrecision: Math.max(context.divisionPrecision, context.powerPrecision + ROOT_GUARD_DIGITS)
+    divisionPrecision: Math.max(context.divisionPrecision, context.powerPrecision + ROOT_GUARD_DIGITS),
   }
   const stableContext: ForeContext = {
     ...internalContext,
-    precision: Math.max(1, Math.trunc(context.powerPrecision))
+    precision: Math.max(1, Math.trunc(context.powerPrecision)),
   }
 
   // 初始值过差会拖慢收敛 先做一次数量级估计
@@ -433,7 +445,12 @@ export function nthRootState(base: ForeState, degree: number, context: ForeConte
 /**
  * 有理数幂核心
  */
-export function powerRationalStates(base: ForeState, numerator: number, denominator: number, context: ForeContext): ForeState {
+export function powerRationalStates(
+  base: ForeState,
+  numerator: number,
+  denominator: number,
+  context: ForeContext
+): ForeState {
   if (!Number.isInteger(numerator) || !Number.isInteger(denominator) || denominator <= 0) {
     throw new Error('[ForeNumber] 当前仅支持整数分子与正整数分母的有理数幂')
   }
@@ -454,14 +471,19 @@ export function powerRationalStates(base: ForeState, numerator: number, denomina
   if (numerator > 0) return rooted
   return divideStates(oneState(), rooted, {
     ...context,
-    divisionPrecision: Math.max(context.divisionPrecision, context.powerPrecision)
+    divisionPrecision: Math.max(context.divisionPrecision, context.powerPrecision),
   })
 }
 
 /**
  * 统一幂分发入口
  */
-export function powerStates(base: ForeState, exponent: ForeState, context: ForeContext, rationalHint?: RationalExponent): ForeState {
+export function powerStates(
+  base: ForeState,
+  exponent: ForeState,
+  context: ForeContext,
+  rationalHint?: RationalExponent
+): ForeState {
   if (rationalHint) {
     const normalizedHint = normalizeRational(rationalHint.numerator, rationalHint.denominator)
     if (normalizedHint.denominator === 1) {

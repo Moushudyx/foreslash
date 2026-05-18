@@ -15,39 +15,35 @@ export type ForeRealPowerMode = 'approx' | 'strict'
  */
 export interface ForeContext {
   /**
-   * 通用精度（有效数字）目标值
-   * 用于四则运算结果的统一有效数字量化
+   * 用于四则运算的通用精度（有效数字）
    */
   precision: number
   /**
-   * 除法结果的小数位精度（十进制位数）
-   * 用于 `divideStates`
+   * 除法结果的精度（有效数字）
    */
   divisionPrecision: number
   /**
    * 幂运算中间结果或输出结果精度上限（有效数字）
-   * 用于负整数幂 倒数路径 根号迭代 与有理数幂中间量化
    */
   powerPrecision: number
   /**
    * 一般实数幂模式
-   * approx 表示允许走近似 ln exp 路径
-   * strict 表示仅允许整数和有理数幂
+   * - `approx` 表示允许走近似 ln exp 路径
+   * - `strict` 表示仅允许整数和有理数幂
    */
   realPowerMode: ForeRealPowerMode
   /**
    * 默认舍入模式
-   * 用于除法舍入
    */
   rounding: ForeRoundMode
   /**
    * 指数上限（防止上溢）
-   * 预留给后续指数边界检查逻辑，当前尚未接入
+   * - 预留给后续指数边界检查逻辑，当前尚未接入
    */
   maxExponent: number
   /**
    * 指数下限（防止下溢）
-   * 预留给后续指数边界检查逻辑，当前尚未接入
+   * - 预留给后续指数边界检查逻辑，当前尚未接入
    */
   minExponent: number
 }

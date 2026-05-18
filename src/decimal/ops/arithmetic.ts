@@ -1,7 +1,19 @@
 import type ForeNumber from '../decimal'
 import type { ForeInput } from '../types'
-import { addStates, divideStates, moduloStates, multiplyStates, quantizeStateByPrecision, subtractStates } from '../core/stateArithmetic'
-import { inspectFractionExponentString, nthRootState, powerStates, MAX_RATIONAL_DENOMINATOR } from '../core/powerArithmetic'
+import {
+  addStates,
+  divideStates,
+  moduloStates,
+  multiplyStates,
+  quantizeStateByPrecision,
+  subtractStates,
+} from '../core/stateArithmetic'
+import {
+  inspectFractionExponentString,
+  nthRootState,
+  powerStates,
+  MAX_RATIONAL_DENOMINATOR,
+} from '../core/powerArithmetic'
 import { isIntegerState } from '../core/utils'
 
 /** 将任意入参标准化为 ForeNumber 实例 */
@@ -17,7 +29,7 @@ function fromState(self: ForeNumber, state: ReturnType<typeof addStates>): ForeN
     _s: state._s,
     _e: state._e,
     _d: state._d,
-    _k: state._k
+    _k: state._k,
   })
 }
 
@@ -125,6 +137,9 @@ export function root(this: ForeNumber, degree: ForeInput): ForeNumber {
     throw new Error('[ForeNumber] root 的 degree 必须是正整数')
   }
   const degreeValue = parsedDegree.toNumber()
+  if (!Number.isSafeInteger(degreeValue)) {
+    throw new Error('[ForeNumber] root 的 degree 必须在安全整数范围内')
+  }
   const raw = nthRootState(this, degreeValue, context)
   return fromState(this, quantizeStateByPrecision(raw, context))
 }

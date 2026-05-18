@@ -1,6 +1,9 @@
 import { afterEach, describe, expect, it } from 'vitest'
 import { ForeNumber } from '../../src/decimal'
 
+// 仅允许通过 scripts/run-vitest-guarded.mjs 运行
+// 否则一旦遇到死循环就会出现 Vitest 无法自行退出的情况
+
 /**
  * 记录用例开始前的全局上下文
  */
@@ -46,6 +49,8 @@ describe('ForeNumber 幂运算', () => {
     expect(new ForeNumber('Infinity').pow('-1').toString()).toBe('0')
     expect(new ForeNumber('0').pow('-1').toString()).toBe('Infinity')
     expect(new ForeNumber('NaN').pow('0').toString()).toBe('1')
+    expect(new ForeNumber('1').pow('0').toString()).toBe('1')
+    expect(new ForeNumber(-1).pow('0').toString()).toBe('1')
   })
 
   it('正确处理零底数的边界场景', () => {
@@ -93,13 +98,18 @@ describe('ForeNumber 幂运算', () => {
     expect(new ForeNumber('-4').sqrt().toString()).toBe('NaN')
     expect(new ForeNumber('-8').pow('1/3').toString()).toBe('-2')
     expect(() => new ForeNumber('9').root('2.5')).toThrow(/degree 必须是正整数/)
+    expect(() => new ForeNumber('9').root('0')).toThrow(/degree 必须是正整数/)
+    expect(() => new ForeNumber('9').root('-3')).toThrow(/degree 必须是正整数/)
   })
 
   it('对非法有理数指数输入给出明确分类', () => {
+    expect(() => new ForeNumber('9').pow('9999999999999999999')).toThrow(/仅支持安全整数范围/)
+    expect(() => new ForeNumber('9').pow(BigInt('9007199254740993'))).toThrow(/仅支持安全整数范围/)
     expect(() => new ForeNumber('9').pow('3/0')).toThrow(/分母不能为 0/)
     expect(() => new ForeNumber('9').pow('3//4')).toThrow(/分数字符串格式无效/)
     expect(() => new ForeNumber('9').pow('1/1000000001')).toThrow(/分母超过当前上限 \d+/)
     expect(() => new ForeNumber('9').pow('9007199254740992/3')).toThrow(/超出安全整数范围/)
+    expect(() => new ForeNumber('9').root('9007199254740993')).toThrow(/degree 必须在安全整数范围内/)
   })
 
   it('支持一般实数幂近似计算', () => {

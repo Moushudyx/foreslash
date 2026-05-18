@@ -7,18 +7,18 @@ export const FORE_BASE_DIGITS = 4
 
 /** 默认计算上下文 */
 export const DEFAULT_CONTEXT: ForeContext = {
-  /** 通用有效数字精度（已接入四则运算结果统一量化） */
+  /** 通用有效数字精度（四则运算） */
   precision: 50,
-  /** 除法小数位精度（十进制位数），已接入除法实现 */
+  /** 除法小数位精度（有效数字） */
   divisionPrecision: 50,
-  /** 幂运算精度上限，已接入负整数幂 根号与有理数幂 */
+  /** 幂运算精度上限（有效数字） */
   powerPrecision: 50,
-  /** 一般实数幂模式，默认走近似 ln exp 路径 */
+  /** 一般实数幂模式, 默认走近似 ln exp 路径 */
   realPowerMode: 'approx',
-  /** 默认舍入模式（已接入除法） */
+  /** 默认舍入模式 */
   rounding: 'round',
   /** 指数上限（预留字段，等待指数边界校验接入） */
   maxExponent: 1_000_000,
   /** 指数下限（预留字段，等待指数边界校验接入） */
-  minExponent: -1_000_000
+  minExponent: -1_000_000,
 }

@@ -25,14 +25,14 @@ export function parseInput(value: ForeInput): ForeState {
 }
 
 /**
- * 解析旧版对象结构
+ * 解析 BaseForeNumber 对象结构
  */
 export function parseBaseForeNumber(value: baseForeNumber): ForeState {
   return normalizeState({
     _s: value._s,
     _e: value._e,
     _d: value._d,
-    _k: value._k ?? 'normal'
+    _k: value._k ?? 'normal',
   })
 }
 
@@ -75,7 +75,7 @@ export function parseDecimalString(input: string): ForeState {
       _s: sign,
       _e: limbZeros,
       _d: limbs,
-      _k: 'normal'
+      _k: 'normal',
     })
   }
 
@@ -89,7 +89,7 @@ export function parseDecimalString(input: string): ForeState {
     _s: sign,
     _e: -scale4,
     _d: limbs,
-    _k: 'normal'
+    _k: 'normal',
   })
 }
 

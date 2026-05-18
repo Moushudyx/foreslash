@@ -20,7 +20,7 @@ export function oneState(): ForeState {
 
 /** 构造非负整数的 normal 状态（仅限安全整数范围） */
 export function integerStateFromNumber(value: number): ForeState {
-  if (!Number.isFinite(value) || !Number.isInteger(value) || value < 0) {
+  if (!Number.isSafeInteger(value) || value < 0) {
     throw new Error('[ForeNumber] 仅支持安全范围内的非负整数辅助参数')
   }
   if (value === 0) return zeroState()
@@ -129,5 +129,5 @@ export function compareNormalStates(left: ForeState, right: ForeState): -1 | 0 |
   if (left._s !== right._s) return left._s > right._s ? 1 : -1
   if (left._s === 0) return 0
   const absCompared = compareNormalAbs(left, right)
-  return left._s > 0 ? absCompared : (absCompared * -1) as -1 | 0 | 1
+  return left._s > 0 ? absCompared : ((absCompared * -1) as -1 | 0 | 1)
 }

@@ -27,49 +27,69 @@ afterEach(() => ForeNumber.config(defaultContext))
 
 describe('特殊值运算组合', () => {
   const inf = () => new ForeNumber('Infinity')
-  const ninf = () => new ForeNumber('-Infinity')
+  const n_inf = () => new ForeNumber('-Infinity')
   const nan = () => new ForeNumber('NaN')
-  const n = (v: string) => new ForeNumber(v)
+  const n = (v: string | number) => new ForeNumber(v)
 
-  it('Infinity ± Infinity 和 ±(-Infinity)', () => {
+  it('Infinity 加减 Infinity 和 ±(-Infinity)', () => {
+    // Infinity 与 ±Infinity 的组合
     expect(inf().plus('Infinity').toString()).toBe('Infinity')
+    expect(inf().plus(inf()).toString()).toBe('Infinity')
+    expect(inf().plus('-Infinity').toString()).toBe('NaN')
+    expect(inf().plus(n_inf()).toString()).toBe('NaN')
     expect(inf().minus('Infinity').toString()).toBe('NaN')
+    expect(inf().minus(inf()).toString()).toBe('NaN')
     expect(inf().minus('-Infinity').toString()).toBe('Infinity')
-    expect(ninf().plus('-Infinity').toString()).toBe('-Infinity')
-    expect(ninf().minus('-Infinity').toString()).toBe('NaN')
-    expect(ninf().minus('Infinity').toString()).toBe('-Infinity')
+    expect(inf().minus(n_inf()).toString()).toBe('Infinity')
+    // -Infinity 与 ±Infinity 的组合
+    expect(n_inf().plus('Infinity').toString()).toBe('NaN')
+    expect(n_inf().plus(inf()).toString()).toBe('NaN')
+    expect(n_inf().plus('-Infinity').toString()).toBe('-Infinity')
+    expect(n_inf().plus(n_inf()).toString()).toBe('-Infinity')
+    expect(n_inf().minus('Infinity').toString()).toBe('-Infinity')
+    expect(n_inf().minus(inf()).toString()).toBe('-Infinity')
+    expect(n_inf().minus('-Infinity').toString()).toBe('NaN')
+    expect(n_inf().minus(n_inf()).toString()).toBe('NaN')
   })
 
-  it('Infinity × ÷ 特殊组合', () => {
+  it('Infinity 乘除特殊组合', () => {
+    // Infinity 与 0 的乘除组合
     expect(inf().mul('0').toString()).toBe('NaN')
-    expect(ninf().mul('0').toString()).toBe('NaN')
+    expect(n_inf().mul('0').toString()).toBe('NaN')
+    expect(n(0).mul(inf()).toString()).toBe('NaN')
+    expect(n(0).mul(n_inf()).toString()).toBe('NaN')
+    expect(n(0).div(inf()).toString()).toBe('0')
+    expect(n(0).dividedBy(n_inf()).toString()).toBe('0')
+    // ±Infinity 的乘除组合
+    expect(inf().mul('Infinity').toString()).toBe('Infinity')
+    expect(inf().mul('-Infinity').toString()).toBe('-Infinity')
+    expect(n_inf().mul('Infinity').toString()).toBe('-Infinity')
+    expect(n_inf().mul('-Infinity').toString()).toBe('Infinity')
     expect(inf().div('Infinity').toString()).toBe('NaN')
-    expect(ninf().div('-Infinity').toString()).toBe('NaN')
-    expect(ninf().div('Infinity').toString()).toBe('NaN')
+    expect(inf().div('-Infinity').toString()).toBe('NaN')
+    expect(n_inf().div('Infinity').toString()).toBe('NaN')
+    expect(n_inf().div('-Infinity').toString()).toBe('NaN')
     expect(n('-1').div('0').toString()).toBe('-Infinity')
+    expect(n('1').div('0').toString()).toBe('Infinity')
   })
 
   it('Infinity 取模组合', () => {
     expect(inf().mod('Infinity').toString()).toBe('NaN')
-    expect(ninf().mod('-Infinity').toString()).toBe('NaN')
-    expect(ninf().mod('3').toString()).toBe('NaN')
+    expect(n_inf().mod('-Infinity').toString()).toBe('NaN')
+    expect(n_inf().mod('3').toString()).toBe('NaN')
     expect(n('3').mod('-Infinity').toString()).toBe('3')
   })
 
   it('Infinity 幂运算组合', () => {
-    expect(ninf().pow('2').toString()).toBe('Infinity')
-    expect(ninf().pow('3').toString()).toBe('-Infinity')
+    expect(inf().pow('2').toString()).toBe('Infinity')
+    expect(n_inf().pow('2').toString()).toBe('Infinity')
+    expect(n_inf().pow('3').toString()).toBe('-Infinity')
     expect(inf().pow('0').toString()).toBe('1')
-    expect(n('1').pow('999').toString()).toBe('1')
+    expect(n_inf().pow('0').toString()).toBe('1')
+  })
+
+  it('幂运算边界场景', () => {
     expect(n('-1').pow('0.5').toString()).toBe('NaN')
-  })
-
-  it('幂运算非法 root 参数', () => {
-    expect(() => n('9').root('0')).toThrow(/degree 必须是正整数/)
-    expect(() => n('9').root('-3')).toThrow(/degree 必须是正整数/)
-  })
-
-  it('0 的幂边界', () => {
     expect(n('0').pow('0').toString()).toBe('1')
     expect(n('-0').pow('0').toString()).toBe('1')
     expect(n('-0').pow('3').toString()).toBe('0')
@@ -397,11 +417,11 @@ describe('大跨度指数精度丢弃', () => {
   }, 30000)
 
   it('极端指数解析', () => {
-    // 解析 1e999999999999 应瞬间完成，不应 OOM
+    // 解析任何数字应瞬间完成, 且资源消耗极少
     const startedAt = Date.now()
     const num = new ForeNumber('1e999999999999')
+    expect(Date.now() - startedAt).toBeLessThan(50)
     expect(num._k).toBe('normal')
     expect(num._s).toBe(1)
-    expect(Date.now() - startedAt).toBeLessThan(500)
   })
 })
