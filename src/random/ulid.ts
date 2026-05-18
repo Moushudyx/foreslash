@@ -26,7 +26,7 @@ let lastNum2 = 0
  * ```
  * @version 0.1.2
  */
-export function ulid(monotonic = true, time = NaN) {
+export function ulid(monotonic = true, time: number = NaN): string {
   const now = isInteger(time) ? time : Date.now()
   if (!monotonic) return (_encodeTime(now) + randomBase32String(16)).toUpperCase()
   if (lastTime !== now) {

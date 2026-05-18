@@ -8,7 +8,13 @@ export interface ThrottleOptions {
 }
 
 /** */
-export function _throttle<T extends any[]>(fn: (...args: T) => any, delay: number, options?: ThrottleOptions) {
+export function _throttle<T extends any[]>(
+  fn: (...args: T) => any,
+  delay: number,
+  options?: ThrottleOptions
+): ((this: any, ...args: T) => void) & {
+  reset: () => void
+} {
   const trailing = options?.trailing ?? false
   const trailingRunLast = options?.trailingRunLast ?? true
   const leading = options?.leading ?? true

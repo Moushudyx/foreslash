@@ -132,7 +132,7 @@ const supMap = /*#__PURE__*/ { ...Array.from('⁰¹²³⁴⁵⁶⁷⁸⁹'), '-'
  * ```
  * @version 0.3.8
  */
-export function transferNumberToSupUniCode(n: ArrayLike<string>) {
+export function transferNumberToSupUniCode(n: ArrayLike<string>): string {
   return Array.from(n)
     .map((s) => (supMap[s] ? supMap[s] : s))
     .join('')

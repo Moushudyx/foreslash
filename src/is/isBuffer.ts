@@ -7,4 +7,5 @@ const Buffer = global.Buffer
  * - 非 Node.js 环境会使用当前环境的 `Buffer` 全局对象
  * @param value 要判断的值
  */
-export const isBuffer = (Buffer && Buffer.isBuffer) || ((() => false) as unknown as (obj: any) => obj is Buffer)
+export const isBuffer: (obj: any) => obj is Buffer =
+  (Buffer && Buffer.isBuffer) || ((() => false) as unknown as (obj: any) => obj is Buffer)

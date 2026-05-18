@@ -12,7 +12,7 @@ const isLowerCase = /*#__PURE__*/ RegExp.prototype.test.bind(/[a-z]/)
 const isNumberCase = /*#__PURE__*/ RegExp.prototype.test.bind(/[0-9]/)
 const isSymbolCase = /*#__PURE__*/ RegExp.prototype.test.bind(/[^a-z0-9A-Z]/)
 /** 使用后可以用`caseConvert`组合为适合的格式 */
-export function _splitVar(c: string) {
+export function _splitVar(c: string): VarCase[] {
   const res = [] as VarCase[]
   // 拆分逻辑：
   // a 基本拆分：

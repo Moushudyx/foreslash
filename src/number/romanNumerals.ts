@@ -32,7 +32,7 @@ export function romanNumerals(
     zero?: string
     one?: string
   }
-) {
+): string {
   const str = decimalNotation(num)
   if (/NaN|Inf/.test(str)) return str
   const type = (options || {}).type || 'unicode'

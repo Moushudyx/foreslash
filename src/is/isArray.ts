@@ -8,4 +8,4 @@
  * isArray({ 0: 0, length: 1 }) // false
  * ```
  */
-export const isArray = Array.isArray
+export const isArray: (value: any) => value is any[] = Array.isArray

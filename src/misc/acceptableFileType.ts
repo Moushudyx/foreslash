@@ -18,7 +18,7 @@ import { _getAcceptableExtByMIME } from '../utils/_acceptableFile'
  * acceptableFileType('text/x-c', '.C') // false
  * ```
  */
-export function acceptableFileType(fileType: string, accept: string) {
+export function acceptableFileType(fileType: string, accept: string): boolean {
   const type = fileType.toLowerCase()
   const allExtList = _getAcceptableExtByMIME(type)
   const acceptList = accept.split(',').map((s) => s.trim()) // 需要注意的是 .C 与 .c 的区别

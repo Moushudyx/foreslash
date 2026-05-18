@@ -11,7 +11,7 @@
  * ```
  * @version 0.3.6
  */
-export function encodeBase64(str: string) {
+export function encodeBase64(str: string): string {
   const utf8Bytes = new TextEncoder().encode(str)
   let binary = ''
   utf8Bytes.forEach((byte) => {
@@ -33,7 +33,7 @@ export function encodeBase64(str: string) {
  * ```
  * @version 0.3.6
  */
-export function decodeBase64(base64Str: string) {
+export function decodeBase64(base64Str: string): string {
   const binary = atob(base64Str)
   const bytes = new Uint8Array(binary.length)
   for (let i = 0; i < binary.length; i++) {

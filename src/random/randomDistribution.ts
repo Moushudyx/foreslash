@@ -16,12 +16,12 @@
  * ```
  * @version 0.3.3
  */
-export function randomDistribution(p: number, options?: { threshold: number }) {
+export function randomDistribution(p: number, options?: { threshold: number }): () => boolean {
   const threshold = options?.threshold ? Math.max(options.threshold, Number.MIN_VALUE * 2) : 5e-6
   const C = getInitP(p, threshold)
   let current = C
   /** 生成一个分布均匀的伪随机数列，缺点是初始概率非常低 */
-  return function getRandomDistribution() {
+  return function getRandomDistribution(): boolean {
     const res = Math.random() < current
     if (res) current = C
     else current += C
@@ -35,7 +35,7 @@ export function randomDistribution(p: number, options?: { threshold: number }) {
  * @returns PRD 算法需要的初始概率
  * @version 0.3.3
  */
-export function getInitP(targetP: number, threshold = 5e-6) {
+export function getInitP(targetP: number, threshold = 5e-6): number {
   if (targetP <= 0) return 0
   if (targetP >= 1) return 1
   // 硬编码一个中间值用于降低计算量
@@ -56,7 +56,7 @@ export function getInitP(targetP: number, threshold = 5e-6) {
   return mid
 }
 /** 检测这个 C 值实际对应的概率 */
-function getRealPFromInitP(initP: number) {
+function getRealPFromInitP(initP: number): number {
   let sum = 0 // 为了方便计算，这里的 sum 是最终数值的倒数
   let prod = 0 // 这里存的是已经计算过的命中比例
   let cur = 0 // 当前比例

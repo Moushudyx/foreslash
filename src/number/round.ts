@@ -27,7 +27,11 @@ import { isEven } from './isOdd'
  * ```
  * @version 0.3.2
  */
-export function round(num: DecimalNotationInput, precision: number, type?: 'round' | 'banker' | 'floor' | 'ceil') {
+export function round(
+  num: DecimalNotationInput,
+  precision: number,
+  type?: 'round' | 'banker' | 'floor' | 'ceil'
+): string {
   const str = decimalNotation(num)
   if (/NaN|Inf/.test(str)) return str
   let [_integer, _fractional] = str.split('.')
@@ -119,7 +123,8 @@ export function roundBank(
     if (!/^50*$/.test(rightNumbers)) return increase(integer, splitF) // 1.450001 的场景
     // 五成双
     const leftNumber = Number(precision ? fractional[precision - 1] : integer[integer.length - 1])
-    if (isEven(leftNumber)) return [integer, splitF] // 五成双 前一位是偶数则不作处理
+    if (isEven(leftNumber))
+      return [integer, splitF] // 五成双 前一位是偶数则不作处理
     else return increase(integer, splitF)
   }
   if (fractional.length < precision) {

@@ -28,7 +28,7 @@ export function format(
     precision?: number
     round?: 'round' | 'banker' | 'floor' | 'ceil'
   }
-) {
+): string {
   const str = decimalNotation(num)
   if (/NaN|Inf/.test(str)) return str
   const separator = (options || {}).separator ?? ','

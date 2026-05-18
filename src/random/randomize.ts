@@ -11,7 +11,7 @@ const originRandom = /*#__PURE__*/ Math.random
  * ```
  * @version 0.3.11
  */
-export function randomize() {
+export function randomize(): () => void {
   Math.random = function random() {
     // 一个老梗: “趋向于运算符” `-->`
     // 写法是 for(;i --> 0;) 或者 while(i --> 0) 这个奇怪的写法可以用于几乎所有 c-like 语言
@@ -27,7 +27,7 @@ export function randomize() {
     // 定期调用以增加不可预测性
     Math.random()
   }, 50)
-  return function recoverRandomize() {
+  return function recoverRandomize(): void {
     Math.random = originRandom
     clearInterval(interval)
   }

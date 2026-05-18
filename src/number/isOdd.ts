@@ -4,7 +4,7 @@
  * @returns 如果是奇数则返回 true 否则返回 false
  * @version 0.3.2
  */
-export function isOdd(num: number | bigint) {
+export function isOdd(num: number | bigint): boolean {
   return !!(typeof num === 'bigint' ? num & BigInt(1) : num & 1)
 }
 /**
@@ -13,6 +13,6 @@ export function isOdd(num: number | bigint) {
  * @returns 如果是偶数则返回 true 否则返回 false
  * @version 0.3.2
  */
-export function isEven(num: number | bigint) {
+export function isEven(num: number | bigint): boolean {
   return !(typeof num === 'bigint' ? num & BigInt(1) : num & 1)
 }

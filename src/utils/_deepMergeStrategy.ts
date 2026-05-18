@@ -85,7 +85,7 @@ export type MergeTypeStrategy = {
 
 export type MergeEmptyPlaceholder = A.x & { '@@merge/placeholder': true }
 /** `deepMerge` 深合并的空值占位符 */
-export const $$Empty = Object.freeze({ '@@merge/placeholder': true })
+export const $$Empty = Object.freeze({ '@@merge/placeholder': true }) as Readonly<MergeEmptyPlaceholder>
 
 export function getMergeStrategy(
   targetType: BaseMargeType | 'Empty',

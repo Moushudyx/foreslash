@@ -20,7 +20,7 @@ import { _getAcceptableMIMEByExt } from '../utils/_acceptableFile'
  * acceptableFileName('c__.c', 'text/x-c') // true
  * ```
  */
-export function acceptableFileName(fileName: string, accept: string) {
+export function acceptableFileName(fileName: string, accept: string): boolean {
   const _ext = fileName.split('.').pop()!
   const ext = /^[CZ]$/.test(_ext) ? _ext : _ext.toLowerCase()
   const allMimeType = _getAcceptableMIMEByExt(ext)

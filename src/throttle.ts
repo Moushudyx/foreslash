@@ -9,7 +9,13 @@ import { _throttle, type ThrottleOptions } from './utils/_throttle'
  * @returns 一个节流处理的函数, 你可以使用其上的 `reset` 方法重置节流函数内部状态(会停止计划中的函数执行)
  * @version 0.2.2
  */
-export function throttle<T extends any[]>(fn: (...args: T) => any, delay: number, options?: ThrottleOptions) {
+export function throttle<T extends any[]>(
+  fn: (...args: T) => any,
+  delay: number,
+  options?: ThrottleOptions
+): ((this: any, ...args: T) => void) & {
+  reset: () => void
+} {
   if (!isNumber(delay) || !isFinite(delay) || delay <= 0) {
     throw new Error('Invalid delay parameter')
   }

@@ -10,7 +10,7 @@ export const uuidNil = '00000000-0000-0000-0000-000000000000'
  * ```
  * @version 0.1.2
  */
-export function uuidV4() {
+export function uuidV4(): string {
   const r = randomHexString(30) // 8 + 4 + 3 + 3 + 12
   return (
     `${r.slice(0, 8)}-${r.slice(8, 12)}-4${r.slice(12, 15)}-` +
@@ -26,7 +26,7 @@ export function uuidV4() {
  * ```
  * @version 0.3.4
  */
-export function uuidV7() {
+export function uuidV7(): string {
   const r = randomHexString(18) // 3 + 3 + 12
   let t = Date.now().toString(16)
   if (t.length < 12) t = '0'.repeat(12 - t.length) + t

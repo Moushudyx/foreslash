@@ -1,7 +1,7 @@
 import { isMap } from './is'
-import { _deepClone, CloneOptions, CustomCloner } from './utils/_deepClone'
+import { _deepClone, type CloneOptions, type CustomCloner } from './utils/_deepClone'
 
-export { CloneOptions, CustomCloner }
+export { type CloneOptions, type CustomCloner }
 /**
  * 标准深拷贝
  * - 功能完善的深拷贝

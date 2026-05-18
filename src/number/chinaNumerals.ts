@@ -55,7 +55,7 @@ export function chinaNumerals(
     dot?: string
     fractionalUnits?: ArrayLike<string>
   }
-) {
+): string {
   const str = decimalNotation(num)
   if (/NaN|Inf/.test(str)) return str
   const type = (options || {}).type || 'normal'

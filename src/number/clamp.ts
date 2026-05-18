@@ -24,7 +24,7 @@ export function clamp(
   min: number,
   max: number,
   options?: { default?: number; defaultMin?: number; defaultMax?: number }
-) {
+): number {
   if (isNaN(min)) throw new Error('Invalid min parameter')
   if (isNaN(max)) throw new Error('Invalid max parameter')
   if (max < min) {

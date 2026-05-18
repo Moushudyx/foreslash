@@ -12,7 +12,7 @@
  * ```
  * @version 0.2.0
  */
-export function sleep(time: number = 1000) {
+export function sleep(time: number = 1000): Promise<unknown> {
   return new Promise((res) => {
     setTimeout(res, time)
   })
