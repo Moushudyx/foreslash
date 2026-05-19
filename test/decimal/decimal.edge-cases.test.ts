@@ -86,6 +86,10 @@ describe('特殊值运算组合', () => {
     expect(n_inf().pow('3').toString()).toBe('-Infinity')
     expect(inf().pow('0').toString()).toBe('1')
     expect(n_inf().pow('0').toString()).toBe('1')
+    expect(inf().pow('123456789e123456789').toString()).toBe('Infinity')
+    expect(inf().pow('-123456789e123456789').toString()).toBe('0')
+    expect(n_inf().pow('123456789123456789123456789').toString()).toBe('-Infinity')
+    expect(n_inf().pow('123456789e123456789').toString()).toBe('Infinity')
   })
 
   it('幂运算边界场景', () => {
@@ -93,6 +97,12 @@ describe('特殊值运算组合', () => {
     expect(n('0').pow('0').toString()).toBe('1')
     expect(n('-0').pow('0').toString()).toBe('1')
     expect(n('-0').pow('3').toString()).toBe('0')
+    expect(n('1').pow('1e1145141919810').toString()).toBe('1')
+    expect(n('1').pow('11145141919810').toString()).toBe('1')
+    expect(n('-1').pow('6372843281945').toString()).toBe('-1') // 奇数
+    expect(n('-1').pow('6372843281945e123456789').toString()).toBe('1') // 偶数
+    expect(n('0').pow('123456789').toString()).toBe('0')
+    expect(n('0').pow('123456789e123456789').toString()).toBe('0')
   })
 
   it('NaN 传播覆盖所有运算符', () => {

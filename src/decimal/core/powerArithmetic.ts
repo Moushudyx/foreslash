@@ -343,21 +343,18 @@ export function powerIntegerStates(base: ForeState, exponent: ForeState, context
     throw new Error('[ForeNumber] 当前仅支持整数幂，非整数幂尚未实现')
   }
 
-  // 统一限制整数指数在 JS 安全整数范围内，避免超大指数触发超长计算。
-  const exponentAbsDigitsForRange = integerDigitsFromState({ ...exponent, _s: exponent._s < 0 ? 1 : exponent._s })
-  if (parseIntegerDigitsToSafeNumber(exponentAbsDigitsForRange) === null) {
-    throw new Error('[ForeNumber] 仅支持安全整数范围内的整数指数')
-  }
-
   if (exponentIsZero) return oneState()
 
   // 关键快速路径：避免在这些可直接判定的场景下展开超大指数 digits
+  // integerDigitsFromState 中调用 new Array(_e) 时过大的 _e 会导致 RangeError
+  // 因此 base 为 1, -1, 0, ±inf 的特殊场景要在此处提前返回
+
+  const exponentNegative = exponent._s < 0
+
   if (isOneState(base)) return oneState()
   if (isNegativeOneState(base)) {
     return isOddIntegerState(exponent) ? normalizeState({ _s: -1, _e: 0, _d: [1], _k: 'normal' }) : oneState()
   }
-
-  const exponentNegative = exponent._s < 0
 
   if (base._k === 'inf' || base._k === '-inf') {
     if (exponentNegative) return zeroState()
@@ -370,9 +367,18 @@ export function powerIntegerStates(base: ForeState, exponent: ForeState, context
     return zeroState()
   }
 
+  // 统一限制整数指数在 JS 安全整数范围内，避免超大指数触发超长计算
+  // 此时所有无需展开 exponent digits 即可判定的路径均已返回，展开操作安全
+
+  const exponentAbsDigitsForRange = integerDigitsFromState({ ...exponent, _s: exponent._s < 0 ? 1 : exponent._s })
+  if (parseIntegerDigitsToSafeNumber(exponentAbsDigitsForRange) === null) {
+    throw new Error('[ForeNumber] 仅支持安全整数范围内的整数指数')
+  }
+
   const exponentAbsDigits = exponentAbsDigitsForRange // integerDigitsFromState({ ...exponent, _s: exponent._s < 0 ? 1 : exponent._s })
 
   // 使用按位折半的快速幂减少乘法次数
+
   let result = oneState()
   let factor = base
   let expDigits = exponentAbsDigits
