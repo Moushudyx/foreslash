@@ -1,19 +1,19 @@
 # Change Log
 
-## Version 0.4.0-snapshot.2 - 2026-05-12
+## Version 0.4.0-snapshot.3 - 2026-05-19
 
-0.4.0 Snapshot 2
+0.4.0 Snapshot 3
 
-- Pref 🥐 Performance optimization: `ForNumber` optimized for performance in large-span calculations
-- Fix 🥕 Bug fixed: Implement `rounded` method in `ForNumber`
-- Fix 🥕 Bug fixed: `abs` method of `ForNumber` now supports negative infinity
+- Pref 🥐 Performance optimization: `ForNumber` integer power calculations now limit integer exponents to the JS safe integer range
+- Feat 🥥 Function(s) added: Static method `isForeNumber` is added to `ForNumber`
+- Change 🥟 Dependencies change: upgrade devDependencies `rolldown` `rolldown-plugin-dts`
 - Other fixes and improvements
 
-0.4.0 快照
+0.4.0 快照 3
 
-- 优化 🥐 功能优化: `ForNumber` 优化了大指数跨度运算下的性能
-- 修复 🥕 缺陷修复: `ForNumber` 补充实现 `rounded` 方法
-- 修复 🥕 缺陷修复: `ForNumber` 的 `abs` 方法支持负无穷
+- 优化 🥐 功能优化: `ForNumber` 的整数幂计算功能, 限制整数指数在 JS 安全整数范围内
+- 功能 🥥 添加函数: `ForNumber` 添加 `isForeNumber` 静态方法
+- 变更 🥟 依赖变更: 升级开发依赖 `rolldown` `rolldown-plugin-dts`
 - 其他修复与优化
 
 ---
@@ -38,6 +38,22 @@ This version introduces `createFormData`, which can encode an object into an `Ar
 - 变更 🥟 依赖变更: 升级开发依赖 `vitest` `@vitest/coverage-v8` `@types/node` `rolldown`
 - 其他修复与优化
 
+## Version 0.4.0-snapshot.2 - 2026-05-12
+
+0.4.0 Snapshot 2
+
+- Pref 🥐 Performance optimization: `ForNumber` optimized for performance in large-span calculations
+- Fix 🥕 Bug fixed: Implement `rounded` method in `ForNumber`
+- Fix 🥕 Bug fixed: `abs` method of `ForNumber` now supports negative infinity
+- Other fixes and improvements
+
+0.4.0 快照 2
+
+- 优化 🥐 功能优化: `ForNumber` 优化了大指数跨度运算下的性能
+- 修复 🥕 缺陷修复: `ForNumber` 补充实现 `rounded` 方法
+- 修复 🥕 缺陷修复: `ForNumber` 的 `abs` 方法支持负无穷
+- 其他修复与优化
+
 ## Version 0.4.0-snapshot.1 - 2026-04-29
 
 0.4.0 Snapshot 1
@@ -47,7 +63,7 @@ This version introduces `createFormData`, which can encode an object into an `Ar
 - Feat 🥥 Function(s) change: `decimalNotation` now support `ForeNumber` input
 - Other fixes and improvements
 
-0.4.0 快照
+0.4.0 快照 1
 
 - 功能 🥥 添加函数: `createFormData` `createFormDataBoundary`
 - 功能 🥥 添加特性: `ForNumber` 用于高精度的数值运算

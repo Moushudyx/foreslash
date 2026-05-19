@@ -42,14 +42,14 @@ export default /* defineConfig() */ [
     ],
     plugins: [typescript({ declaration: false, removeComments: true })],
   },
-  // {
-  //   input: 'src/index.ts',
-  //   output: [
-  //     {
-  //       file: 'lib/index.d.ts',
-  //       format: 'esm',
-  //     },
-  //   ],
-  //   plugins: [dts()],
-  // },
+  {
+    input: 'src/index.ts',
+    output: [
+      {
+        file: 'lib/index.d.ts',
+        format: 'esm',
+      },
+    ],
+    plugins: [dts()],
+  },
 ]

@@ -26,10 +26,22 @@ const isWindows = process.platform === 'win32'
 const vitestArgs = process.argv.slice(2)
 
 /**
+ * 本守护脚本的自定义标志（不应透传给 vitest）
+ */
+const GUARD_FLAGS = ['--run-benchmark']
+
+/**
  * 标记是否包含 benchmark 目标\
  * 说明：benchmark 只允许通过本守护脚本运行，避免 AI 直接调用 vitest 导致长时间阻塞
  */
-const containsBenchmarkTarget = vitestArgs.some((arg) => String(arg).includes('benchmark'))
+const containsBenchmarkTarget =
+  vitestArgs.includes('--run-benchmark') ||
+  vitestArgs.some((arg) => String(arg).includes('benchmark'))
+
+/**
+ * 过滤掉自定义标志后的 vitest 参数
+ */
+const filteredVitestArgs = vitestArgs.filter((a) => !GUARD_FLAGS.includes(a))
 
 /**
  * 注入给 vitest 子进程的环境变量
@@ -43,7 +55,7 @@ const childEnv = {
 /**
  * 生成 Vitest 子进程
  */
-const child = spawn(isWindows ? 'pnpm.cmd' : 'pnpm', ['vitest', ...vitestArgs], isWindows
+const child = spawn(isWindows ? 'pnpm.cmd' : 'pnpm', ['vitest', ...filteredVitestArgs], isWindows
   ? {
       stdio: ['inherit', 'pipe', 'pipe'],
       shell: true,
