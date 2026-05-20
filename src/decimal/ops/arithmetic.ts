@@ -10,10 +10,10 @@ import {
 } from '../core/stateArithmetic'
 import {
   inspectFractionExponentString,
-  nthRootState,
-  powerStates,
   MAX_RATIONAL_DENOMINATOR,
-} from '../core/powerArithmetic'
+} from '../core/power/rationalPower'
+import { powerStates } from '../core/powerArithmetic'
+import { nthRootState } from '../core/power/nthRoot'
 import { isIntegerState } from '../core/utils'
 
 /** 将任意入参标准化为 ForeNumber 实例 */

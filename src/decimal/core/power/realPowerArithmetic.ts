@@ -1,5 +1,5 @@
-import type { ForeContext, ForeState } from '../types'
-import { multiplyStates } from './stateArithmetic'
+import type { ForeContext, ForeState } from '../../types'
+import { multiplyStates } from '../stateArithmetic'
 import { expState, lnState } from './transcendentalArithmetic'
 import {
   createSpecialState,
@@ -7,7 +7,7 @@ import {
   isZeroState,
   oneState,
   zeroState
-} from './utils'
+} from '../utils'
 
 /**
  * 一般实数幂的前置入口

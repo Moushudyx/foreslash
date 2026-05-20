@@ -1,6 +1,6 @@
-import type { ForeContext, ForeState } from '../types'
-import { parseDecimalString } from './parse'
-import { divideStates, multiplyStates } from './stateArithmetic'
+import type { ForeContext, ForeState } from '../../types'
+import { parseDecimalString } from '../parse'
+import { divideStates, multiplyStates } from '../stateArithmetic'
 import {
   compareNormalAbs,
   compareNormalStates,
@@ -11,7 +11,7 @@ import {
   isZeroState,
   oneState,
   zeroState
-} from './utils'
+} from '../utils'
 
 /**
  * 最小近似有效位数

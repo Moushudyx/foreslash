@@ -1,10 +1,11 @@
 # Change Log
 
-## Version 0.4.0-snapshot.3 - 2026-05-19
+## Version 0.4.0-snapshot.3 - 2026-05-20
 
 0.4.0 Snapshot 3
 
 - Pref 🥐 Performance optimization: `ForNumber` integer power calculations now limit integer exponents to the JS safe integer range
+- Refactor 🥮 Feature refactor: `ForNumber` power calculation logic
 - Feat 🥥 Function(s) added: Static method `isForeNumber` is added to `ForNumber`
 - Change 🥟 Dependencies change: upgrade devDependencies `rolldown` `rolldown-plugin-dts`
 - Other fixes and improvements
@@ -12,6 +13,7 @@
 0.4.0 快照 3
 
 - 优化 🥐 功能优化: `ForNumber` 的整数幂计算功能, 限制整数指数在 JS 安全整数范围内
+- 重构 🥮 功能重构: `ForNumber` 的幂计算逻辑
 - 功能 🥥 添加函数: `ForNumber` 添加 `isForeNumber` 静态方法
 - 变更 🥟 依赖变更: 升级开发依赖 `rolldown` `rolldown-plugin-dts`
 - 其他修复与优化

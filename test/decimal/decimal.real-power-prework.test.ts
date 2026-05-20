@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { ForeNumber } from '../../src/decimal'
-import { powerRealStates } from '../../src/decimal/core/realPowerArithmetic'
-import { expState, lnState } from '../../src/decimal/core/transcendentalArithmetic'
+import { powerRealStates } from '../../src/decimal/core/power/realPowerArithmetic'
+import { expState, lnState } from '../../src/decimal/core/power/transcendentalArithmetic'
 
 /**
  * 将内部状态包装为 ForeNumber 实例

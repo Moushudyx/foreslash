@@ -92,6 +92,16 @@ export function decimalDigitLength(digits: number[]): number {
   return digits[0].toString().length + (digits.length - 1) * 4
 }
 
+/** 将万进制整数 digits 安全转换为 number，超出安全范围时返回 null */
+export function parseIntegerDigitsToSafeNumber(digits: number[]): number | null {
+  let value = 0
+  for (let i = 0; i < digits.length; i += 1) {
+    value = value * 10000 + digits[i]
+    if (!Number.isSafeInteger(value)) return null
+  }
+  return value
+}
+
 // ────────────────────── 比较 ──────────────────────
 
 /** 精确比较两个内部状态是否完全一致 */
