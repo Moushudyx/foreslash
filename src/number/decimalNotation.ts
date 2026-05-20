@@ -1,4 +1,4 @@
-import { isNumber } from '../is'
+import { isNumber, isString } from '../is'
 
 type ForeNumberLike = {
   toString: () => string
@@ -16,10 +16,28 @@ function isForeNumberLike(input: unknown): input is ForeNumberLike {
 }
 
 function normalizeNumericInput(input: DecimalNotationInput): string | number {
-  if (isNumber(input) || typeof input === 'string') return input
+  if (isNumber(input) || isString(input)) return input
   if (isForeNumberLike(input)) return input.toString()
   return String(input)
 }
+
+/**
+ * 归一化纯十进制字符串, 剥离整数部分的前导零和小数部分的尾随零
+ * @param str 已确认为纯十进制格式的字符串 (匹配 /^-?\d+(?:\.\d+)?$/)
+ * @internal
+ */
+function normalizePlainDecimal(str: string): string {
+  const match = str.match(/^(-?)(\d+)(?:\.(\d+))?$/)!
+  const [, sign, intPart, fracPart] = match
+  // 剥离整数部分前导零，若全部为零则保留一个 '0'
+  const intNorm = intPart.replace(/^0+/, '') || '0'
+  if (fracPart === undefined) return sign + intNorm
+  // 剥离小数部分尾随零
+  const fracNorm = fracPart.replace(/0+$/, '')
+  if (fracNorm === '') return sign + intNorm
+  return sign + intNorm + '.' + fracNorm
+}
+
 /**
  * 将一个数字转换为正常的十进制计数法
  * @param num 需要转换的数字
@@ -35,6 +53,9 @@ function normalizeNumericInput(input: DecimalNotationInput): string | number {
  */
 export function decimalNotation(num: DecimalNotationInput): string {
   const normalized = normalizeNumericInput(num)
+  // 如果是普通数字字符串, 归一化后返回
+  if (isString(normalized) && /^-?\d+(?:\.\d+)?$/i.test(normalized)) return normalizePlainDecimal(normalized)
+  // 其他情况走 Number 转换后处理
   const n = isNumber(normalized) ? normalized : Number(normalized)
   if (!isFinite(n)) return String(n) // throw new Error('Invalid number parameter')
   let str = String(n)
