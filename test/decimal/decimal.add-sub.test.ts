@@ -29,7 +29,9 @@ describe('ForeNumber 加减法', () => {
 
   it('量级差距很大时精度测试', () => {
     expect(new ForeNumber('1.234e12').plus('9.876e-12').toString()).toBe('1234000000000.000000000009876')
+    expect(new ForeNumber('1234000000000.000000000009876').minus('9.876e-12').toString()).toBe('1234000000000')
     expect(new ForeNumber('1.234e12').minus('9.876e-12').toString()).toBe('1233999999999.999999999990124')
+    expect(new ForeNumber('1233999999999.999999999990124').plus('9.876e-12').toString()).toBe('1234000000000')
   })
 
   it('在加减法中正确处理特殊值', () => {

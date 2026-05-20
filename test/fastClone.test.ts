@@ -52,4 +52,13 @@ describe('fastClone', () => {
     expect(clonedObj.f !== obj.f).toBe(true)
     expect(clonedObj.f.get(clonedObj)).toBe(2)
   })
+  it('自定义 Map', () => {
+    const customMap = new Map()
+    const obj1 = { a: 1 }
+    const obj2 = { b: 2 }
+    customMap.set(obj1, obj2)
+    const clonedMap = fastClone({ foo: obj1, bar: { a: 1 } }, customMap)
+    expect(clonedMap.foo).toBe(obj2)
+    expect(clonedMap.bar).toEqual({ a: 1 })
+  })
 })

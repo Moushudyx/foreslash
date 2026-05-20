@@ -101,4 +101,49 @@ describe('ForeNumber 框架基础', () => {
     expect(n.mod('2').toString()).toBe('1.25')
     expect(() => n.toBinary(10)).toThrow(/尚未实现/)
   })
+
+  it('isInteger isFinite 与 isNaN', () => {
+    // isInteger
+    expect(new ForeNumber('1e-100').isInteger).toBe(false)
+    expect(new ForeNumber('0.00000000001').isInteger).toBe(false)
+    expect(new ForeNumber('1.00000000000').isInteger).toBe(true)
+    expect(new ForeNumber('10000').isInteger).toBe(true)
+    expect(new ForeNumber('1.000').isInteger).toBe(true)
+    expect(new ForeNumber('42.00000').isInteger).toBe(true)
+    expect(new ForeNumber('-1e-100').isInteger).toBe(false)
+    expect(new ForeNumber('-0.00000000001').isInteger).toBe(false)
+    expect(new ForeNumber('-1.00000000000').isInteger).toBe(true)
+    expect(new ForeNumber('-10000').isInteger).toBe(true)
+    expect(new ForeNumber('-1.000').isInteger).toBe(true)
+    expect(new ForeNumber('-42.00000').isInteger).toBe(true)
+    expect(new ForeNumber('Infinity').isInteger).toBe(false)
+    expect(new ForeNumber('-Infinity').isInteger).toBe(false)
+    expect(new ForeNumber('NaN').isInteger).toBe(false)
+    // isFinite
+    expect(new ForeNumber('123.45').isFinite).toBe(true)
+    expect(new ForeNumber('0').isFinite).toBe(true)
+    expect(new ForeNumber('-0').isFinite).toBe(true)
+    expect(new ForeNumber('NaN').isFinite).toBe(false)
+    expect(new ForeNumber('Infinity').isFinite).toBe(false)
+    expect(new ForeNumber('-Infinity').isFinite).toBe(false)
+    // isNaN
+    expect(new ForeNumber(NaN).isNaN).toBe(true)
+    expect(new ForeNumber('NaN').isNaN).toBe(true)
+    expect(new ForeNumber('123').isNaN).toBe(false)
+    expect(new ForeNumber('Infinity').isNaN).toBe(false)
+    expect(new ForeNumber('-Infinity').isNaN).toBe(false)
+  })
+
+  it('toHex, toOct 和 toBin (预留占位)', () => {
+    // toHex, toOct 和 toBin 未实现
+    expect(() => new ForeNumber('10').toHex()).toThrow(/尚未实现/)
+    expect(() => new ForeNumber('10').toBin()).toThrow(/尚未实现/)
+    expect(() => new ForeNumber('10').toOct()).toThrow(/尚未实现/)
+    // 非 normal 状态不做转换
+    expect(new ForeNumber('NaN').toHex()).toBe('NaN')
+    expect(new ForeNumber('Infinity').toBin()).toBe('Infinity')
+    expect(new ForeNumber('-Infinity').toOct()).toBe('-Infinity')
+    // 非法 precision 参数触发校验
+    expect(() => new ForeNumber('10').toHex(-1)).toThrow(/precision/)
+  })
 })

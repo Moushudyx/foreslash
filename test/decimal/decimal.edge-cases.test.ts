@@ -81,15 +81,29 @@ describe('特殊值运算组合', () => {
   })
 
   it('Infinity 幂运算组合', () => {
-    expect(inf().pow('2').toString()).toBe('Infinity')
-    expect(n_inf().pow('2').toString()).toBe('Infinity')
-    expect(n_inf().pow('3').toString()).toBe('-Infinity')
     expect(inf().pow('0').toString()).toBe('1')
     expect(n_inf().pow('0').toString()).toBe('1')
+    // Infinity 的偶数次正幂为 Infinity
+    expect(inf().pow('2').toString()).toBe('Infinity')
     expect(inf().pow('123456789e123456789').toString()).toBe('Infinity')
+    expect(inf().pow('0.123456789').toString()).toBe('Infinity')
+    // Infinity 的负幂为 0
+    expect(inf().pow('-2').toString()).toBe('0')
+    expect(inf().pow('-1').toString()).toBe('0')
     expect(inf().pow('-123456789e123456789').toString()).toBe('0')
+    expect(inf().pow('-0.123456789').toString()).toBe('0')
+    // -Infinity 的奇数次正幂为 -Infinity
+    expect(n_inf().pow('3').toString()).toBe('-Infinity')
     expect(n_inf().pow('123456789123456789123456789').toString()).toBe('-Infinity')
+    // -Infinity 的偶数次正幂为 Infinity
+    expect(n_inf().pow('2').toString()).toBe('Infinity')
     expect(n_inf().pow('123456789e123456789').toString()).toBe('Infinity')
+    // -Infinity 的负奇数次幂为 0（符号约定）
+    expect(n_inf().pow('-1').toString()).toBe('0')
+    expect(n_inf().pow('-123456789123456789123456789').toString()).toBe('0')
+    // -Infinity 不支持一般实数幂
+    expect(() => n_inf().pow('0.123456789').toString()).toThrow(/负数底数暂不支持一般实数幂/)
+    expect(() => n_inf().pow('-0.123456789').toString()).toThrow(/负数底数暂不支持一般实数幂/)
   })
 
   it('幂运算边界场景', () => {
@@ -111,6 +125,12 @@ describe('特殊值运算组合', () => {
       expect(nan()[op]('3').toString()).toBe('NaN')
       expect(n('3')[op]('NaN').toString()).toBe('NaN')
     }
+    expect(n('3').pow('NaN').toString()).toBe('NaN')
+    expect(nan().pow('3').toString()).toBe('NaN') // 整数幂
+    expect(nan().pow('3/5').toString()).toBe('NaN') // 有理数幂
+    expect(nan().pow('0.123456789').toString()).toBe('NaN') // 一般实数幂
+    expect(nan().negated().isNaN).toBe(true)
+    expect(nan().neg().isNaN).toBe(true)
   })
 })
 

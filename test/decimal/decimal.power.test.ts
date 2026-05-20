@@ -17,9 +17,12 @@ describe('ForeNumber 幂运算', () => {
   it('支持整数幂与别名方法', () => {
     expect(new ForeNumber('2').power('10').toString()).toBe('1024')
     expect(new ForeNumber('2').pow('10').toString()).toBe('1024')
+    expect(new ForeNumber('10000').pow('2').toString()).toBe('100000000')
+    expect(new ForeNumber('1.234e12').pow('2').toString()).toBe('1522756000000000000000000')
     expect(new ForeNumber('-2').pow('3').toString()).toBe('-8')
     expect(new ForeNumber('-2').pow('4').toString()).toBe('16')
-    expect(new ForeNumber('1.234e12').pow('2').toString()).toBe('1522756000000000000000000')
+    expect(new ForeNumber('-10000').pow('2').toString()).toBe('100000000')
+    expect(new ForeNumber('-10000').pow('3').toString()).toBe('-1000000000000')
   })
 
   it('支持受 powerPrecision 控制的负整数幂', () => {
@@ -63,6 +66,8 @@ describe('ForeNumber 幂运算', () => {
   it('正确处理底数为 1 和 -1 的幂', () => {
     expect(new ForeNumber('1').pow('100').toString()).toBe('1')
     expect(new ForeNumber('1').pow('-5').toString()).toBe('1')
+    expect(new ForeNumber('1').pow('0.111111115').toString()).toBe('1') // 底数为 1 走快速通道
+    expect(new ForeNumber('1').pow('1.111111111').toString()).toBe('1')
     expect(new ForeNumber('-1').pow('2').toString()).toBe('1')
     expect(new ForeNumber('-1').pow('3').toString()).toBe('-1')
     expect(new ForeNumber('-1').pow('-2').toString()).toBe('1')
@@ -74,20 +79,24 @@ describe('ForeNumber 幂运算', () => {
     expect(new ForeNumber('NaN').pow('2').toString()).toBe('NaN')
   })
 
-  it('正确处理负底数的偶次方根', () => {
+  it('正确处理负底数', () => {
     expect(new ForeNumber('-4').pow('1/2').toString()).toBe('NaN')
+    expect(new ForeNumber('-2').pow('3.14').toString()).toBe('NaN')
     expect(new ForeNumber('-27').pow('2/3').toString()).toBe('9')
+    expect(new ForeNumber('-8').pow('1/3').toString()).toBe('-2')
   })
 
   it('通过 pow 和专用方法支持 1/n 根', () => {
     expect(new ForeNumber('9').pow('0.5').toString()).toBe('3')
     expect(new ForeNumber('9').squareRoot().toString()).toBe('3')
     expect(new ForeNumber('9').sqrt().toString()).toBe('3')
+    expect(new ForeNumber('123').root(1).toString()).toBe('123')
     expect(new ForeNumber('27').root('3').toString()).toBe('3')
     expect(new ForeNumber('-8').root('3').toString()).toBe('-2')
+    expect(new ForeNumber('0').root('3').toString()).toBe('0')
   })
 
-  it('支持有理数指数并拒绝非法根域', () => {
+  it('支持有理数指数', () => {
     expect(new ForeNumber('16').pow('0.75').toString()).toBe('8')
     expect(new ForeNumber('16').pow('3/4').toString()).toBe('8')
     expect(new ForeNumber('16').pow('-2/1').toString()).toBe('0.00390625')
@@ -97,19 +106,22 @@ describe('ForeNumber 幂运算', () => {
     expect(new ForeNumber('9').pow('-1/2').toString()).toBe('0.33333333333333333333333333333333333333333333333333')
     expect(new ForeNumber('-4').sqrt().toString()).toBe('NaN')
     expect(new ForeNumber('-8').pow('1/3').toString()).toBe('-2')
-    expect(() => new ForeNumber('9').root('2.5')).toThrow(/degree 必须是正整数/)
-    expect(() => new ForeNumber('9').root('0')).toThrow(/degree 必须是正整数/)
-    expect(() => new ForeNumber('9').root('-3')).toThrow(/degree 必须是正整数/)
+    expect(new ForeNumber('12').pow('2/1').toString()).toBe('144') // 分母为 1 的有理数幂应等价于整数幂
   })
 
-  it('对非法有理数指数输入给出明确分类', () => {
-    expect(() => new ForeNumber('9').pow('9999999999999999999')).toThrow(/仅支持安全整数范围/)
-    expect(() => new ForeNumber('9').pow(BigInt('9007199254740993'))).toThrow(/仅支持安全整数范围/)
-    expect(() => new ForeNumber('9').pow('3/0')).toThrow(/分母不能为 0/)
-    expect(() => new ForeNumber('9').pow('3//4')).toThrow(/分数字符串格式无效/)
-    expect(() => new ForeNumber('9').pow('1/1000000001')).toThrow(/分母超过当前上限 \d+/)
-    expect(() => new ForeNumber('9').pow('9007199254740992/3')).toThrow(/超出安全整数范围/)
-    expect(() => new ForeNumber('9').root('9007199254740993')).toThrow(/degree 必须在安全整数范围内/)
+  it('对非法指数输入给出明确分类', () => {
+    const num = () => new ForeNumber('9')
+    expect(() => num().pow('9999999999999999999')).toThrow(/仅支持安全整数范围/)
+    expect(() => num().pow(BigInt('9007199254740993'))).toThrow(/仅支持安全整数范围/)
+    expect(() => num().pow('1/999999999999999')).toThrow(/分母超过/)
+    expect(() => num().pow('3/0')).toThrow(/分母不能为 0/)
+    expect(() => num().pow('3//4')).toThrow(/分数字符串格式无效/)
+    expect(() => num().pow('1/1000000001')).toThrow(/分母超过当前上限 \d+/)
+    expect(() => num().pow('9007199254740992/3')).toThrow(/超出安全整数范围/)
+    expect(() => num().root('9007199254740993')).toThrow(/degree 必须在安全整数范围内/)
+    expect(() => num().root('2.5')).toThrow(/degree 必须是正整数/)
+    expect(() => num().root('0')).toThrow(/degree 必须是正整数/)
+    expect(() => num().root('-3')).toThrow(/degree 必须是正整数/)
   })
 
   it('支持一般实数幂近似计算', () => {

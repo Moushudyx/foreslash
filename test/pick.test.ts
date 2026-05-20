@@ -22,6 +22,13 @@ describe('pick', () => {
     expect(pick(obj, (value) => typeof value !== 'number')).toEqual({ c: '', d: arr })
     expect(pick(obj, (_, key) => key === 'b')).toEqual({ b: 2 })
     expect(pick(obj, (_, key) => key === 'd').d).toBe(arr) // 浅拷贝
+    // 访问不存在的键
+    // @ts-ignore
+    expect(pick(obj, 'nonexistent')).toEqual({})
+    // @ts-ignore
+    expect(pick(obj, ['a', 'nonexistent', 1145])).toEqual({ a: 1 })
+    // @ts-ignore
+    expect(pick(obj, (value, key) => key === 'nonexistent')).toEqual({})
   })
   it('原型为 null', () => {
     const arr = [1, 2, 3]

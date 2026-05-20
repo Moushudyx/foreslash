@@ -29,4 +29,11 @@ describe('uuid', () => {
     // 空 UUID
     expect(uuidNil).toBe('00000000-0000-0000-0000-000000000000')
   })
+  it('UUID V7 时间戳自动补零', () => {
+    const originDateNow = Date.now
+    Date.now = () => 0x1234 // 4 位时间戳
+    const uuid = uuidV7()
+    expect(uuid).toMatch(/^[a-f0-9]{8}-[a-f0-9]{4}-7[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$/)
+    Date.now = originDateNow
+  })
 })

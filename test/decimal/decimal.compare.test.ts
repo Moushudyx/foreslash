@@ -141,5 +141,15 @@ describe('ForeNumber 比较运算', () => {
       expect(new ForeNumber('10000000000000000000').lt('10000000000000000000.00000000000000000001')).toBe(true)
       expect(new ForeNumber('10000000000000000000').eq('10000000000000000000.00000000000000000001')).toBe(false)
     })
+
+    it('对齐后位数不等但量级相同的比较', () => {
+      // 验证 compareNormalAbs
+      expect(new ForeNumber('1.0001').gt('1.00010001')).toBe(false)
+      expect(new ForeNumber('1.00010001').gt('1.0001')).toBe(true)
+      expect(new ForeNumber('-1.0001').lt('-1.00010001')).toBe(false)
+      expect(new ForeNumber('-1.00010001').lt('-1.0001')).toBe(true)
+      expect(new ForeNumber('1.0001').eq('1.00010001')).toBe(false)
+      expect(new ForeNumber('1.00010001').eq('1.0001')).toBe(false)
+    })
   })
 })

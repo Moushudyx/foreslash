@@ -108,6 +108,12 @@ describe('rounded banker 模式', () => {
     expect(new ForeNumber('2.5').rounded(0, 'banker').toString()).toBe('2')
     expect(new ForeNumber('9.5').rounded(0, 'banker').toString()).toBe('10')
   })
+
+  it('负数舍入', () => {
+    expect(new ForeNumber('-2.5').rounded(0, 'banker').toString()).toBe('-2')
+    expect(new ForeNumber('-3.5').rounded(0, 'banker').toString()).toBe('-4')
+    expect(new ForeNumber('-1.25').rounded(1, 'banker').toString()).toBe('-1.2')
+  })
 })
 
 // ═══════════════════ 负数精度（修约到十位/百位） ═══════════════════

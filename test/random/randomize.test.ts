@@ -25,4 +25,40 @@ describe('randomize', () => {
     // console.log(Math.random.toString())
     expect(Math.random).toBe(originMathRandom)
   })
+  it('setInterval 回调会定期调用 Math.random 增加不可预测性', () => {
+    vi.useFakeTimers()
+    const originMathRandom = Math.random
+    const recover = randomize()
+
+    // 包装被替换后的 Math.random，记录 setInterval 回调触发的调用次数
+    let callCount = 0
+    const replacedRandom = Math.random
+    Math.random = function () {
+      callCount++
+      return replacedRandom()
+    }
+
+    // 重置由 randomize 初始化时可能产生的计数
+    callCount = 0
+
+    // 推进 150ms，setInterval 间隔为 50ms，应触发约 3 次回调
+    vi.advanceTimersByTime(150)
+    expect(callCount).toBeGreaterThanOrEqual(2)
+
+    // 恢复 Math.random
+    Math.random = replacedRandom
+    recover()
+    vi.useRealTimers()
+    expect(Math.random).toBe(originMathRandom)
+  })
+
+  it('恢复时应清除 setInterval 定时器', () => {
+    vi.useFakeTimers()
+    const clearIntervalSpy = vi.spyOn(globalThis, 'clearInterval')
+    const recover = randomize()
+    recover()
+    expect(clearIntervalSpy).toHaveBeenCalled()
+    clearIntervalSpy.mockRestore()
+    vi.useRealTimers()
+  })
 })

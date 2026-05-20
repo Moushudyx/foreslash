@@ -87,6 +87,20 @@ describe('ForeNumber 除法', () => {
     ForeNumber.config(previous)
   })
 
+  it('极端指数差除法（触发 extreme shift 路径）', () => {
+    const previous = ForeNumber.config()
+    ForeNumber.config({ divisionPrecision: 12, rounding: 'round' })
+
+    // 指数差过大触发 divideStatesExtremeShift
+    const huge = new ForeNumber('1e1000002').div('10')
+    expect(huge.isFinite).toBe(true)
+    expect(huge.eq('1e1000001')).toBe(true)
+    // 1 / 1e1000001 下溢为零
+    expect(new ForeNumber('1').div('1e1000001').eq('0')).toBe(true)
+
+    ForeNumber.config(previous)
+  })
+
   it('在除乘链式调用中保持精度', () => {
     const previous = ForeNumber.config()
     ForeNumber.config({ divisionPrecision: 180, rounding: 'round' })
