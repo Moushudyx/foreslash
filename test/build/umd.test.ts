@@ -95,6 +95,16 @@ describe('UMD 产物 (lib/index.umd.js)', () => {
     expect(clamp(NaN, 0, 10)).toBe(0)
   })
 
+  it('deepMerge 深度合并', () => {
+    const { deepMerge } = loadUMD()
+    const obj1 = { a: 1, b: { c: 2 }, d: [1, 2] }
+    const obj2 = { b: { e: 3 }, d: [3], f: 4 }
+    const merged = deepMerge(obj1, obj2)
+    expect(merged).toEqual({ a: 1, b: { c: 2, e: 3 }, d: [1, 2, 3], f: 4 })
+    expect(merged.b).not.toBe(obj1.b) // 深合并
+    expect(merged.d).not.toBe(obj1.d) // 深合并
+  })
+
   it('多次调用 loadUMD 互不干扰', () => {
     const fs1 = loadUMD()
     const fs2 = loadUMD()

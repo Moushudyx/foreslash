@@ -26,4 +26,9 @@ describe('isEmpty', () => {
     expect(isEmpty(new Set([1]))).toBe(false)
     expect(isEmpty(new Map([[1, 2]]))).toBe(false)
   })
+  it('原型上的键不视为实例键', () => {
+    const obj = Object.assign(Object.create({ a: 1 }), { b: 2 })
+    expect(isEmpty(obj)).toBe(false)
+    expect(isEmpty(Object.create({ a: 1 }))).toBe(true)
+  })
 })

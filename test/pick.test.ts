@@ -29,6 +29,13 @@ describe('pick', () => {
     expect(pick(obj, ['a', 'nonexistent', 1145])).toEqual({ a: 1 })
     // @ts-ignore
     expect(pick(obj, (value, key) => key === 'nonexistent')).toEqual({})
+    // 访问类型错误的键
+    // @ts-ignore
+    expect(pick(obj, true)).toEqual({})
+    // @ts-ignore
+    expect(pick(obj, { key: 'a' })).toEqual({})
+    // @ts-ignore
+    expect(pick(obj, null)).toEqual({})
   })
   it('原型为 null', () => {
     const arr = [1, 2, 3]

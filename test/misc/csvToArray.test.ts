@@ -38,4 +38,14 @@ describe('csvToArray', () => {
       ['1', '2'],
     ])
   })
+
+  it('兼容非标准 CSV', () => {
+    const csv = '姓名,年龄\r张三,16\r李四,25'
+
+    expect(csvToArray(csv)).toEqual([
+      ['姓名', '年龄'],
+      ['张三', '16'],
+      ['李四', '25'],
+    ])
+  })
 })

@@ -69,4 +69,25 @@ describe('defer', () => {
     await expect(errDefer2).rejects.toThrowError('2')
     expect(res).toEqual([1, 2, 3, 4, 5, 6])
   })
+  it('cancelCleanUp 错误输入不影响功能', async () => {
+    const res: number[] = []
+    await defer((cleanUp, cancelCleanUp) => {
+      const cleanUpId = cleanUp(() => res.push(123))
+      cleanUp(() => res.push(5))
+      cleanUp(() => res.push(6))
+      res.push(4)
+      // @ts-ignore
+      cancelCleanUp(true) // 错误输入
+      // @ts-ignore
+      cancelCleanUp(0.1) // 错误输入
+      // @ts-ignore
+      cancelCleanUp(-1) // 错误输入
+      // @ts-ignore
+      cancelCleanUp('invalid-id') // 错误输入
+      // @ts-ignore
+      cancelCleanUp(() => 123) // 错误输入
+      cancelCleanUp(cleanUpId)
+    }) // 依次输出 4 5 6
+    expect(res).toEqual([4, 5, 6])
+  })
 })

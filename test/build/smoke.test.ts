@@ -97,6 +97,16 @@ describe('ESM 产物 (lib/index.mjs)', () => {
     expect(clamp(NaN, 0, 10)).toBe(0)
     expect(clamp(15, 0, 10, { defaultMax: 6 })).toBe(6)
   })
+
+  it('deepMerge 深度合并', () => {
+    const { deepMerge } = mod
+    const obj1 = { a: 1, b: { c: 2 }, d: [1, 2] }
+    const obj2 = { b: { e: 3 }, d: [3], f: 4 }
+    const merged = deepMerge(obj1, obj2)
+    expect(merged).toEqual({ a: 1, b: { c: 2, e: 3 }, d: [1, 2, 3], f: 4 })
+    expect(merged.b).not.toBe(obj1.b) // 深合并
+    expect(merged.d).not.toBe(obj1.d) // 深合并
+  })
 })
 
 // ═══════════════════ CJS 产物测试 ═══════════════════
@@ -135,5 +145,15 @@ describe('CJS 产物 (lib/index.cmn.cjs)', () => {
     const { isNumber } = mod
     expect(isNumber(42)).toBe(true)
     expect(isNumber('42')).toBe(false)
+  })
+
+  it('deepMerge — 与 ESM 产物行为一致', () => {
+    const { deepMerge } = mod
+    const obj1 = { a: 1, b: { c: 2 }, d: [1, 2] }
+    const obj2 = { b: { e: 3 }, d: [3], f: 4 }
+    const merged = deepMerge(obj1, obj2)
+    expect(merged).toEqual({ a: 1, b: { c: 2, e: 3 }, d: [1, 2, 3], f: 4 })
+    expect(merged.b).not.toBe(obj1.b) // 深合并
+    expect(merged.d).not.toBe(obj1.d) // 深合并
   })
 })

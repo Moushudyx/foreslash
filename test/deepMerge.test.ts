@@ -95,7 +95,7 @@ describe('deepMerge', () => {
     formData2.append('j', '2')
     formData2.append('k', '3')
     const obj1 = { a: {}, d: formData1, i: { j: '1' } }
-    const obj2 = { a: { b: 1, c: 2 }, d: { e: '1', f: '2', g: file, h: '3' }, i: formData2 }
+    const obj2 = { a: { b: 1, c: 2 }, d: { e: '1', f: '2', g: file, h: '3', [Symbol()]: '' }, i: formData2 }
     const mergeObj1 = deepMerge(obj1, obj2, {
       typeStrategy: {
         Number2Empty: 'keep',

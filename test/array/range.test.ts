@@ -20,6 +20,7 @@ describe('range', () => {
       0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55,
     ])
     expect(range(1, 10, { step: 2, value: '1' })).toEqual(['1', '1', '1', '1', '1'])
+    expect(range(1, 10, { step: 2 })).toEqual([1, 3, 5, 7, 9])
   })
   it('非法参数测试', () => {
     // @ts-ignore

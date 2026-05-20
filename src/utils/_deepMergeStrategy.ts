@@ -105,7 +105,7 @@ export function getBaseMargeType(obj: any): BaseMargeType | 'Empty' {
   if (isMergeEmptyPlaceholder(obj)) return 'Empty'
   const _tag = getTag(obj)
   if (/Function/.test(_tag)) return 'Function'
-  if (/Iterator/.test(_tag)) return 'Iterator'
+  if (/Iterator/.test(_tag)) return 'Iterator' // ECMAScript 2027 引入了一个新的内置对象 `Iterator`, 这个对象是所有迭代器的原型, 通过 `Object.prototype.toString.call` 可以区分出迭代器
   if (/(?:8|16|32|64)Array/.test(_tag)) return 'TypedArray'
   if (/Error/.test(_tag)) return 'Error'
   return _tag as BaseMargeType
