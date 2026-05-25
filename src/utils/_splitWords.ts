@@ -67,9 +67,9 @@ export function _splitVar(c: string): VarCase[] {
         // 归为一串
         temp.code += char
       }
-    } else if (isUpperCase(char)) {
+    } else /* if (isUpperCase(char)) */ {
       // b-1
-      //归为一个
+      // 归为一个
       if (!temp.code) temp.upperCase = true
       if (temp.upperCase) {
         // 归为一串

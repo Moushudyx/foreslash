@@ -38,8 +38,13 @@ describe('ForeNumber 框架基础', () => {
   })
 
   it('静态方法 isFinite', () => {
+    expect(ForeNumber.isFinite('42')).toBe(true)
+    expect(ForeNumber.isFinite('-42')).toBe(true)
     expect(ForeNumber.isFinite('123.45')).toBe(true)
     expect(ForeNumber.isFinite('0')).toBe(true)
+    expect(ForeNumber.isFinite('1.213e9998')).toBe(true)
+    expect(ForeNumber.isFinite('-1.213e1234')).toBe(true)
+    expect(ForeNumber.isFinite('1.123456789e9')).toBe(true)
     expect(ForeNumber.isFinite('NaN')).toBe(false)
     expect(ForeNumber.isFinite('Infinity')).toBe(false)
     expect(ForeNumber.isFinite('-Infinity')).toBe(false)
@@ -47,11 +52,22 @@ describe('ForeNumber 框架基础', () => {
 
   it('静态方法 isInteger', () => {
     expect(ForeNumber.isInteger('42')).toBe(true)
-    expect(ForeNumber.isInteger('-7')).toBe(true)
+    expect(ForeNumber.isInteger('-42')).toBe(true)
     expect(ForeNumber.isInteger('0')).toBe(true)
     expect(ForeNumber.isInteger('3.14')).toBe(false)
+    // 大数字
+    expect(ForeNumber.isInteger('4321874362814632412')).toBe(true)
+    expect(ForeNumber.isInteger('-73213123')).toBe(true)
+    // 科学计数法
+    expect(ForeNumber.isInteger('1.213e9998')).toBe(true)
+    expect(ForeNumber.isInteger('-1.213e1234')).toBe(true)
+    expect(ForeNumber.isInteger('1.123456789e9')).toBe(true)
+    expect(ForeNumber.isInteger('1.123456789e8')).toBe(false)
+    expect(ForeNumber.isInteger('1.123456789e-8')).toBe(false)
+    // 特殊数字
     expect(ForeNumber.isInteger('NaN')).toBe(false)
     expect(ForeNumber.isInteger('Infinity')).toBe(false)
+    expect(ForeNumber.isInteger('-Infinity')).toBe(false)
   })
 
   it('静态方法 isForeNumber', () => {

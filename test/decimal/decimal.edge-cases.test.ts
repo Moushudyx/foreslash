@@ -122,6 +122,7 @@ describe('特殊值运算组合', () => {
   it('NaN 传播覆盖所有运算符', () => {
     const ops = ['plus', 'minus', 'multiply', 'dividedBy', 'modulo'] as const
     for (const op of ops) {
+      expect(nan()[op]('NaN').toString()).toBe('NaN')
       expect(nan()[op]('3').toString()).toBe('NaN')
       expect(n('3')[op]('NaN').toString()).toBe('NaN')
     }

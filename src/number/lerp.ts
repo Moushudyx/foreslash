@@ -1,9 +1,9 @@
 import { isArray, isNumber } from '../is'
 /**
  * 用线性插值法求取一个中间值
- * @param val1 第一个值, 当 权重=0 时返回的将是这个值, 可以是数组或二维数组
- * @param val2 第二个值, 当 权重=0 时返回的将是这个值, 可以是数组或二维数组
- * @param t 权重
+ * @param val1 第一个值, 当 插值因子=0 时返回的将是这个值, 可以是数组或二维数组
+ * @param val2 第二个值, 当 插值因子=1 时返回的将是这个值, 可以是数组或二维数组
+ * @param t 插值因子, 数值靠近 0 表示接近第一个值, 数值靠近 1 表示接近第二个值
  * @example
  * ```js
  * // 传入数值
@@ -74,6 +74,7 @@ export function lerp(
   val2: number | number[] | number[][],
   t: number
 ): number | number[] | number[][] {
+  if (!isNumber(t)) throw new Error('Invalid t parameter: t should be a number')
   if (isNumber(val1)) {
     // 纯数字
     if (!isNumber(val2)) throw new Error('Invalid val2 parameter: val2 should be a number')
@@ -92,6 +93,7 @@ export function lerp(
       if (!isNumber(val2[0])) throw new Error('Invalid val2 parameter: val2 should be an Array<number>')
       return (val1 as number[]).map((v1, index) => _lerp(v1, (val2 as number[])[index], t))
     } else if (isArray(val1[0])) {
+      if (!isArray(val2[0])) throw new Error('Invalid val2 parameter: val2 should be an Array<Array<number>>')
       const res: number[][] = []
       for (let i = 0; i < val1.length; i++) {
         const arr1 = (val1 as number[][])[i]
@@ -105,6 +107,8 @@ export function lerp(
       }
       return res
     }
+    // 其他输入
+    throw new Error('Invalid val1 parameter: val1 should be an Array<number | Array<number>>')
   }
   // 其他输入
   throw new Error('Invalid val1 parameter: val1 should be a number or Array')

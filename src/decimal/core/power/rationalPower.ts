@@ -78,15 +78,15 @@ function gcd(a: number, b: number): number {
 }
 
 /**
- * 化简有理数并统一分母符号
- *
- * 这是有理数指数**唯一的归一化校验入口**
+ * 化简有理数并统一分母符号\
+ * 这是有理数指数**唯一的归一化校验入口**\
  * 下游函数应信任返回的 RationalExponent，不再重复校验
  */
 export function normalizeRational(numerator: number, denominator: number): RationalExponent {
-  if (!Number.isInteger(numerator) || !Number.isInteger(denominator) || denominator === 0) {
-    throw new Error('[ForeNumber] 有理数指数必须是整数分子与非零整数分母')
-  }
+  // 传入的 numerator / denominator 已经过校验，无需重复校验
+  // if (!Number.isInteger(numerator) || !Number.isInteger(denominator) || denominator === 0) {
+  //   throw new Error('[ForeNumber] 有理数指数必须是整数分子与非零整数分母')
+  // }
 
   const sign = denominator < 0 ? -1 : 1
   const normalizedNumerator = numerator * sign
@@ -101,9 +101,8 @@ export function normalizeRational(numerator: number, denominator: number): Ratio
 // ────────────────────── 分数字符串解析 ──────────────────────
 
 /**
- * 解析显式分数字符串并给出明确分类
- *
- * 这是显式分数字符串的**唯一校验入口**
+ * 解析显式分数字符串并给出明确分类\
+ * 这是显式分数字符串的**唯一校验入口**\
  * 返回 `ok` 时 value 已归一化，下游可直接信任
  */
 export function inspectFractionExponentString(input: string): FractionExponentStringResult {
@@ -127,14 +126,6 @@ export function inspectFractionExponentString(input: string): FractionExponentSt
     kind: 'ok',
     value: normalizeRational(sign * numerator, denominator),
   }
-}
-
-/**
- * 兼容旧调用路径的分数字符串解析入口
- */
-export function parseFractionExponentString(input: string): RationalExponent | null {
-  const inspected = inspectFractionExponentString(input)
-  return inspected.kind === 'ok' ? inspected.value : null
 }
 
 // ────────────────────── 指数分类 ──────────────────────

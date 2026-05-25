@@ -31,21 +31,29 @@ describe('lerp', () => {
   })
   it('非法参数测试', () => {
     // @ts-ignore
-    expect(() => lerp(1, '2', 123)).toThrow()
+    expect(() => lerp(1, '2', 123)).toThrow(/Invalid val2 parameter/)
     // @ts-ignore
-    expect(() => lerp('1', 2, 123)).toThrow()
+    expect(() => lerp('1', 2, 123)).toThrow(/Invalid val1 parameter/)
     // @ts-ignore
-    expect(() => lerp(1, [2], 123)).toThrow()
+    expect(() => lerp(1, [2], 123)).toThrow(/Invalid val2 parameter/)
     // @ts-ignore
-    expect(() => lerp([1, 2], 2, 123)).toThrow()
+    expect(() => lerp([1, 2], 2, 123)).toThrow(/Invalid val2 parameter/)
     // @ts-ignore
-    expect(() => lerp([[1]], [2], 123)).toThrow()
+    expect(() => lerp([[1]], [2], 123)).toThrow(/Invalid val2 parameter/)
     // @ts-ignore
-    expect(() => lerp([1], [[2]], 123)).toThrow()
+    expect(() => lerp([1], [[2]], 123)).toThrow(/Invalid val2 parameter/)
     // 长度不一致测试
-    expect(() => lerp([], [2], 123)).toThrow()
-    expect(() => lerp([1, 2], [2], 123)).toThrow()
-    expect(() => lerp([[1, 2]], [[2]], 123)).toThrow()
-    expect(() => lerp([[1, 2]], [[1], [2]], 123)).toThrow()
+    expect(() => lerp([], [2], 123)).toThrow(/Invalid val2 parameter/)
+    expect(() => lerp([1, 2], [2], 123)).toThrow(/Invalid val2 parameter/)
+    expect(() => lerp([[1, 2]], [[2]], 123)).toThrow(/Invalid val2 parameter/)
+    expect(() => lerp([[1, 2]], [[1], [2]], 123)).toThrow(/Invalid val2 parameter/)
+    // @ts-ignore
+    expect(() => lerp([[1, 2]], [2], 123)).toThrow(/Invalid val2 parameter/)
+    // @ts-ignore
+    expect(() => lerp(['1'], [2], 123)).toThrow(/Invalid val1 parameter/)
+    // @ts-ignore
+    expect(() => lerp([1], ['2'], 123)).toThrow(/Invalid val2 parameter/)
+    // @ts-ignore
+    expect(() => lerp([1], [2], '123')).toThrow(/Invalid t parameter/)
   })
 })

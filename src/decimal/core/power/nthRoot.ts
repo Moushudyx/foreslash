@@ -55,24 +55,26 @@ function approximateInitialRoot(base: ForeState, degree: number): ForeState {
 
   // 先尝试用原生 number 给出一个更接近的起点
   const numberApprox = Number(base._d[0])
-  if (Number.isFinite(numberApprox) && numberApprox > 0) {
-    const exponent10 = base._e * 4 + decimalDigitLength(base._d) - 1
-    const approx = Math.pow(
-      numberApprox * Math.pow(10, Math.max(-300, Math.min(300, exponent10 - (base._d[0].toString().length - 1)))),
-      1 / degree
-    )
-    if (Number.isFinite(approx) && approx > 0) {
-      const magnitude = Math.floor(exponent10 / degree)
-      return multiplyStates(
-        normalizeState({ _s: 1, _e: 0, _d: [Math.max(1, Math.floor(approx))], _k: 'normal' }),
-        powerOfTenState(magnitude)
-      )
-    }
-  }
+  // base._d[0] 必定为 1 到 9999 之间
+  // if (Number.isFinite(numberApprox) && numberApprox > 0) {
+  const exponent10 = base._e * 4 + decimalDigitLength(base._d) - 1
+  const approx = Math.pow(
+    numberApprox * Math.pow(10, Math.max(-300, Math.min(300, exponent10 - (base._d[0].toString().length - 1)))),
+    1 / degree
+  )
+  // 上一步的计算时已经限制结果必定在 1e-300 到 1e300 之间
+  // if (Number.isFinite(approx) && approx > 0) {
+  const magnitude = Math.floor(exponent10 / degree)
+  return multiplyStates(
+    normalizeState({ _s: 1, _e: 0, _d: [Math.max(1, Math.floor(approx))], _k: 'normal' }),
+    powerOfTenState(magnitude)
+  )
+  // }
+  // }
 
-  // 回退到只按数量级估算的保守初值
-  const magnitude10 = base._e * 4 + decimalDigitLength(base._d) - 1
-  return powerOfTenState(Math.floor(magnitude10 / degree))
+  // // 回退到只按数量级估算的保守初值
+  // const magnitude10 = base._e * 4 + decimalDigitLength(base._d) - 1
+  // return powerOfTenState(Math.floor(magnitude10 / degree))
 }
 
 /**

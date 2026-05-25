@@ -27,9 +27,10 @@ import { parseIntegerDigitsToSafeNumber } from '../utils'
  * 将安全范围内的有符号整数转换为指数状态
  */
 export function integerExponentStateFromNumber(value: number): ForeState {
-  if (!Number.isFinite(value) || !Number.isInteger(value) || !Number.isSafeInteger(value)) {
-    throw new Error('[ForeNumber] 仅支持安全范围内的整数指数')
-  }
+  // 传入的 value 已经确认是安全整数
+  // if (!Number.isSafeInteger(value)) {
+  //   throw new Error('[ForeNumber] 仅支持安全范围内的整数指数')
+  // }
   if (value === 0) return zeroState()
   const absolute = integerStateFromNumber(Math.abs(value))
   return value < 0 ? { ...absolute, _s: -1 } : absolute

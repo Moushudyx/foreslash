@@ -30,17 +30,14 @@ describe('ForeNumber 比较运算', () => {
       expect(new ForeNumber('1').eq('1.00000000000000000001')).toBe(false)
     })
 
-    it('NaN 与任何值（含自身）比较均返回 false', () => {
-      expect(new ForeNumber('NaN').eq('NaN')).toBe(false)
-      expect(new ForeNumber('NaN').eq('1')).toBe(false)
-      expect(new ForeNumber('1').eq('NaN')).toBe(false)
-    })
-
-    it('正确处理 Infinity 相等', () => {
+    it('正确处理特殊值相等比较', () => {
       expect(new ForeNumber('Infinity').eq('Infinity')).toBe(true)
       expect(new ForeNumber('-Infinity').eq('-Infinity')).toBe(true)
       expect(new ForeNumber('Infinity').eq('-Infinity')).toBe(false)
       expect(new ForeNumber('Infinity').eq('1e1000')).toBe(false)
+      expect(new ForeNumber('NaN').eq('NaN')).toBe(false)
+      expect(new ForeNumber('NaN').eq('1')).toBe(false)
+      expect(new ForeNumber('1').eq('NaN')).toBe(false)
     })
   })
 
@@ -60,6 +57,7 @@ describe('ForeNumber 比较运算', () => {
       expect(new ForeNumber('Infinity').gt('1e1000')).toBe(true)
       expect(new ForeNumber('1').gt('-Infinity')).toBe(true)
       expect(new ForeNumber('-Infinity').gt('Infinity')).toBe(false)
+      expect(new ForeNumber('NaN').gt('NaN')).toBe(false)
       expect(new ForeNumber('NaN').gt('1')).toBe(false)
       expect(new ForeNumber('1').gt('NaN')).toBe(false)
     })
@@ -80,6 +78,7 @@ describe('ForeNumber 比较运算', () => {
       expect(new ForeNumber('1e1000').lt('Infinity')).toBe(true)
       expect(new ForeNumber('-Infinity').lt('1')).toBe(true)
       expect(new ForeNumber('Infinity').lt('-Infinity')).toBe(false)
+      expect(new ForeNumber('NaN').lt('NaN')).toBe(false)
       expect(new ForeNumber('NaN').lt('1')).toBe(false)
       expect(new ForeNumber('1').lt('NaN')).toBe(false)
     })
@@ -102,6 +101,7 @@ describe('ForeNumber 比较运算', () => {
       expect(new ForeNumber('Infinity').gte('Infinity')).toBe(true)
       expect(new ForeNumber('Infinity').gte('1')).toBe(true)
       expect(new ForeNumber('-Infinity').gte('-Infinity')).toBe(true)
+      expect(new ForeNumber('NaN').gte('NaN')).toBe(false)
       expect(new ForeNumber('NaN').gte('1')).toBe(false)
       expect(new ForeNumber('1').gte('NaN')).toBe(false)
     })
@@ -124,6 +124,7 @@ describe('ForeNumber 比较运算', () => {
       expect(new ForeNumber('1').lte('Infinity')).toBe(true)
       expect(new ForeNumber('-Infinity').lte('1')).toBe(true)
       expect(new ForeNumber('-Infinity').lte('-Infinity')).toBe(true)
+      expect(new ForeNumber('NaN').lte('NaN')).toBe(false)
       expect(new ForeNumber('NaN').lte('1')).toBe(false)
       expect(new ForeNumber('1').lte('NaN')).toBe(false)
     })
