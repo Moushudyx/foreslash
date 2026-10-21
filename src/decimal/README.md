@@ -19,7 +19,13 @@
 
 ### convert
 
+Foreslash 中的数字格式转换方法内部使用 `decimalNotation` 将数字转换为十进制表示, 因此只需要在这个方法内部支持 `ForeNumber` 的输入解析, 即可支持 `scientificNotation` 等方法
+
+`ForeNumber` 的 `toBinary`/`toOctal`/`toHexadecimal`（以及 `toBin`/`toOct`/`toHex` 别名）直接基于内部 limb 转换, 不经过原生 `number`; `precision` 表示最多保留的小数位数, 默认 32；超出位数时截断, 不添加 `0b`/`0o`/`0x` 前缀, 十六进制字母为小写, 结果会去掉小数末尾的零; 整数部分不受 `precision` 限制
+
 ### core
+
+内部使用万进制表示法存储数字, 以便在高精度计算中减少进位操作的开销, 使用万进制可以在保证精度的同时提高计算效率
 
 #### 幂计算
 

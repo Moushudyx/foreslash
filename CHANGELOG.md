@@ -31,7 +31,7 @@ This version introduces `createFormData`, which can encode an object into an `Ar
 - Refactor 🥮 Feature refactor: `ForNumber` power calculation logic
 - Feat 🥥 Function(s) added: Static method `isForeNumber` is added to `ForNumber`
 - Change 🥟 Dependencies change: upgrade devDependencies `rolldown` `rolldown-plugin-dts`
-- Fix 🥕 Bug fixed: Implement `rounded` method in `ForNumber`
+- Fix 🥕 Bug fixed: Implement `rounded` `toBase` method in `ForNumber`
 - Fix 🥕 Bug fixed: `abs` method of `ForNumber` now supports negative infinity
 - Other fixes and improvements
 
@@ -42,7 +42,7 @@ This version introduces `createFormData`, which can encode an object into an `Ar
 - 重构 🥮 功能重构: `ForNumber` 的幂计算逻辑
 - 功能 🥥 添加函数: `ForNumber` 添加 `isForeNumber` 静态方法
 - 变更 🥟 依赖变更: 升级开发依赖 `rolldown` `rolldown-plugin-dts`
-- 修复 🥕 缺陷修复: `ForNumber` 补充实现 `rounded` 方法
+- 修复 🥕 缺陷修复: `ForNumber` 补充实现 `rounded` `toBase` 方法
 - 修复 🥕 缺陷修复: `ForNumber` 的 `abs` 方法支持负无穷
 - 其他修复与优化
 
