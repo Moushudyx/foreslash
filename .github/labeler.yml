@@ -1,0 +1,21 @@
+# 标签定义
+#
+# 基于 label-sync 自动化标签分配规则
+#
+# 参考: https://github.com/actions/labeler
+
+"type: documentation":
+  - changed-files:
+    - any-glob-to-any-file: "docs/**"
+
+"type: source-code":
+  - changed-files:
+    - any-glob-to-any-file: "src/**"
+
+"type: unit-test":
+  - changed-files:
+    - any-glob-to-any-file: ["test/**", "tests/**"]
+
+"type: workflow":
+  - changed-files:
+    - any-glob-to-any-file: ".github/workflows/**"

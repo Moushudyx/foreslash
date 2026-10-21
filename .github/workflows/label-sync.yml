@@ -1,0 +1,31 @@
+# 标签配置文件 .github/labels.yml 更改时同步
+
+name: Label Sync
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - ".github/labels.yml"
+  workflow_dispatch:
+
+permissions:
+  issues: write
+  pull-requests: write
+
+jobs:
+  sync-labels:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📋️ Checkout # 切出分支
+        uses: actions/checkout@v4
+
+      - name: 🏗️ Sync labels # 同步标签
+        uses: crazy-max/ghaction-github-labeler@v5
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          yaml-file: .github/labels.yml
+          skip-delete: true # 不删除不在 labels.yml 中的标签
+          dry-run: false

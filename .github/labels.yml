@@ -1,0 +1,19 @@
+# 标签配置
+#
+# 定义标签的名称、颜色和描述
+
+- name: "type: documentation"
+  color: "0e8a16"
+  description: "Changes to documentation/ — documentation files"
+
+- name: "type: source-code"
+  color: "0e8a16"
+  description: "Changes to src/ — source code"
+
+- name: "type: unit-test"
+  color: "0e8a16"
+  description: "Changes to test/ — unit tests"
+
+- name: "type: workflow"
+  color: "fbca04"
+  description: "Changes to .github/workflows/ — GitHub Actions"
