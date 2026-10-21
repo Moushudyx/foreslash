@@ -166,6 +166,7 @@ describe('rounded 特殊值', () => {
   it('非有限精度参数返回原值', () => {
     const v = new ForeNumber('3.14159')
     expect(v.rounded(Infinity).toString()).toBe('3.14159')
+    expect(v.rounded(-Infinity).toString()).toBe('3.14159')
     expect(v.rounded(NaN).toString()).toBe('3.14159')
   })
 })
