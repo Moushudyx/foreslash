@@ -58,7 +58,7 @@ function isNegativeOneState(state: ForeState): boolean {
  * 在不展开指数 digits 的情况下判断整数指数奇偶性
  * 内部基数是 10000(偶数), 当 _e > 0 时指数必然为偶数
  */
-function isOddIntegerState(state: ForeState): boolean {
+export function isOddIntegerState(state: ForeState): boolean {
   if (state._k !== 'normal' || state._s === 0) return false
   if (!isIntegerState(state)) return false
 

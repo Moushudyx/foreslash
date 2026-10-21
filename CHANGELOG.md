@@ -28,7 +28,7 @@ This version introduces `createFormData`, which can encode an object into an `Ar
 
 - Pref 🥐 Performance optimization: `ForNumber` integer power calculations now limit integer exponents to the JS safe integer range
 - Pref 🥐 Performance optimization: `ForNumber` optimized for performance in large-span calculations
-- Refactor 🥮 Feature refactor: `ForNumber` power calculation logic
+- Refactor 🥮 Feature refactor: `ForNumber` power calculation logic, handling boundary conditions follows IEEE 754 pow rules
 - Feat 🥥 Function(s) added: Static method `isForeNumber` is added to `ForNumber`
 - Change 🥟 Dependencies change: upgrade devDependencies `rolldown` `rolldown-plugin-dts`
 - Fix 🥕 Bug fixed: Implement `rounded` `toBase` method in `ForNumber`
@@ -39,7 +39,7 @@ This version introduces `createFormData`, which can encode an object into an `Ar
 
 - 优化 🥐 功能优化: `ForNumber` 的整数幂计算功能, 限制整数指数在 JS 安全整数范围内
 - 优化 🥐 功能优化: `ForNumber` 优化了大指数跨度运算下的性能
-- 重构 🥮 功能重构: `ForNumber` 的幂计算逻辑
+- 重构 🥮 功能重构: `ForNumber` 的幂计算逻辑, 边界条件处理按 IEEE 754 pow 规则
 - 功能 🥥 添加函数: `ForNumber` 添加 `isForeNumber` 静态方法
 - 变更 🥟 依赖变更: 升级开发依赖 `rolldown` `rolldown-plugin-dts`
 - 修复 🥕 缺陷修复: `ForNumber` 补充实现 `rounded` `toBase` 方法

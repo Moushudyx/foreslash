@@ -101,9 +101,9 @@ describe('特殊值运算组合', () => {
     // -Infinity 的负奇数次幂为 0（符号约定）
     expect(n_inf().pow('-1').toString()).toBe('0')
     expect(n_inf().pow('-123456789123456789123456789').toString()).toBe('0')
-    // -Infinity 不支持一般实数幂
-    expect(() => n_inf().pow('0.123456789').toString()).toThrow(/负数底数暂不支持一般实数幂/)
-    expect(() => n_inf().pow('-0.123456789').toString()).toThrow(/负数底数暂不支持一般实数幂/)
+    // -Infinity 的非整数幂遵循 IEEE 754
+    expect(n_inf().pow('0.123456789').toString()).toBe('Infinity')
+    expect(n_inf().pow('-0.123456789').toString()).toBe('0')
   })
 
   it('幂运算边界场景', () => {
