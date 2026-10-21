@@ -4,10 +4,6 @@ name: 📦 Manual Publish to NPM
 
 on:
   workflow_dispatch:
-    inputs:
-      parameters:
-        description: '🤔 没想好参数'
-        required: false
 
 permissions:
   contents: write
