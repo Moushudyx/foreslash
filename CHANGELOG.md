@@ -1,25 +1,5 @@
 # Change Log
 
-## Version 0.4.0-snapshot.3 - 2026-05-20
-
-0.4.0 Snapshot 3
-
-- Pref 🥐 Performance optimization: `ForNumber` integer power calculations now limit integer exponents to the JS safe integer range
-- Refactor 🥮 Feature refactor: `ForNumber` power calculation logic
-- Feat 🥥 Function(s) added: Static method `isForeNumber` is added to `ForNumber`
-- Change 🥟 Dependencies change: upgrade devDependencies `rolldown` `rolldown-plugin-dts`
-- Other fixes and improvements
-
-0.4.0 快照 3
-
-- 优化 🥐 功能优化: `ForNumber` 的整数幂计算功能, 限制整数指数在 JS 安全整数范围内
-- 重构 🥮 功能重构: `ForNumber` 的幂计算逻辑
-- 功能 🥥 添加函数: `ForNumber` 添加 `isForeNumber` 静态方法
-- 变更 🥟 依赖变更: 升级开发依赖 `rolldown` `rolldown-plugin-dts`
-- 其他修复与优化
-
----
-
 Since version 0.4.0, the automated testing tool will switch to Vitest, the package manager will switch to pnpm, and the bundler will switch to rolldown, these modern tools will improve development efficiency and build performance.
 
 This version introduces `createFormData`, which can encode an object into an `ArrayBuffer` of `multipart/form-data` in environments without native `FormData`, and can be sent directly as the request body. A common use case is uploading files in environments like WeChat Mini Programs.
@@ -40,18 +20,28 @@ This version introduces `createFormData`, which can encode an object into an `Ar
 - 变更 🥟 依赖变更: 升级开发依赖 `vitest` `@vitest/coverage-v8` `@types/node` `rolldown`
 - 其他修复与优化
 
-## Version 0.4.0-snapshot.2 - 2026-05-12
+---
 
-0.4.0 Snapshot 2
+## Version 0.4.0-snapshot.3 - 2026-10-21
 
+0.4.0 Snapshot 3
+
+- Pref 🥐 Performance optimization: `ForNumber` integer power calculations now limit integer exponents to the JS safe integer range
 - Pref 🥐 Performance optimization: `ForNumber` optimized for performance in large-span calculations
+- Refactor 🥮 Feature refactor: `ForNumber` power calculation logic
+- Feat 🥥 Function(s) added: Static method `isForeNumber` is added to `ForNumber`
+- Change 🥟 Dependencies change: upgrade devDependencies `rolldown` `rolldown-plugin-dts`
 - Fix 🥕 Bug fixed: Implement `rounded` method in `ForNumber`
 - Fix 🥕 Bug fixed: `abs` method of `ForNumber` now supports negative infinity
 - Other fixes and improvements
 
-0.4.0 快照 2
+0.4.0 快照 3
 
+- 优化 🥐 功能优化: `ForNumber` 的整数幂计算功能, 限制整数指数在 JS 安全整数范围内
 - 优化 🥐 功能优化: `ForNumber` 优化了大指数跨度运算下的性能
+- 重构 🥮 功能重构: `ForNumber` 的幂计算逻辑
+- 功能 🥥 添加函数: `ForNumber` 添加 `isForeNumber` 静态方法
+- 变更 🥟 依赖变更: 升级开发依赖 `rolldown` `rolldown-plugin-dts`
 - 修复 🥕 缺陷修复: `ForNumber` 补充实现 `rounded` 方法
 - 修复 🥕 缺陷修复: `ForNumber` 的 `abs` 方法支持负无穷
 - 其他修复与优化

@@ -43,8 +43,8 @@
     "test:full": "node scripts/run-vitest-guarded.mjs run --coverage --exclude test/build/** --run-benchmark",
     "test:smoke": "vitest run test/build/smoke.test.ts test/build/umd.test.ts",
     "test:dts": "tsc --noEmit --project test/build/tsconfig.dts.json",
-    "test:build": "rolldown -c && pnpm run test:smoke",
-    "prepublishOnly": "pnpm test:full && pnpm run build",
+    "test:build": "pnpm run build && pnpm run test:smoke",
+    "prepublishOnly": "pnpm test:full && pnpm test:build",
     "docs:dev": "rolldown -c && vitepress dev docs",
     "docs:build": "rolldown -c && vitepress build docs",
     "docs:preview": "rolldown -c && vitepress preview docs"
@@ -68,6 +68,7 @@
     "sass-embedded": "^1.90.0",
     "tslib": "^2.7.0",
     "typescript": "^5.5.4",
+    "vite": "^6.4.2",
     "vitepress": "^1.6.3",
     "vitest": "^4.1.5"
   },
