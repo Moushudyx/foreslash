@@ -20,10 +20,10 @@ jobs:
 
     steps:
       - name: 📋️ Checkout # 切出分支
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: 🏗️ Sync labels # 同步标签
-        uses: crazy-max/ghaction-github-labeler@v5
+        uses: crazy-max/ghaction-github-labeler@v6
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           yaml-file: .github/labels.yml

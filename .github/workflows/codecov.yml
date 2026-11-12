@@ -16,14 +16,14 @@ jobs:
     runs-on: ubuntu-latest
     environment: production
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
         with:
           node-version: 20
           # cache: pnpm
           registry-url: 'https://registry.npmjs.org'
       - name: 📦 Setup pnpm # 安装 pnpm
-        uses: pnpm/action-setup@v4
+        uses: pnpm/action-setup@v5
         with:
           version: 10
       - name: 📦 Install dependencies # 安装依赖
@@ -33,6 +33,6 @@ jobs:
         if: | # 仅在 Moushudyx/foreslash 下执行, 防止别人 fork 后误操作
           startsWith(github.repository, 'Moushudyx')
       - name: ☂️ Upload coverage reports to Codecov
-        uses: codecov/codecov-action@v5
+        uses: codecov/codecov-action@v6
         with:
           token: ${{ secrets.CODECOV_TOKEN }}

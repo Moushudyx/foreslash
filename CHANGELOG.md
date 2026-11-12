@@ -22,9 +22,9 @@ This version introduces `createFormData`, which can encode an object into an `Ar
 
 ---
 
-## Version 0.4.0-snapshot.3 - 2026-10-21
+## Version 0.4.0-snapshot.3 - 2026-11-12
 
-0.4.0 Snapshot 3
+Update GitHub workflows to comply with npm Trusted Publishing (OIDC) requirements, pre-releases use the `next` tag, and stable releases use the `latest` tag.
 
 - Pref 🥐 Performance optimization: `ForNumber` integer power calculations now limit integer exponents to the JS safe integer range
 - Pref 🥐 Performance optimization: `ForNumber` optimized for performance in large-span calculations
@@ -35,7 +35,7 @@ This version introduces `createFormData`, which can encode an object into an `Ar
 - Fix 🥕 Bug fixed: `abs` method of `ForNumber` now supports negative infinity
 - Other fixes and improvements
 
-0.4.0 快照 3
+GitHub 工作流更改为符合 npm Trusted Publishing (OIDC) 的要求, 预发布版本使用 `next` 标签, 正式版本使用 `latest` 标签
 
 - 优化 🥐 功能优化: `ForNumber` 的整数幂计算功能, 限制整数指数在 JS 安全整数范围内
 - 优化 🥐 功能优化: `ForNumber` 优化了大指数跨度运算下的性能

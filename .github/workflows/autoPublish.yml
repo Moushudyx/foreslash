@@ -29,17 +29,18 @@ jobs:
     environment: production
     steps:
       - name: 📋️ Checkout code # 获取代码
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           fetch-depth: 2  # 获取前一次提交, 对比版本
       - name: 📦 Setup Node # 安装 Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
-          node-version: 20
+          node-version: 24
+          package-manager-cache: false
           # cache: pnpm
           registry-url: 'https://registry.npmjs.org'
       - name: 📦 Setup pnpm # 安装 pnpm
-        uses: pnpm/action-setup@v4
+        uses: pnpm/action-setup@v5
         with:
           version: 10
 
@@ -71,9 +72,9 @@ jobs:
         run: pnpm install
       - name: 🚀 Build & Publish Package # 编译并发布
         if: steps.version_check.outputs.version_changed == 'true'
-        run: npm publish --provenance
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          NPM_TAG=$(node -p "require('./package.json').version.split('+')[0].includes('-') ? 'next' : 'latest'")
+          npm publish --provenance --tag "$NPM_TAG"
 
       - name: 📝 Generate release notes # 生成 Release 相关信息
         if: steps.version_check.outputs.version_changed == 'true'
@@ -103,7 +104,7 @@ jobs:
           echo "$(cat release_notes.txt)"
       - name: 🚀 Create GitHub Release # 发布 Release
         if: steps.version_check.outputs.version_changed == 'true'
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v3
         with:
           tag_name: v${{ steps.version_check.outputs.version }}
           name: ${{ steps.changelog.outputs.release_title }}
@@ -114,6 +115,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: ☂️ Upload coverage reports to Codecov
         if: steps.version_check.outputs.version_changed == 'true'
-        uses: codecov/codecov-action@v5
+        uses: codecov/codecov-action@v6
         with:
           token: ${{ secrets.CODECOV_TOKEN }}

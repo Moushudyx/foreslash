@@ -23,24 +23,25 @@ jobs:
       contents: write # 创建 Release 要用这个权限
     environment: production
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
         with:
-          node-version: 20
+          node-version: 24
+          package-manager-cache: false
           # cache: pnpm
           registry-url: 'https://registry.npmjs.org'
       - name: 📦 Setup pnpm # 安装 pnpm
-        uses: pnpm/action-setup@v4
+        uses: pnpm/action-setup@v5
         with:
           version: 10
       - name: 📦 Install dependencies # 安装依赖
         run: pnpm install
       - name: 🚀 Build & Publish Package # 编译并发布
-        run: npm publish --provenance
+        run: |
+          NPM_TAG=$(node -p "require('./package.json').version.split('+')[0].includes('-') ? 'next' : 'latest'")
+          npm publish --provenance --tag "$NPM_TAG"
         if: | # 仅在 Moushudyx/foreslash 下发布, 防止别人 fork 后误操作
           startsWith(github.repository, 'Moushudyx')
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: 🔎 Detect version # 获取 version
         id: version_check
@@ -75,7 +76,7 @@ jobs:
           echo "Version ${{ steps.version_check.outputs.version }} - $DATE"
           echo "$(cat release_notes.txt)"
       - name: 🚀 Create GitHub Release # 发布 Release
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v3
         with:
           tag_name: v${{ steps.version_check.outputs.version }}
           name: ${{ steps.changelog.outputs.release_title }}
@@ -85,6 +86,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: ☂️ Upload coverage reports to Codecov
-        uses: codecov/codecov-action@v5
+        uses: codecov/codecov-action@v6
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
