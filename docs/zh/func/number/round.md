@@ -2,7 +2,9 @@
 prev:
   text: 'lerp 线性插值'
   link: './lerp'
-next: false
+next:
+  text: 'isOdd 判断奇数'
+  link: './isOdd'
 ---
 
 # round

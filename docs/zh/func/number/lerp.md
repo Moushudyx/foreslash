@@ -1,7 +1,7 @@
 ---
 prev:
-  text: 'romanNumerals 罗马数字'
-  link: './romanNumerals'
+  text: 'clamp 限制范围'
+  link: './clamp'
 next:
   text: 'round 数值修约'
   link: './round'

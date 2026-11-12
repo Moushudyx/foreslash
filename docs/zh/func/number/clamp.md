@@ -1,8 +1,8 @@
 ---
 prev: false
 next:
-  text: 'decimalNotation 十进制展示'
-  link: './decimalNotation'
+  text: 'lerp 线性插值'
+  link: './lerp'
 ---
 
 # clamp

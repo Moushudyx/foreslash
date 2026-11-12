@@ -2,9 +2,7 @@
 prev:
   text: 'chinaNumerals 中文数字'
   link: './chinaNumerals'
-next:
-  text: 'lerp 线性插值'
-  link: './lerp'
+next: false
 ---
 
 # romanNumerals

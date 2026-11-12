@@ -19,7 +19,7 @@ export const zh = defineConfig({
 
     footer: {
       message: '基于 Mulan PSL v2 许可发布',
-      copyright: `© ${new Date().getFullYear()} Moushu`,
+      copyright: `© 2024-${new Date().getFullYear()} Moushu`,
     },
 
     docFooter: {
@@ -117,13 +117,15 @@ function sidebarIs(): DefaultTheme.SidebarItem[] {
       collapsed: false,
       items: [
         { text: 'clamp 限制范围', link: 'clamp' },
+        { text: 'lerp 线性插值', link: 'lerp' },
+        { text: 'round 数值修约', link: 'round' },
+        { text: 'isOdd 判断奇数', link: 'isOdd' },
+        { text: 'isEven 判断偶数', link: 'isEven' },
         { text: 'decimalNotation 十进制展示', link: 'decimalNotation' },
         { text: 'scientificNotation 科学计数法', link: 'scientificNotation' },
         { text: 'format 格式化', link: 'format' },
         { text: 'chinaNumerals 中文数字', link: 'chinaNumerals' },
         { text: 'romanNumerals 罗马数字', link: 'romanNumerals' },
-        { text: 'lerp 线性插值', link: 'lerp' },
-        { text: 'round 数值修约', link: 'round' },
       ],
     },
     {
@@ -155,7 +157,7 @@ function sidebarIs(): DefaultTheme.SidebarItem[] {
       ],
     },
     {
-      text: '随机操作',
+      text: '随机数操作',
       base: 'func/random/',
       collapsed: false,
       items: [

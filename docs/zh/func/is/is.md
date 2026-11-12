@@ -4,6 +4,10 @@
 
 您也可以使用 `Ctrl` + `K`(Mac 请使用 `Cmd` + `K`) 来搜索整个文档
 
+关于判空函数 `isEmpty` 的说明, 请参考 [isEmpty 页面](../object/isEmpty)
+
+关于奇偶性的判断, 请参考 [isOdd 页面](../number/isOdd) 和 [isEven 页面](../number/isEven) 页面
+
 [[TOC]]
 
 ## isArray 数组 {#Array}

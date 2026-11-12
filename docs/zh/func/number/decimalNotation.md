@@ -1,7 +1,7 @@
 ---
 prev:
-  text: 'clamp 限制范围'
-  link: './clamp'
+  text: 'isEven 判断偶数'
+  link: './isEven'
 next:
   text: 'scientificNotation 科学计数法'
   link: './scientificNotation'
