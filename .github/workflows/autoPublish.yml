@@ -26,6 +26,8 @@ jobs:
     permissions:
       id-token: write # [Publishing packages with provenance via GitHub Actions](https://docs.npmjs.com/generating-provenance-statements)
       contents: write # 创建 Release 要用这个权限
+    env:
+      NPM_CONFIG_REGISTRY: https://registry.npmjs.org
     environment: production
     steps:
       - name: 📋️ Checkout code # 获取代码
@@ -38,7 +40,6 @@ jobs:
           node-version: 24
           package-manager-cache: false
           # cache: pnpm
-          registry-url: 'https://registry.npmjs.org'
       - name: 📦 Setup pnpm # 安装 pnpm
         uses: pnpm/action-setup@v5
         with:
